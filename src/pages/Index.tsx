@@ -293,8 +293,7 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* Custom Cursor (Desktop only) */}
-      {!isMobile && <CustomCursor />}
+      {/* Custom Cursor removed - using default browser cursor */}
 
       {/* Navigation */}
       <Navigation
