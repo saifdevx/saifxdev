@@ -12,19 +12,19 @@ const specializations = [
     icon: Code2,
     title: "Python Programming",
     description: "Creating robust, scalable applications",
-    gradient: "from-blue-500 to-cyan-500",
+    gradient: "from-violet-500 to-purple-500",
   },
   {
     icon: Cog,
     title: "Automation Systems",
     description: "Streamlining workflows with smart automation",
-    gradient: "from-green-500 to-emerald-500",
+    gradient: "from-fuchsia-500 to-pink-500",
   },
   {
     icon: Monitor,
     title: "IT Solutions",
     description: "Comprehensive technical solutions",
-    gradient: "from-orange-500 to-amber-500",
+    gradient: "from-purple-400 to-violet-500",
   },
 ];
 
@@ -66,8 +66,8 @@ const SpecializationsSection = () => {
   };
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center py-16 md:py-20 px-4 md:px-8 overflow-hidden">
-      {/* Background */}
+    <section className="relative w-full h-full md:h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
+      {/* Purple themed background */}
       <motion.div
         className="absolute inset-0 opacity-30"
         initial={{ scale: 0.8, opacity: 0 }}
@@ -75,8 +75,13 @@ const SpecializationsSection = () => {
         transition={{ duration: 1 }}
         viewport={{ once: true }}
         style={{
-          background: "radial-gradient(ellipse at center, hsl(var(--primary) / 0.15) 0%, transparent 60%)",
+          background: "radial-gradient(ellipse at center, hsl(263 70% 58% / 0.2) 0%, transparent 60%)",
         }}
+      />
+      
+      <div 
+        className="absolute top-0 right-0 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-3xl opacity-20"
+        style={{ background: "radial-gradient(circle, hsl(280 85% 65%) 0%, transparent 70%)" }}
       />
 
       <div className="max-w-6xl w-full">
@@ -85,16 +90,16 @@ const SpecializationsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-10 md:mb-12"
+          className="text-center mb-6 md:mb-10"
         >
-          <span className="section-title">What I Do</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
-            Specializations & <span className="gradient-text">Certifications</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-purple-400 mb-3 block">What I Do</span>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
+            Specializations & <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">Certifications</span>
           </h2>
         </motion.div>
 
         {/* Specializations Grid - Card Dealing Animation */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12 md:mb-16">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3 mb-8 md:mb-12">
           {specializations.map((spec, index) => (
             <motion.div
               key={spec.title}
@@ -106,20 +111,20 @@ const SpecializationsSection = () => {
               whileHover={{ y: -8, scale: 1.03 }}
               className="group"
             >
-              <div className="glass-card p-4 md:p-6 h-full border-2 border-transparent hover:border-primary/30 transition-all duration-300">
+              <div className="glass-card p-3 md:p-5 h-full border-2 border-transparent hover:border-purple-500/30 transition-all duration-300 relative overflow-hidden">
                 {/* Icon */}
                 <motion.div
-                  className={`w-10 h-10 md:w-12 md:h-12 rounded-xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center mb-3 md:mb-4`}
+                  className={`w-9 h-9 md:w-11 md:h-11 rounded-xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center mb-2 md:mb-3`}
                   whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <spec.icon size={20} className="md:w-6 md:h-6 text-white" />
+                  <spec.icon size={18} className="md:w-5 md:h-5 text-white" />
                 </motion.div>
 
-                <h3 className="text-sm md:text-base font-bold mb-1 md:mb-2 group-hover:text-primary transition-colors">
+                <h3 className="text-xs md:text-sm font-bold mb-1 group-hover:text-purple-400 transition-colors">
                   {spec.title}
                 </h3>
-                <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
+                <p className="text-muted-foreground text-[10px] md:text-xs leading-relaxed">
                   {spec.description}
                 </p>
 
@@ -142,12 +147,12 @@ const SpecializationsSection = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           viewport={{ once: true }}
         >
-          <h3 className="text-lg md:text-xl font-semibold text-center mb-6 flex items-center justify-center gap-2">
-            <Award className="text-primary" size={20} />
+          <h3 className="text-sm md:text-base font-semibold text-center mb-4 flex items-center justify-center gap-2">
+            <Award className="text-purple-400" size={18} />
             <span>Certifications</span>
           </h3>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 md:gap-2">
             {certifications.map((cert, index) => (
               <motion.div
                 key={index}
@@ -156,20 +161,20 @@ const SpecializationsSection = () => {
                 transition={{ duration: 0.4, delay: 0.4 + index * 0.08 }}
                 viewport={{ once: true }}
                 whileHover={{ scale: cert.isEmpty ? 1.02 : 1.05 }}
-                className={`p-3 md:p-4 rounded-xl border transition-all duration-300 ${
+                className={`p-2 md:p-3 rounded-xl border transition-all duration-300 ${
                   cert.isEmpty
                     ? "border-dashed border-border/50 bg-transparent"
-                    : "border-border/30 bg-muted/20 hover:border-primary/30 hover:bg-muted/40"
+                    : "border-purple-500/20 bg-purple-500/5 hover:border-purple-500/40 hover:bg-purple-500/10"
                 }`}
               >
-                <div className="flex items-center gap-2 md:gap-3">
-                  <div className={`p-1.5 md:p-2 rounded-lg ${cert.isEmpty ? "bg-muted/30" : "bg-primary/10"}`}>
+                <div className="flex items-center gap-2">
+                  <div className={`p-1.5 rounded-lg ${cert.isEmpty ? "bg-muted/30" : "bg-purple-500/10"}`}>
                     <cert.icon 
-                      size={14} 
-                      className={`md:w-4 md:h-4 ${cert.isEmpty ? "text-muted-foreground/50" : "text-primary"}`} 
+                      size={12} 
+                      className={`md:w-3.5 md:h-3.5 ${cert.isEmpty ? "text-muted-foreground/50" : "text-purple-400"}`} 
                     />
                   </div>
-                  <span className={`text-xs md:text-sm font-medium ${cert.isEmpty ? "text-muted-foreground/50" : ""}`}>
+                  <span className={`text-[10px] md:text-xs font-medium ${cert.isEmpty ? "text-muted-foreground/50" : ""}`}>
                     {cert.isEmpty ? "Add More" : cert.name}
                   </span>
                 </div>
