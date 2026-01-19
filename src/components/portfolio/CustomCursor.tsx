@@ -1,66 +1,134 @@
-import { useEffect, useState } from "react";
-import { motion, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 const CustomCursor = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isClicking, setIsClicking] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  const springConfig = { damping: 25, stiffness: 300 };
-  const cursorX = useSpring(0, springConfig);
-  const cursorY = useSpring(0, springConfig);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>();
+  const mousePos = useRef({ x: 0, y: 0 });
+  const cursorPos = useRef({ x: 0, y: 0 });
+  const glowPos = useRef({ x: 0, y: 0 });
+  const isHovering = useRef(false);
+  const isClicking = useRef(false);
+  const isVisible = useRef(false);
 
   useEffect(() => {
+    // Check for touch device
+    if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+      return;
+    }
+
+    const cursor = cursorRef.current;
+    const glow = glowRef.current;
+    if (!cursor || !glow) return;
+
     // Hide default cursor globally
-    document.body.style.cursor = 'none';
-    document.documentElement.style.cursor = 'none';
-    
-    // Add style to hide cursor on all elements
     const style = document.createElement('style');
     style.id = 'custom-cursor-style';
     style.textContent = '*, *::before, *::after { cursor: none !important; }';
     document.head.appendChild(style);
 
+    // Direct mouse tracking - no React state for maximum performance
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      cursorX.set(e.clientX);
-      cursorY.set(e.clientY);
-      if (!isVisible) setIsVisible(true);
+      mousePos.current = { x: e.clientX, y: e.clientY };
+      if (!isVisible.current) {
+        isVisible.current = true;
+        cursor.style.opacity = '1';
+        glow.style.opacity = '0.15';
+      }
     };
 
-    const handleMouseDown = () => setIsClicking(true);
-    const handleMouseUp = () => setIsClicking(false);
-    const handleMouseLeave = () => setIsVisible(false);
-    const handleMouseEnter = () => setIsVisible(true);
+    const handleMouseDown = () => {
+      isClicking.current = true;
+      cursor.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    };
 
-    // Track hoverable elements
-    const handleElementHover = () => {
-      const hoverables = document.querySelectorAll('button, a, [data-hover]');
+    const handleMouseUp = () => {
+      isClicking.current = false;
+      cursor.style.transform = `translate(-50%, -50%) scale(${isHovering.current ? 1.5 : 1})`;
+    };
+
+    const handleMouseLeave = () => {
+      isVisible.current = false;
+      cursor.style.opacity = '0';
+      glow.style.opacity = '0';
+    };
+
+    const handleMouseEnter = () => {
+      isVisible.current = true;
+      cursor.style.opacity = '1';
+      glow.style.opacity = '0.15';
+    };
+
+    // Hover detection for interactive elements
+    const handleElementEnter = () => {
+      isHovering.current = true;
+      cursor.style.width = '40px';
+      cursor.style.height = '40px';
+      cursor.style.transform = `translate(-50%, -50%) scale(${isClicking.current ? 0.8 : 1.5})`;
+    };
+
+    const handleElementLeave = () => {
+      isHovering.current = false;
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      cursor.style.transform = `translate(-50%, -50%) scale(${isClicking.current ? 0.8 : 1})`;
+    };
+
+    // Attach hover listeners to all interactive elements
+    const attachHoverListeners = () => {
+      const hoverables = document.querySelectorAll('button, a, [data-hover], input, textarea, [role="button"]');
       hoverables.forEach((el) => {
-        el.addEventListener('mouseenter', () => setIsHovering(true));
-        el.addEventListener('mouseleave', () => setIsHovering(false));
+        el.addEventListener('mouseenter', handleElementEnter);
+        el.addEventListener('mouseleave', handleElementLeave);
       });
     };
 
+    // Animation loop using requestAnimationFrame for smooth 60fps updates
+    const animate = () => {
+      // Smooth interpolation for cursor (fast follow)
+      const cursorLerp = 0.35;
+      cursorPos.current.x += (mousePos.current.x - cursorPos.current.x) * cursorLerp;
+      cursorPos.current.y += (mousePos.current.y - cursorPos.current.y) * cursorLerp;
+      
+      // Slower interpolation for glow (trailing effect)
+      const glowLerp = 0.08;
+      glowPos.current.x += (mousePos.current.x - glowPos.current.x) * glowLerp;
+      glowPos.current.y += (mousePos.current.y - glowPos.current.y) * glowLerp;
+
+      // Apply positions directly to DOM
+      cursor.style.left = `${cursorPos.current.x}px`;
+      cursor.style.top = `${cursorPos.current.y}px`;
+      
+      glow.style.left = `${glowPos.current.x - 100}px`;
+      glow.style.top = `${glowPos.current.y - 100}px`;
+
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
+    // Start animation loop
+    rafRef.current = requestAnimationFrame(animate);
+
+    // Add event listeners
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    window.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mousedown', handleMouseDown, { passive: true });
+    window.addEventListener('mouseup', handleMouseUp, { passive: true });
     document.body.addEventListener('mouseleave', handleMouseLeave);
     document.body.addEventListener('mouseenter', handleMouseEnter);
-    
-    // Initial setup and mutation observer for dynamic elements
-    handleElementHover();
-    const observer = new MutationObserver(handleElementHover);
+
+    // Initial attachment and mutation observer for dynamic elements
+    attachHoverListeners();
+    const observer = new MutationObserver(attachHoverListeners);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      // Restore default cursor
+      // Cleanup
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      
       document.body.style.cursor = '';
       document.documentElement.style.cursor = '';
       const existingStyle = document.getElementById('custom-cursor-style');
       if (existingStyle) existingStyle.remove();
-      
+
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -68,50 +136,46 @@ const CustomCursor = () => {
       document.body.removeEventListener('mouseenter', handleMouseEnter);
       observer.disconnect();
     };
-  }, [cursorX, cursorY, isVisible]);
+  }, []);
 
   // Hide on touch devices
-  if (typeof window !== 'undefined' && 'ontouchstart' in window) {
+  if (typeof window !== 'undefined' && ('ontouchstart' in window || navigator.maxTouchPoints > 0)) {
     return null;
   }
 
   return (
     <>
-      {/* Main cursor dot */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
+      {/* Main cursor dot - using CSS transitions instead of framer-motion */}
+      <div
+        ref={cursorRef}
+        className="fixed pointer-events-none z-[9999] mix-blend-difference"
         style={{
-          x: cursorX,
-          y: cursorY,
+          width: '12px',
+          height: '12px',
+          transform: 'translate(-50%, -50%)',
+          opacity: 0,
+          transition: 'width 0.15s ease-out, height 0.15s ease-out, transform 0.1s ease-out, opacity 0.2s ease-out',
+          willChange: 'left, top, width, height, transform',
         }}
-        animate={{
-          scale: isClicking ? 0.8 : isHovering ? 1.5 : 1,
-          opacity: isVisible ? 1 : 0,
-        }}
-        transition={{ duration: 0.15 }}
       >
         <div
-          className="relative -translate-x-1/2 -translate-y-1/2 rounded-full bg-white"
-          style={{
-            width: isHovering ? 40 : 12,
-            height: isHovering ? 40 : 12,
-            transition: 'width 0.2s, height 0.2s',
-          }}
+          className="w-full h-full rounded-full bg-white"
         />
-      </motion.div>
+      </div>
 
       {/* Trailing glow effect */}
-      <motion.div
-        className="fixed top-0 left-0 pointer-events-none z-[9998]"
-        animate={{
-          x: mousePosition.x - 100,
-          y: mousePosition.y - 100,
-          opacity: isVisible ? 0.15 : 0,
+      <div
+        ref={glowRef}
+        className="fixed pointer-events-none z-[9998]"
+        style={{
+          width: '200px',
+          height: '200px',
+          opacity: 0,
+          willChange: 'left, top, opacity',
         }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="w-[200px] h-[200px] rounded-full bg-primary/30 blur-3xl" />
-      </motion.div>
+        <div className="w-full h-full rounded-full bg-primary/30 blur-3xl" />
+      </div>
     </>
   );
 };
