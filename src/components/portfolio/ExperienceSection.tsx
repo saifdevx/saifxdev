@@ -11,7 +11,7 @@ const certifications = [
 
 const ExperienceSection = () => {
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-32 md:pt-28 md:pb-36 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full h-screen flex items-center justify-center py-16 md:py-20 px-4 md:px-8 overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <motion.div

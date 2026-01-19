@@ -345,7 +345,7 @@ const Index = () => {
             {sections.map((Section, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 w-screen h-screen overflow-y-auto overflow-x-hidden"
+                className="flex-shrink-0 w-screen h-screen overflow-hidden"
                 initial={{ opacity: 0.3 }}
                 animate={{
                   opacity: index === currentSection ? 1 : 0.2,
