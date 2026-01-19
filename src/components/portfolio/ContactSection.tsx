@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Twitter, ExternalLink } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Twitter } from "lucide-react";
 import { useState } from "react";
 
 const socialLinks = [
@@ -7,29 +7,29 @@ const socialLinks = [
     name: "LinkedIn", 
     icon: Linkedin, 
     url: "#", 
-    color: "hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-400",
-    glow: "group-hover:shadow-blue-500/30",
+    color: "hover:bg-teal-500/20 hover:border-teal-500/50 hover:text-teal-400",
+    glow: "group-hover:shadow-teal-500/30",
   },
   { 
     name: "GitHub", 
     icon: Github, 
     url: "#", 
-    color: "hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-400",
-    glow: "group-hover:shadow-purple-500/30",
+    color: "hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-cyan-400",
+    glow: "group-hover:shadow-cyan-500/30",
   },
   { 
     name: "Instagram", 
     icon: Instagram, 
     url: "#", 
-    color: "hover:bg-pink-500/20 hover:border-pink-500/50 hover:text-pink-400",
-    glow: "group-hover:shadow-pink-500/30",
+    color: "hover:bg-teal-400/20 hover:border-teal-400/50 hover:text-teal-300",
+    glow: "group-hover:shadow-teal-400/30",
   },
   { 
     name: "Twitter", 
     icon: Twitter, 
     url: "#", 
-    color: "hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-cyan-400",
-    glow: "group-hover:shadow-cyan-500/30",
+    color: "hover:bg-cyan-400/20 hover:border-cyan-400/50 hover:text-cyan-300",
+    glow: "group-hover:shadow-cyan-400/30",
   },
 ];
 
@@ -69,12 +69,12 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative w-full h-screen flex items-center justify-center py-16 md:py-20 px-4 md:px-8 overflow-hidden">
-      {/* Animated Background */}
+    <section className="relative w-full h-full md:h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
+      {/* Teal themed background */}
       <div className="absolute inset-0">
         <motion.div
-          className="absolute top-1/3 right-1/4 w-[400px] md:w-[600px] h-[400px] md:h-[600px] rounded-full blur-3xl"
-          style={{ background: "hsl(var(--primary) / 0.15)" }}
+          className="absolute top-1/3 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-3xl"
+          style={{ background: "hsl(173 80% 40% / 0.2)" }}
           animate={{
             scale: [1, 1.2, 1],
             x: [0, 30, 0],
@@ -83,8 +83,8 @@ const ContactSection = () => {
           transition={{ duration: 20, repeat: Infinity }}
         />
         <motion.div
-          className="absolute bottom-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-3xl"
-          style={{ background: "hsl(var(--secondary) / 0.12)" }}
+          className="absolute bottom-1/4 left-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full blur-3xl"
+          style={{ background: "hsl(180 65% 35% / 0.15)" }}
           animate={{
             scale: [1, 1.3, 1],
             y: [0, -50, 0],
@@ -101,12 +101,12 @@ const ContactSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          <span className="section-title">Get in Touch</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-teal-400 mb-3 block">Get in Touch</span>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
             Let's Build Something{" "}
-            <span className="gradient-text">Amazing</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">Amazing</span>
           </h2>
-          <p className="text-base md:text-lg text-muted-foreground mb-8 md:mb-10 max-w-xl mx-auto">
+          <p className="text-sm md:text-base text-muted-foreground mb-6 max-w-xl mx-auto">
             Have a project in mind? Let's turn your ideas into reality.
           </p>
         </motion.div>
@@ -117,38 +117,38 @@ const ContactSection = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={zoomVariants}
-          className="glass-card p-6 md:p-8 lg:p-10 max-w-xl mx-auto relative overflow-hidden"
+          className="glass-card p-5 md:p-6 lg:p-8 max-w-xl mx-auto relative overflow-hidden border border-teal-500/20"
         >
           {/* Glow pulse effect */}
           <motion.div
             className="absolute inset-0 rounded-2xl"
             animate={{
               boxShadow: [
-                "0 0 0 0 hsl(var(--primary) / 0)",
-                "0 0 40px 10px hsl(var(--primary) / 0.1)",
-                "0 0 0 0 hsl(var(--primary) / 0)",
+                "0 0 0 0 hsl(173 80% 40% / 0)",
+                "0 0 40px 10px hsl(173 80% 40% / 0.1)",
+                "0 0 0 0 hsl(173 80% 40% / 0)",
               ],
             }}
             transition={{ duration: 3, repeat: Infinity }}
           />
 
-          <div className="space-y-4 relative z-10">
+          <div className="space-y-3 relative z-10">
             {/* Email */}
             <motion.button
               onClick={() => copyToClipboard("saifdevcore@gmail.com", "email")}
-              className="w-full group flex items-center justify-between p-4 rounded-xl hover:bg-muted/50 transition-all duration-300"
-              whileHover={{ x: 5, backgroundColor: "hsl(var(--muted) / 0.5)" }}
+              className="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-teal-500/10 transition-all duration-300 border border-transparent hover:border-teal-500/20"
+              whileHover={{ x: 5 }}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <motion.div 
-                  className="p-3 rounded-xl bg-primary/10 group-hover:bg-primary/20 transition-colors"
+                  className="p-2.5 rounded-xl bg-teal-500/10 group-hover:bg-teal-500/20 transition-colors"
                   whileHover={{ rotate: [0, -10, 10, 0] }}
                 >
-                  <Mail size={20} className="text-primary" />
+                  <Mail size={18} className="text-teal-400" />
                 </motion.div>
                 <div className="text-left">
-                  <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-sm md:text-base font-semibold">saifdevcore@gmail.com</p>
+                  <p className="text-[10px] text-muted-foreground">Email</p>
+                  <p className="text-xs md:text-sm font-semibold">saifdevcore@gmail.com</p>
                 </div>
               </div>
               <motion.div 
@@ -156,9 +156,9 @@ const ContactSection = () => {
                 whileHover={{ scale: 1.1 }}
               >
                 {copiedEmail ? (
-                  <Check size={18} className="text-green-500" />
+                  <Check size={16} className="text-green-500" />
                 ) : (
-                  <Copy size={18} className="text-muted-foreground" />
+                  <Copy size={16} className="text-muted-foreground" />
                 )}
               </motion.div>
             </motion.button>
@@ -166,19 +166,19 @@ const ContactSection = () => {
             {/* Phone */}
             <motion.button
               onClick={() => copyToClipboard("+92 329 5129669", "phone")}
-              className="w-full group flex items-center justify-between p-4 rounded-xl hover:bg-muted/50 transition-all duration-300"
-              whileHover={{ x: 5, backgroundColor: "hsl(var(--muted) / 0.5)" }}
+              className="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-cyan-500/10 transition-all duration-300 border border-transparent hover:border-cyan-500/20"
+              whileHover={{ x: 5 }}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <motion.div 
-                  className="p-3 rounded-xl bg-secondary/10 group-hover:bg-secondary/20 transition-colors"
+                  className="p-2.5 rounded-xl bg-cyan-500/10 group-hover:bg-cyan-500/20 transition-colors"
                   whileHover={{ rotate: [0, -10, 10, 0] }}
                 >
-                  <Phone size={20} className="text-secondary" />
+                  <Phone size={18} className="text-cyan-400" />
                 </motion.div>
                 <div className="text-left">
-                  <p className="text-xs text-muted-foreground">Phone</p>
-                  <p className="text-sm md:text-base font-semibold">+92 329 5129669</p>
+                  <p className="text-[10px] text-muted-foreground">Phone</p>
+                  <p className="text-xs md:text-sm font-semibold">+92 329 5129669</p>
                 </div>
               </div>
               <motion.div 
@@ -186,32 +186,32 @@ const ContactSection = () => {
                 whileHover={{ scale: 1.1 }}
               >
                 {copiedPhone ? (
-                  <Check size={18} className="text-green-500" />
+                  <Check size={16} className="text-green-500" />
                 ) : (
-                  <Copy size={18} className="text-muted-foreground" />
+                  <Copy size={16} className="text-muted-foreground" />
                 )}
               </motion.div>
             </motion.button>
 
             {/* Location */}
-            <div className="flex items-center gap-4 p-4 rounded-xl">
-              <div className="p-3 rounded-xl bg-accent/10">
-                <MapPin size={20} className="text-accent" />
+            <div className="flex items-center gap-3 p-3 rounded-xl">
+              <div className="p-2.5 rounded-xl bg-teal-400/10">
+                <MapPin size={18} className="text-teal-300" />
               </div>
               <div className="text-left">
-                <p className="text-xs text-muted-foreground">Location</p>
-                <p className="text-sm md:text-base font-semibold">Islamabad, Pakistan</p>
+                <p className="text-[10px] text-muted-foreground">Location</p>
+                <p className="text-xs md:text-sm font-semibold">Islamabad, Pakistan</p>
               </div>
             </div>
 
             {/* CTA Button */}
             <motion.a
               href="mailto:saifdevcore@gmail.com"
-              className="mt-4 w-full flex items-center justify-center gap-3 px-6 py-4 rounded-xl bg-gradient-to-r from-primary via-secondary to-accent text-white font-semibold"
-              whileHover={{ scale: 1.02, boxShadow: "0 15px 30px hsl(var(--primary) / 0.3)" }}
+              className="mt-3 w-full flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-teal-500 via-cyan-500 to-teal-500 text-white font-semibold text-sm"
+              whileHover={{ scale: 1.02, boxShadow: "0 15px 30px hsl(173 80% 40% / 0.3)" }}
               whileTap={{ scale: 0.98 }}
             >
-              <Send size={18} />
+              <Send size={16} />
               Send Message
             </motion.a>
           </div>
@@ -223,10 +223,10 @@ const ContactSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="mt-10 md:mt-12"
+          className="mt-8"
         >
-          <p className="text-sm text-muted-foreground mb-4">Connect with me</p>
-          <div className="flex items-center justify-center gap-3 md:gap-4">
+          <p className="text-xs text-muted-foreground mb-3">Connect with me</p>
+          <div className="flex items-center justify-center gap-3">
             {socialLinks.map((social, index) => (
               <motion.a
                 key={social.name}
@@ -237,14 +237,14 @@ const ContactSection = () => {
                 viewport={{ once: true }}
                 whileHover={{ y: -5, scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className={`group p-3 md:p-4 rounded-xl bg-muted/30 border border-border/50 transition-all duration-300 ${social.color} ${social.glow} hover:shadow-lg`}
+                className={`group p-3 rounded-xl bg-muted/30 border border-teal-500/20 transition-all duration-300 ${social.color} ${social.glow} hover:shadow-lg`}
                 title={social.name}
               >
-                <social.icon size={20} className="md:w-6 md:h-6" />
+                <social.icon size={18} />
               </motion.a>
             ))}
           </div>
-          <p className="text-xs text-muted-foreground/50 mt-3">Links coming soon</p>
+          <p className="text-[10px] text-muted-foreground/50 mt-2">Links coming soon</p>
         </motion.div>
 
         {/* Quote */}
@@ -253,12 +253,12 @@ const ContactSection = () => {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
           viewport={{ once: true }}
-          className="mt-10 md:mt-14"
+          className="mt-8"
         >
-          <blockquote className="text-base md:text-lg italic text-muted-foreground">
+          <blockquote className="text-sm md:text-base italic text-muted-foreground">
             "The future belongs to those who understand AI."
           </blockquote>
-          <p className="mt-2 text-sm font-medium gradient-text">— Saif Satti</p>
+          <p className="mt-1.5 text-xs font-medium bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">— Saif Satti</p>
         </motion.div>
 
         {/* Footer */}
@@ -267,7 +267,7 @@ const ContactSection = () => {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.8 }}
           viewport={{ once: true }}
-          className="mt-10 md:mt-14 text-xs text-muted-foreground"
+          className="mt-6 text-[10px] text-muted-foreground"
         >
           <p>© 2024 Saif Satti. Built with passion and AI.</p>
         </motion.footer>

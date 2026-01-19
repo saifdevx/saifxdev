@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import logoImg from "@/assets/logo.png";
 
 import CustomCursor from "@/components/portfolio/CustomCursor";
 import Navigation from "@/components/portfolio/Navigation";
@@ -37,6 +38,18 @@ const sections = [
   ContactSection,
 ];
 
+// Unique accent colors per section
+const sectionThemes = [
+  { accent: "217 91% 60%", name: "blue" },      // Hero - Blue
+  { accent: "142 76% 36%", name: "green" },     // About - Green
+  { accent: "263 70% 58%", name: "purple" },    // Specializations - Purple
+  { accent: "38 92% 50%", name: "amber" },      // Skills - Amber
+  { accent: "346 77% 50%", name: "rose" },      // Projects - Rose
+  { accent: "199 89% 48%", name: "cyan" },      // Experience - Cyan
+  { accent: "280 85% 65%", name: "violet" },    // Services - Violet
+  { accent: "173 80% 40%", name: "teal" },      // Contact - Teal
+];
+
 const Index = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [isDark, setIsDark] = useState(true);
@@ -59,7 +72,7 @@ const Index = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Handle theme toggle
+  // Handle theme toggle and section accent colors
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
@@ -68,6 +81,14 @@ const Index = () => {
       root.classList.add("light");
     }
   }, [isDark]);
+
+  // Update accent color based on current section (desktop only)
+  useEffect(() => {
+    if (!isMobile) {
+      const root = document.documentElement;
+      root.style.setProperty('--primary', sectionThemes[currentSection].accent);
+    }
+  }, [currentSection, isMobile]);
 
   // Keyboard navigation (desktop only)
   useEffect(() => {
@@ -216,7 +237,7 @@ const Index = () => {
 
   return (
     <>
-      {/* Loading Screen */}
+      {/* Loading Screen - Using logo instead of SS text */}
       <AnimatePresence>
         {isLoading && (
           <motion.div
@@ -232,19 +253,20 @@ const Index = () => {
                 transition={{ duration: 0.6, type: "spring" }}
                 className="mb-8"
               >
-                <motion.h1 
-                  className="text-6xl md:text-7xl font-black gradient-text"
+                <motion.img 
+                  src={logoImg}
+                  alt="Saif Satti Logo"
+                  className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-3xl"
                   animate={{ 
-                    textShadow: [
+                    boxShadow: [
                       "0 0 20px hsl(var(--primary) / 0.5)",
-                      "0 0 40px hsl(var(--primary) / 0.8)",
+                      "0 0 60px hsl(var(--primary) / 0.8)",
                       "0 0 20px hsl(var(--primary) / 0.5)"
-                    ]
+                    ],
+                    rotate: [0, 5, -5, 0]
                   }}
                   transition={{ duration: 2, repeat: Infinity }}
-                >
-                  SS
-                </motion.h1>
+                />
               </motion.div>
               
               <motion.div
@@ -312,13 +334,13 @@ const Index = () => {
 
       {/* Main Content */}
       {isMobile ? (
-        // Mobile: Vertical Scrolling Layout
+        // Mobile: Vertical Scrolling Layout with proper spacing
         <div className="w-full">
           {sections.map((Section, index) => (
             <div
               key={index}
               ref={(el) => (sectionRefs.current[index] = el)}
-              className="min-h-screen"
+              className="min-h-screen flex items-center justify-center py-20"
             >
               <Section />
             </div>

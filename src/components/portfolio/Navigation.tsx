@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Sun, Moon, Command, Menu, X, Sparkles } from "lucide-react";
+import { Sun, Moon, Command, Menu, X, Home, User, Briefcase, Code2, FolderOpen, GraduationCap, Wrench, Mail } from "lucide-react";
 import { useState } from "react";
 import logoImg from "@/assets/logo.png";
 
@@ -14,6 +14,9 @@ interface NavigationProps {
   isMobile?: boolean;
 }
 
+// Icons for each section
+const sectionIcons = [Home, User, Briefcase, Code2, FolderOpen, GraduationCap, Wrench, Mail];
+
 const Navigation = ({
   currentSection,
   isDark,
@@ -23,10 +26,11 @@ const Navigation = ({
   onNavigate,
 }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <>
-      {/* Logo - Fixed Top Left with new logo image */}
+      {/* Logo - Fixed Top Left - Bigger */}
       <motion.div
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
@@ -42,79 +46,101 @@ const Navigation = ({
           <motion.img 
             src={logoImg} 
             alt="Saif Satti Logo" 
-            className="w-14 h-14 md:w-16 md:h-16 rounded-2xl object-contain"
+            className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-contain shadow-2xl"
             animate={{
-              rotate: [0, 5, -5, 0],
+              rotate: [0, 3, -3, 0],
             }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           />
           {/* Glow effect on hover */}
           <motion.div
-            className="absolute inset-0 rounded-xl bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            className="absolute inset-0 rounded-2xl bg-primary/30 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
           />
         </motion.button>
       </motion.div>
 
-      {/* Navigation - Top Right - Redesigned */}
+      {/* Navigation - Top Right - Premium Compact Pill Design */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
         className="fixed top-4 right-4 md:top-6 md:right-6 z-50"
       >
-        <div className="bg-background/60 backdrop-blur-2xl border border-border/30 rounded-2xl px-2 py-1.5 flex items-center gap-1 shadow-2xl">
-          {/* Desktop Navigation Links */}
+        <div className="bg-background/70 backdrop-blur-2xl border border-border/40 rounded-full px-1.5 py-1.5 flex items-center gap-0.5 shadow-2xl shadow-black/20">
+          {/* Desktop Navigation - Icon-based compact pill */}
           <div className="hidden lg:flex items-center gap-0.5">
-            {sectionNames.slice(0, 5).map((name, index) => (
-              <motion.button
-                key={name}
-                onClick={() => onNavigate(index)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-300 ${
-                  index === currentSection
-                    ? "bg-primary/20 text-primary"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
-                }`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {name}
-              </motion.button>
-            ))}
-            {sectionNames.length > 5 && (
-              <motion.button
-                onClick={onCommandPaletteOpen}
-                className="px-2 py-1.5 rounded-xl text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                +{sectionNames.length - 5}
-              </motion.button>
-            )}
+            {sectionNames.map((name, index) => {
+              const Icon = sectionIcons[index];
+              const isActive = index === currentSection;
+              const isHovered = hoveredIndex === index;
+              
+              return (
+                <motion.button
+                  key={name}
+                  onClick={() => onNavigate(index)}
+                  onMouseEnter={() => setHoveredIndex(index)}
+                  onMouseLeave={() => setHoveredIndex(null)}
+                  className={`relative p-2.5 rounded-full transition-all duration-300 ${
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                  }`}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Icon size={16} />
+                  
+                  {/* Tooltip on hover */}
+                  <AnimatePresence>
+                    {isHovered && !isActive && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 5, scale: 0.9 }}
+                        className="absolute top-full mt-2 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-foreground text-background text-xs font-medium rounded-lg whitespace-nowrap z-50"
+                      >
+                        {name}
+                        <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-foreground rotate-45" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                  
+                  {/* Active indicator ring */}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute inset-0 rounded-full border-2 border-primary-foreground/30"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                </motion.button>
+              );
+            })}
           </div>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-5 bg-border/50 mx-1" />
+          <div className="hidden lg:block w-px h-6 bg-border/50 mx-1.5" />
 
           {/* Command Palette Trigger */}
           <motion.button
             onClick={onCommandPaletteOpen}
-            className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-muted/30 hover:bg-muted/50 transition-all text-xs group"
+            className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-muted/40 hover:bg-muted/60 transition-all text-xs group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Command size={12} className="text-muted-foreground group-hover:text-primary transition-colors" />
-            <span className="text-muted-foreground font-mono text-[10px]">⌘K</span>
+            <Command size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="text-muted-foreground font-mono text-[10px] hidden xl:inline">⌘K</span>
           </motion.button>
 
           {/* Theme Toggle */}
           <motion.button
             onClick={onThemeToggle}
-            className="p-2 rounded-xl hover:bg-muted/50 transition-all relative overflow-hidden group"
+            className="p-2.5 rounded-full hover:bg-muted/50 transition-all relative overflow-hidden group"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
             <motion.div
-              className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl"
+              className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 opacity-0 group-hover:opacity-100 transition-opacity rounded-full"
             />
             <AnimatePresence mode="wait">
               {isDark ? (
@@ -146,7 +172,7 @@ const Navigation = ({
           {/* Mobile Menu Toggle */}
           <motion.button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="lg:hidden p-2 rounded-xl hover:bg-muted/50 transition-all"
+            className="lg:hidden p-2.5 rounded-full hover:bg-muted/50 transition-all"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -175,14 +201,14 @@ const Navigation = ({
         </div>
       </motion.nav>
 
-      {/* Mobile Menu Overlay - Redesigned */}
+      {/* Mobile Menu Overlay - Redesigned fullscreen */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-40 bg-background/98 backdrop-blur-3xl lg:hidden"
           >
             {/* Close on backdrop click */}
             <div 
@@ -195,47 +221,58 @@ const Navigation = ({
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
               transition={{ delay: 0.1 }}
-              className="relative flex flex-col items-center justify-center h-full gap-4 px-8"
+              className="relative flex flex-col items-center justify-center h-full gap-3 px-8"
             >
-              {/* Logo in menu */}
+              {/* Logo in menu - bigger */}
               <motion.img 
                 src={logoImg} 
                 alt="Logo" 
-                className="w-16 h-16 mb-4"
+                className="w-20 h-20 mb-6 rounded-2xl shadow-2xl"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ type: "spring", delay: 0.1 }}
               />
               
-              {/* Section Links */}
-              {sectionNames.map((name, index) => (
-                <motion.button
-                  key={name}
-                  initial={{ x: -30, opacity: 0 }}
-                  animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.05 + 0.15 }}
-                  onClick={() => {
-                    onNavigate(index);
-                    setIsMobileMenuOpen(false);
-                  }}
-                  className={`relative text-lg font-semibold transition-colors flex items-center gap-3 py-2 ${
-                    index === currentSection
-                      ? "gradient-text"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  <span className="text-[10px] font-mono text-primary/50 w-5">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  {name}
-                  {index === currentSection && (
-                    <motion.div
-                      layoutId="activeSection"
-                      className="absolute -left-4 w-1.5 h-full bg-primary rounded-full"
-                    />
-                  )}
-                </motion.button>
-              ))}
+              {/* Section Links with icons */}
+              {sectionNames.map((name, index) => {
+                const Icon = sectionIcons[index];
+                return (
+                  <motion.button
+                    key={name}
+                    initial={{ x: -30, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ delay: index * 0.05 + 0.15 }}
+                    onClick={() => {
+                      onNavigate(index);
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className={`relative w-full max-w-xs flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all ${
+                      index === currentSection
+                        ? "bg-primary/10 border border-primary/30"
+                        : "hover:bg-muted/50"
+                    }`}
+                  >
+                    <div className={`p-2 rounded-xl ${
+                      index === currentSection 
+                        ? "bg-primary text-primary-foreground" 
+                        : "bg-muted/50 text-muted-foreground"
+                    }`}>
+                      <Icon size={18} />
+                    </div>
+                    <span className={`text-base font-medium ${
+                      index === currentSection ? "text-primary" : "text-foreground"
+                    }`}>
+                      {name}
+                    </span>
+                    {index === currentSection && (
+                      <motion.div
+                        layoutId="activeMobileSection"
+                        className="absolute right-4 w-2 h-2 rounded-full bg-primary"
+                      />
+                    )}
+                  </motion.button>
+                );
+              })}
 
               {/* Quick Actions */}
               <motion.div
@@ -249,33 +286,22 @@ const Navigation = ({
                     onCommandPaletteOpen();
                     setIsMobileMenuOpen(false);
                   }}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30 border border-border/50 text-sm"
+                  className="flex items-center gap-2 px-5 py-3 rounded-2xl bg-muted/40 border border-border/50 text-sm font-medium"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  <Command size={14} />
+                  <Command size={16} />
                   <span>Quick Nav</span>
                 </motion.button>
                 
                 <motion.button
                   onClick={onThemeToggle}
-                  className="p-2 rounded-xl bg-muted/30 border border-border/50"
+                  className="p-3 rounded-2xl bg-muted/40 border border-border/50"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  {isDark ? <Moon size={16} /> : <Sun size={16} />}
+                  {isDark ? <Moon size={18} /> : <Sun size={18} />}
                 </motion.button>
-              </motion.div>
-
-              {/* Decorative element */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.6 }}
-                className="absolute bottom-8 flex items-center gap-2 text-xs text-muted-foreground/50"
-              >
-                <Sparkles size={12} />
-                <span>Built with passion</span>
               </motion.div>
             </motion.div>
           </motion.div>
