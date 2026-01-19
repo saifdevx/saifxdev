@@ -12,7 +12,7 @@ const AboutSection = () => {
   const floatingIcons = [Terminal, Code, Lightbulb, Heart];
 
   return (
-    <section className="relative w-full h-full md:h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
       {/* Green themed gradient background */}
       <motion.div
         initial={{ x: "-100%", opacity: 0 }}
