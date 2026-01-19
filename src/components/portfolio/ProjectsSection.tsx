@@ -43,7 +43,7 @@ const ProjectsSection = () => {
   const project = projects[currentProject];
 
   return (
-    <section className="relative w-screen h-screen flex items-center justify-center px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-32 md:pt-28 md:pb-36 px-4 md:px-8 overflow-hidden">
       {/* Background */}
       <motion.div
         key={currentProject}
@@ -59,23 +59,23 @@ const ProjectsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8 md:mb-12"
         >
           <span className="section-title">Portfolio</span>
-          <h2 className="text-4xl md:text-5xl font-bold">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             Featured <span className="gradient-text">Projects</span>
           </h2>
         </motion.div>
 
         {/* Project Card */}
-        <div className="grid lg:grid-cols-2 gap-8 items-center">
+        <div className="grid lg:grid-cols-2 gap-6 md:gap-8 items-center">
           {/* Project Image */}
           <motion.div
             key={`image-${currentProject}`}
             initial={{ opacity: 0, x: -50, rotateY: -15 }}
             animate={{ opacity: 1, x: 0, rotateY: 0 }}
             transition={{ duration: 0.6 }}
-            className="perspective-1000"
+            className="perspective-1000 order-2 lg:order-1"
           >
             <motion.div
               className="glass-card overflow-hidden aspect-video"
@@ -87,7 +87,7 @@ const ProjectsSection = () => {
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                <span className="text-muted-foreground text-sm">Project Preview</span>
+                <span className="text-muted-foreground text-xs md:text-sm">Project Preview</span>
               </div>
             </motion.div>
           </motion.div>
@@ -98,27 +98,28 @@ const ProjectsSection = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
+            className="order-1 lg:order-2"
           >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-sm font-mono text-muted-foreground">
+            <div className="flex items-center gap-3 mb-3 md:mb-4">
+              <span className="text-xs md:text-sm font-mono text-muted-foreground">
                 0{currentProject + 1} / 0{projects.length}
               </span>
             </div>
 
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+            <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
               {project.title}
             </h3>
 
-            <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+            <p className="text-muted-foreground text-sm md:text-lg mb-4 md:mb-6 leading-relaxed">
               {project.description}
             </p>
 
             {/* Tech Stack */}
-            <div className="flex flex-wrap gap-2 mb-8">
+            <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
               {project.tech.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary border border-primary/20"
+                  className="px-2 md:px-3 py-1 text-xs md:text-sm rounded-full bg-primary/10 text-primary border border-primary/20"
                 >
                   {tech}
                 </span>
@@ -126,22 +127,22 @@ const ProjectsSection = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-4">
               <motion.button
-                className="flex items-center gap-2 px-6 py-3 rounded-xl bg-primary text-primary-foreground font-medium"
+                className="flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl bg-primary text-primary-foreground font-medium text-sm md:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <ExternalLink size={18} />
+                <ExternalLink size={16} className="md:w-[18px] md:h-[18px]" />
                 Live Demo
               </motion.button>
               
               <motion.button
-                className="flex items-center gap-2 px-6 py-3 rounded-xl border border-border hover:border-primary/50 transition-colors font-medium"
+                className="flex items-center justify-center gap-2 px-4 md:px-6 py-2.5 md:py-3 rounded-lg md:rounded-xl border border-border hover:border-primary/50 transition-colors font-medium text-sm md:text-base"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <Github size={18} />
+                <Github size={16} className="md:w-[18px] md:h-[18px]" />
                 Source Code
               </motion.button>
             </div>
@@ -149,14 +150,14 @@ const ProjectsSection = () => {
         </div>
 
         {/* Navigation Arrows */}
-        <div className="flex items-center justify-center gap-4 mt-12">
+        <div className="flex items-center justify-center gap-3 md:gap-4 mt-8 md:mt-12">
           <motion.button
             onClick={prevProject}
-            className="p-3 rounded-xl glass-card hover:bg-muted transition-colors"
+            className="p-2 md:p-3 rounded-lg md:rounded-xl glass-card hover:bg-muted transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={20} className="md:w-6 md:h-6" />
           </motion.button>
           
           {/* Dots */}
@@ -165,10 +166,10 @@ const ProjectsSection = () => {
               <button
                 key={index}
                 onClick={() => setCurrentProject(index)}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-full transition-all duration-300 ${
                   index === currentProject
-                    ? "w-8 bg-primary"
-                    : "bg-muted-foreground/30 hover:bg-muted-foreground/60"
+                    ? "w-6 md:w-8 bg-primary"
+                    : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/60"
                 }`}
               />
             ))}
@@ -176,11 +177,11 @@ const ProjectsSection = () => {
 
           <motion.button
             onClick={nextProject}
-            className="p-3 rounded-xl glass-card hover:bg-muted transition-colors"
+            className="p-2 md:p-3 rounded-lg md:rounded-xl glass-card hover:bg-muted transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={20} className="md:w-6 md:h-6" />
           </motion.button>
         </div>
       </div>
