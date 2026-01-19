@@ -20,49 +20,36 @@ const Navigation = ({
   onCommandPaletteOpen,
   sectionNames,
   onNavigate,
-  isMobile = false,
 }: NavigationProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
-      {/* Desktop/Tablet Navigation - Top Right */}
+      {/* Navigation - Top Right */}
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.5 }}
-        className="fixed top-4 right-4 md:top-6 md:right-6 z-50"
+        className="fixed top-4 right-4 md:top-6 md:right-6 z-40"
       >
-        <div className="glass-card px-3 py-2 md:px-4 md:py-3 flex items-center gap-2 md:gap-4">
-          {/* Logo - Hidden on very small screens */}
-          <motion.span
-            className="hidden sm:inline font-bold text-lg gradient-text"
-            whileHover={{ scale: 1.05 }}
-          >
-            SS
-          </motion.span>
-
-          {/* Divider - Hidden on mobile */}
-          <div className="hidden sm:block w-px h-4 bg-border" />
-
+        <div className="bg-background/80 backdrop-blur-xl border border-border/50 rounded-xl px-3 py-2 flex items-center gap-2 shadow-lg">
           {/* Command Palette Trigger */}
           <motion.button
             onClick={onCommandPaletteOpen}
-            className="hidden md:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-muted/50 hover:bg-muted transition-colors text-sm"
+            className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted transition-colors text-xs"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Command size={14} />
-            <span className="text-muted-foreground">⌘K</span>
+            <Command size={12} />
+            <span className="text-muted-foreground font-mono">⌘K</span>
           </motion.button>
 
           {/* Theme Toggle */}
           <motion.button
             onClick={onThemeToggle}
             className="p-2 rounded-lg hover:bg-muted transition-colors"
-            whileHover={{ scale: 1.1, rotate: 180 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
-            transition={{ duration: 0.3 }}
           >
             <AnimatePresence mode="wait">
               {isDark ? (
@@ -73,7 +60,7 @@ const Navigation = ({
                   exit={{ rotate: 90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Moon size={18} />
+                  <Moon size={16} />
                 </motion.div>
               ) : (
                 <motion.div
@@ -83,7 +70,7 @@ const Navigation = ({
                   exit={{ rotate: -90, opacity: 0 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <Sun size={18} />
+                  <Sun size={16} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -96,7 +83,7 @@ const Navigation = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
           </motion.button>
         </div>
       </motion.nav>
@@ -108,48 +95,51 @@ const Navigation = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-40 bg-background/95 backdrop-blur-lg md:hidden"
+            className="fixed inset-0 z-50 bg-background/98 backdrop-blur-xl md:hidden"
           >
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 20, opacity: 0 }}
               transition={{ delay: 0.1 }}
-              className="flex flex-col items-center justify-center h-full gap-6 px-8"
+              className="flex flex-col items-center justify-center h-full gap-5 px-8"
             >
               {/* Section Links */}
               {sectionNames.map((name, index) => (
                 <motion.button
                   key={name}
-                  initial={{ x: -20, opacity: 0 }}
+                  initial={{ x: -30, opacity: 0 }}
                   animate={{ x: 0, opacity: 1 }}
-                  transition={{ delay: index * 0.05 }}
+                  transition={{ delay: index * 0.05 + 0.1 }}
                   onClick={() => {
                     onNavigate(index);
                     setIsMobileMenuOpen(false);
                   }}
-                  className={`text-2xl font-semibold transition-colors ${
+                  className={`text-xl font-semibold transition-colors flex items-center gap-3 ${
                     index === currentSection
                       ? "gradient-text"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
+                  <span className="text-xs font-mono text-primary/60">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                   {name}
                 </motion.button>
               ))}
 
-              {/* Command Palette in Mobile Menu */}
+              {/* Quick Nav Button */}
               <motion.button
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.4 }}
+                transition={{ delay: 0.5 }}
                 onClick={() => {
                   onCommandPaletteOpen();
                   setIsMobileMenuOpen(false);
                 }}
-                className="mt-8 flex items-center gap-2 px-6 py-3 rounded-xl glass-card text-muted-foreground"
+                className="mt-6 flex items-center gap-2 px-5 py-2.5 rounded-xl bg-muted/50 text-muted-foreground text-sm"
               >
-                <Command size={18} />
+                <Command size={16} />
                 <span>Quick Navigation</span>
               </motion.button>
             </motion.div>
@@ -157,20 +147,21 @@ const Navigation = ({
         )}
       </AnimatePresence>
 
-      {/* Logo - Fixed Top Left for brand visibility */}
+      {/* Logo - Fixed Top Left */}
       <motion.div
         initial={{ x: -50, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.3 }}
-        className="fixed top-4 left-4 md:top-6 md:left-6 z-50"
+        className="fixed top-4 left-4 md:top-6 md:left-6 z-40"
       >
-        <motion.span
-          className="font-black text-2xl md:text-3xl gradient-text cursor-pointer"
-          whileHover={{ scale: 1.1 }}
+        <motion.button
           onClick={() => onNavigate(0)}
+          className="font-black text-xl md:text-2xl gradient-text"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
         >
           SS
-        </motion.span>
+        </motion.button>
       </motion.div>
     </>
   );

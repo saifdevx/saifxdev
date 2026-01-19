@@ -22,47 +22,52 @@ const MobileProgress = ({
       <motion.div
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="fixed bottom-4 left-4 right-4 z-40 md:hidden"
+        className="fixed bottom-3 left-3 right-3 z-30 md:hidden"
       >
-        <div className="glass-card px-4 py-3 flex items-center justify-between">
+        <div className="bg-background/90 backdrop-blur-xl border border-border/50 rounded-xl px-4 py-3 flex items-center justify-between shadow-lg">
           {/* Section Name */}
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-mono text-primary font-bold">
-              {String(currentSection + 1).padStart(2, "0")}
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-mono text-primary font-bold bg-primary/10 px-2 py-0.5 rounded">
+              {String(currentSection + 1).padStart(2, '0')}
             </span>
-            <span className="text-sm font-medium truncate">
+            <span className="text-sm font-medium truncate max-w-[120px]">
               {sectionNames[currentSection]}
             </span>
           </div>
 
           {/* Progress Dots */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-1">
             {Array.from({ length: totalSections }).map((_, index) => (
-              <div
+              <motion.div
                 key={index}
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-all duration-300 ${
                   index === currentSection
-                    ? "bg-primary w-4"
+                    ? "w-4 bg-primary"
                     : index < currentSection
-                    ? "bg-primary/50"
-                    : "bg-muted-foreground/30"
+                    ? "w-1.5 bg-primary/50"
+                    : "w-1.5 bg-muted-foreground/30"
                 }`}
+                animate={index === currentSection ? {
+                  scale: [1, 1.2, 1],
+                } : {}}
+                transition={{ duration: 1, repeat: Infinity }}
               />
             ))}
           </div>
         </div>
       </motion.div>
 
-      {/* Scroll to Top Button - Shows after scrolling down */}
+      {/* Scroll to Top Button */}
       {currentSection > 0 && (
         <motion.button
           initial={{ scale: 0, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0, opacity: 0 }}
           onClick={scrollToTop}
-          className="fixed bottom-20 right-4 z-40 p-3 rounded-full glass-card md:hidden"
+          className="fixed bottom-16 right-3 z-30 p-2.5 rounded-full bg-background/90 backdrop-blur-xl border border-border/50 shadow-lg md:hidden"
+          whileTap={{ scale: 0.9 }}
         >
-          <ChevronUp size={20} className="text-primary" />
+          <ChevronUp size={18} className="text-primary" />
         </motion.button>
       )}
     </>

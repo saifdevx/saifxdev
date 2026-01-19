@@ -1,43 +1,90 @@
 import { motion } from "framer-motion";
-import { Brain, Workflow, Globe, MessageSquare } from "lucide-react";
+import { Brain, Workflow, Globe, MessageSquare, Zap, Sparkles } from "lucide-react";
 
 const services = [
   {
     icon: Brain,
     title: "AI Integration",
-    description: "Implement cutting-edge AI solutions tailored to your business needs. From chatbots to data analysis pipelines.",
+    description: "Implement cutting-edge AI solutions tailored to your business. From chatbots to intelligent pipelines.",
     features: ["Custom AI Models", "LLM Integration", "Process Automation"],
+    gradient: "from-purple-500 to-pink-500",
+    size: "large",
   },
   {
     icon: Workflow,
     title: "Python Automation",
-    description: "Eliminate repetitive tasks and streamline operations with powerful Python scripts and automation tools.",
+    description: "Eliminate repetitive tasks with powerful Python scripts and automation tools.",
     features: ["Task Automation", "Data Processing", "API Development"],
+    gradient: "from-blue-500 to-cyan-500",
+    size: "large",
   },
   {
     icon: Globe,
     title: "Web Development",
-    description: "Create modern, responsive websites and web applications that look stunning and perform flawlessly.",
-    features: ["React & Next.js", "Responsive Design", "Performance Optimized"],
+    description: "Modern, responsive websites that perform flawlessly.",
+    features: ["React & Next.js", "Responsive Design"],
+    gradient: "from-green-500 to-emerald-500",
+    size: "small",
   },
   {
     icon: MessageSquare,
     title: "Consulting",
-    description: "Get expert guidance on AI strategy, technical architecture, and digital transformation initiatives.",
-    features: ["AI Strategy", "Technical Guidance", "Best Practices"],
+    description: "Expert guidance on AI strategy and architecture.",
+    features: ["AI Strategy", "Best Practices"],
+    gradient: "from-orange-500 to-amber-500",
+    size: "small",
   },
 ];
 
 const ServicesSection = () => {
+  // Bento cascade animation - from different corners
+  const cascadeVariants = {
+    hidden: (index: number) => ({
+      opacity: 0,
+      scale: 0.8,
+      x: index % 2 === 0 ? -50 : 50,
+      y: index < 2 ? -50 : 50,
+    }),
+    visible: (index: number) => ({
+      opacity: 1,
+      scale: 1,
+      x: 0,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        delay: index * 0.15,
+        type: "spring",
+        stiffness: 80,
+      },
+    }),
+  };
+
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-32 md:pt-28 md:pb-36 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center py-24 md:py-20 px-4 md:px-8 overflow-hidden">
       {/* Background */}
       <motion.div
         className="absolute inset-0"
-        style={{
-          background: "radial-gradient(ellipse at 30% 50%, hsl(var(--primary) / 0.08) 0%, transparent 50%)",
-        }}
-      />
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div 
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse at 70% 30%, hsl(var(--primary) / 0.08) 0%, transparent 50%)",
+          }}
+        />
+        <motion.div
+          className="absolute top-1/4 left-0 w-px h-1/2 bg-gradient-to-b from-transparent via-primary/20 to-transparent"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+        <motion.div
+          className="absolute top-0 right-1/4 w-1/2 h-px bg-gradient-to-r from-transparent via-secondary/20 to-transparent"
+          animate={{ opacity: [0.3, 0.6, 0.3] }}
+          transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+        />
+      </motion.div>
 
       <div className="relative max-w-6xl w-full">
         <motion.div
@@ -45,7 +92,7 @@ const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-10 md:mb-16"
+          className="text-center mb-10 md:mb-14"
         >
           <span className="section-title">Services</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
@@ -53,44 +100,62 @@ const ServicesSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Bento Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              custom={index}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true }}
-              whileHover={{ y: -8 }}
-              className="group"
+              variants={cascadeVariants}
+              whileHover={{ y: -8, scale: 1.02 }}
+              className={`group ${service.size === "large" ? "lg:col-span-2" : ""}`}
             >
-              <div className="glass-card p-4 md:p-6 h-full transition-all duration-300 hover:border-primary/30">
-                {/* Icon */}
+              <div className="glass-card p-5 md:p-6 h-full border-2 border-transparent hover:border-primary/20 transition-all duration-300 relative overflow-hidden">
+                {/* Gradient overlay on hover */}
                 <motion.div
-                  className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 md:mb-5 group-hover:scale-110 transition-transform"
-                  whileHover={{ rotate: 5 }}
-                >
-                  <service.icon size={20} className="md:w-6 md:h-6 text-primary" />
-                </motion.div>
+                  className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-300`}
+                />
 
-                {/* Title */}
-                <h3 className="text-base md:text-lg font-bold mb-2 md:mb-3">{service.title}</h3>
+                {/* Icon with glow */}
+                <div className="relative mb-4 md:mb-5">
+                  <motion.div
+                    className={`w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${service.gradient} flex items-center justify-center`}
+                    whileHover={{ rotate: [0, -5, 5, 0], scale: 1.1 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <service.icon size={24} className="md:w-7 md:h-7 text-white" />
+                  </motion.div>
+                  {/* Glow effect */}
+                  <motion.div
+                    className={`absolute inset-0 w-12 h-12 md:w-14 md:h-14 rounded-xl bg-gradient-to-br ${service.gradient} blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-300`}
+                  />
+                </div>
 
-                {/* Description */}
-                <p className="text-muted-foreground text-xs md:text-sm mb-4 md:mb-5 leading-relaxed">
+                {/* Content */}
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:text-primary transition-colors">
+                  {service.title}
+                </h3>
+                <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   {service.description}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-1 md:space-y-2">
-                  {service.features.map((feature) => (
-                    <li
+                <ul className="space-y-1.5">
+                  {service.features.map((feature, i) => (
+                    <motion.li
                       key={feature}
+                      initial={{ opacity: 0, x: -10 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 + i * 0.1 }}
+                      viewport={{ once: true }}
                       className="text-xs md:text-sm text-muted-foreground flex items-center gap-2"
                     >
-                      <span className="w-1 h-1 rounded-full bg-primary" />
+                      <Sparkles size={12} className="text-primary" />
                       {feature}
-                    </li>
+                    </motion.li>
                   ))}
                 </ul>
               </div>
@@ -102,19 +167,23 @@ const ServicesSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mt-8 md:mt-12"
+          className="text-center mt-10 md:mt-14"
         >
-          <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4">
-            Have a project in mind? Let's discuss how I can help.
-          </p>
           <motion.button
-            className="px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-sm md:text-base"
-            whileHover={{ scale: 1.05 }}
+            className="group px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold flex items-center gap-3 mx-auto"
+            whileHover={{ scale: 1.05, boxShadow: "0 20px 40px hsl(var(--primary) / 0.3)" }}
             whileTap={{ scale: 0.98 }}
           >
-            Start a Conversation
+            <Zap size={20} />
+            Start a Project
+            <motion.span
+              animate={{ x: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              →
+            </motion.span>
           </motion.button>
         </motion.div>
       </div>
