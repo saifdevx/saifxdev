@@ -30,7 +30,7 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section className="relative w-screen h-screen flex items-center justify-center px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-32 md:pt-28 md:pb-36 px-4 md:px-8 overflow-hidden">
       {/* Background */}
       <motion.div
         className="absolute inset-0"
@@ -45,15 +45,15 @@ const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <span className="section-title">Services</span>
-          <h2 className="text-4xl md:text-5xl font-bold">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             How I Can <span className="gradient-text">Help You</span>
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
@@ -64,29 +64,29 @@ const ServicesSection = () => {
               whileHover={{ y: -8 }}
               className="group"
             >
-              <div className="glass-card p-6 h-full transition-all duration-300 hover:border-primary/30">
+              <div className="glass-card p-4 md:p-6 h-full transition-all duration-300 hover:border-primary/30">
                 {/* Icon */}
                 <motion.div
-                  className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-5 group-hover:scale-110 transition-transform"
+                  className="w-10 h-10 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center mb-4 md:mb-5 group-hover:scale-110 transition-transform"
                   whileHover={{ rotate: 5 }}
                 >
-                  <service.icon size={24} className="text-primary" />
+                  <service.icon size={20} className="md:w-6 md:h-6 text-primary" />
                 </motion.div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold mb-3">{service.title}</h3>
+                <h3 className="text-base md:text-lg font-bold mb-2 md:mb-3">{service.title}</h3>
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm mb-5 leading-relaxed">
+                <p className="text-muted-foreground text-xs md:text-sm mb-4 md:mb-5 leading-relaxed">
                   {service.description}
                 </p>
 
                 {/* Features */}
-                <ul className="space-y-2">
+                <ul className="space-y-1 md:space-y-2">
                   {service.features.map((feature) => (
                     <li
                       key={feature}
-                      className="text-sm text-muted-foreground flex items-center gap-2"
+                      className="text-xs md:text-sm text-muted-foreground flex items-center gap-2"
                     >
                       <span className="w-1 h-1 rounded-full bg-primary" />
                       {feature}
@@ -104,13 +104,13 @@ const ServicesSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
+          className="text-center mt-8 md:mt-12"
         >
-          <p className="text-muted-foreground mb-4">
+          <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4">
             Have a project in mind? Let's discuss how I can help.
           </p>
           <motion.button
-            className="px-8 py-4 rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold"
+            className="px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl bg-gradient-to-r from-primary to-secondary text-white font-semibold text-sm md:text-base"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
           >

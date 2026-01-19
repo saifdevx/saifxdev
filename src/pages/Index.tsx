@@ -5,6 +5,7 @@ import CustomCursor from "@/components/portfolio/CustomCursor";
 import Navigation from "@/components/portfolio/Navigation";
 import CommandPalette from "@/components/portfolio/CommandPalette";
 import SectionProgress from "@/components/portfolio/SectionProgress";
+import MobileProgress from "@/components/portfolio/MobileProgress";
 import HeroSection from "@/components/portfolio/HeroSection";
 import AboutSection from "@/components/portfolio/AboutSection";
 import SpecializationsSection from "@/components/portfolio/SpecializationsSection";
@@ -42,8 +43,20 @@ const Index = () => {
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isScrolling, setIsScrolling] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Check if mobile
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Handle theme toggle
   useEffect(() => {
@@ -55,8 +68,10 @@ const Index = () => {
     }
   }, [isDark]);
 
-  // Keyboard navigation
+  // Keyboard navigation (desktop only)
   useEffect(() => {
+    if (isMobile) return;
+
     const handleKeyDown = (e: KeyboardEvent) => {
       // Command palette
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
@@ -77,13 +92,16 @@ const Index = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentSection]);
+  }, [currentSection, isMobile]);
 
-  // Scroll wheel navigation (horizontal)
+  // Scroll wheel navigation (desktop only - horizontal)
   useEffect(() => {
+    if (isMobile) return;
+
     const handleWheel = (e: WheelEvent) => {
       if (isScrolling) return;
       
+      e.preventDefault();
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       
       if (delta > 50) {
@@ -95,10 +113,12 @@ const Index = () => {
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => window.removeEventListener("wheel", handleWheel);
-  }, [currentSection, isScrolling]);
+  }, [currentSection, isScrolling, isMobile]);
 
-  // Touch swipe navigation
+  // Touch swipe navigation (desktop horizontal mode only)
   useEffect(() => {
+    if (isMobile) return;
+
     const handleTouchStart = (e: TouchEvent) => {
       touchStartX.current = e.touches[0].clientX;
     };
@@ -124,7 +144,29 @@ const Index = () => {
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [currentSection, isScrolling]);
+  }, [currentSection, isScrolling, isMobile]);
+
+  // Mobile scroll detection for current section
+  useEffect(() => {
+    if (!isMobile) return;
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const windowHeight = window.innerHeight;
+      
+      sectionRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          if (rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2) {
+            setCurrentSection(index);
+          }
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isMobile]);
 
   const goToNextSection = useCallback(() => {
     if (currentSection < sections.length - 1 && !isScrolling) {
@@ -143,10 +185,17 @@ const Index = () => {
   }, [currentSection, isScrolling]);
 
   const navigateToSection = (index: number) => {
-    if (!isScrolling) {
-      setIsScrolling(true);
+    if (isMobile) {
+      // Mobile: scroll to section
+      sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
       setCurrentSection(index);
-      setTimeout(() => setIsScrolling(false), 800);
+    } else {
+      // Desktop: horizontal navigation
+      if (!isScrolling) {
+        setIsScrolling(true);
+        setCurrentSection(index);
+        setTimeout(() => setIsScrolling(false), 800);
+      }
     }
   };
 
@@ -197,8 +246,8 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* Custom Cursor */}
-      <CustomCursor />
+      {/* Custom Cursor (Desktop only) */}
+      {!isMobile && <CustomCursor />}
 
       {/* Navigation */}
       <Navigation
@@ -208,6 +257,8 @@ const Index = () => {
         onThemeToggle={() => setIsDark(!isDark)}
         onCommandPaletteOpen={() => setIsCommandPaletteOpen(true)}
         sectionNames={sectionNames}
+        onNavigate={navigateToSection}
+        isMobile={isMobile}
       />
 
       {/* Command Palette */}
@@ -217,47 +268,76 @@ const Index = () => {
         onNavigate={navigateToSection}
       />
 
-      {/* Section Progress */}
-      <SectionProgress
-        currentSection={currentSection}
-        totalSections={sections.length}
-        onPrevious={goToPreviousSection}
-        onNext={goToNextSection}
-      />
+      {/* Section Progress (Desktop) */}
+      {!isMobile && (
+        <SectionProgress
+          currentSection={currentSection}
+          totalSections={sections.length}
+          onPrevious={goToPreviousSection}
+          onNext={goToNextSection}
+          sectionNames={sectionNames}
+          onNavigate={navigateToSection}
+        />
+      )}
 
-      {/* Main Content - Horizontal Scroll Container */}
-      <div
-        ref={containerRef}
-        className="fixed inset-0 overflow-hidden bg-background"
-      >
-        <motion.div
-          className="h-full flex"
-          animate={{
-            x: `-${currentSection * 100}vw`,
-          }}
-          transition={{
-            type: "spring",
-            stiffness: 100,
-            damping: 20,
-            mass: 0.5,
-          }}
-        >
+      {/* Mobile Progress */}
+      {isMobile && (
+        <MobileProgress
+          currentSection={currentSection}
+          totalSections={sections.length}
+          sectionNames={sectionNames}
+        />
+      )}
+
+      {/* Main Content */}
+      {isMobile ? (
+        // Mobile: Vertical Scrolling Layout
+        <div className="w-full">
           {sections.map((Section, index) => (
-            <motion.div
+            <div
               key={index}
-              className="flex-shrink-0 w-screen h-screen overflow-hidden"
-              initial={{ opacity: 0.5, scale: 0.95 }}
-              animate={{
-                opacity: index === currentSection ? 1 : 0.3,
-                scale: index === currentSection ? 1 : 0.95,
-              }}
-              transition={{ duration: 0.5 }}
+              ref={(el) => (sectionRefs.current[index] = el)}
+              className="min-h-screen"
             >
               <Section />
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
-      </div>
+        </div>
+      ) : (
+        // Desktop: Horizontal Scroll Container
+        <div
+          ref={containerRef}
+          className="fixed inset-0 overflow-hidden bg-background"
+        >
+          <motion.div
+            className="h-full flex"
+            animate={{
+              x: `-${currentSection * 100}vw`,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 100,
+              damping: 20,
+              mass: 0.5,
+            }}
+          >
+            {sections.map((Section, index) => (
+              <motion.div
+                key={index}
+                className="flex-shrink-0 w-screen h-screen overflow-hidden"
+                initial={{ opacity: 0.5, scale: 0.95 }}
+                animate={{
+                  opacity: index === currentSection ? 1 : 0.3,
+                  scale: index === currentSection ? 1 : 0.95,
+                }}
+                transition={{ duration: 0.5 }}
+              >
+                <Section />
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+      )}
     </>
   );
 };

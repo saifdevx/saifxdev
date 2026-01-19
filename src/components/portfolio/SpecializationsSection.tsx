@@ -34,7 +34,7 @@ const specializations = [
 
 const SpecializationsSection = () => {
   return (
-    <section className="relative w-screen h-screen flex items-center justify-center px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-24 pb-32 md:pt-28 md:pb-36 px-4 md:px-8 overflow-hidden">
       {/* Background Gradient */}
       <motion.div
         className="absolute inset-0 opacity-30"
@@ -49,15 +49,15 @@ const SpecializationsSection = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-10 md:mb-16"
         >
           <span className="section-title">What I Do</span>
-          <h2 className="text-4xl md:text-5xl font-bold">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
             My <span className="gradient-text">Specializations</span>
           </h2>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
           {specializations.map((spec, index) => (
             <motion.div
               key={spec.title}
@@ -69,7 +69,7 @@ const SpecializationsSection = () => {
               className="group relative"
             >
               <div 
-                className="glass-card p-8 h-full transition-all duration-300 group-hover:border-primary/30"
+                className="glass-card p-5 md:p-8 h-full transition-all duration-300 group-hover:border-primary/30"
                 style={{
                   boxShadow: "0 0 0 transparent",
                 }}
@@ -82,20 +82,20 @@ const SpecializationsSection = () => {
               >
                 {/* Icon Container */}
                 <motion.div
-                  className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center mb-6`}
+                  className={`w-11 h-11 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br ${spec.gradient} flex items-center justify-center mb-4 md:mb-6`}
                   whileHover={{ rotate: [0, -10, 10, 0], scale: 1.1 }}
                   transition={{ duration: 0.5 }}
                 >
-                  <spec.icon size={28} className="text-white" />
+                  <spec.icon size={22} className="md:w-7 md:h-7 text-white" />
                 </motion.div>
 
                 {/* Title */}
-                <h3 className="text-xl font-bold mb-3 group-hover:gradient-text transition-all duration-300">
+                <h3 className="text-lg md:text-xl font-bold mb-2 md:mb-3 group-hover:gradient-text transition-all duration-300">
                   {spec.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <p className="text-muted-foreground text-xs md:text-sm leading-relaxed">
                   {spec.description}
                 </p>
 
