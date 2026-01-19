@@ -95,7 +95,7 @@ const Index = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentSection, isMobile]);
 
-  // Scroll wheel navigation (desktop only - horizontal) - FIXED scroll speed
+  // Scroll wheel navigation (desktop only - horizontal) - IMPROVED
   useEffect(() => {
     if (isMobile) return;
 
@@ -103,17 +103,17 @@ const Index = () => {
       e.preventDefault();
       
       const now = Date.now();
-      // Debounce: Only allow scroll every 1200ms (slows down scroll speed)
-      if (now - lastScrollTime.current < 1200) return;
+      // Reduced debounce to 600ms for smoother response
+      if (now - lastScrollTime.current < 600) return;
       if (isScrolling) return;
       
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       
-      // Increased threshold from 50 to 100 for more intentional scrolling
-      if (delta > 100) {
+      // Threshold of 30 for responsive scrolling
+      if (delta > 30) {
         lastScrollTime.current = now;
         goToNextSection();
-      } else if (delta < -100) {
+      } else if (delta < -30) {
         lastScrollTime.current = now;
         goToPreviousSection();
       }
@@ -180,8 +180,8 @@ const Index = () => {
     if (currentSection < sections.length - 1 && !isScrolling) {
       setIsScrolling(true);
       setCurrentSection((prev) => prev + 1);
-      // Increased timeout to 1000ms for smoother transitions
-      setTimeout(() => setIsScrolling(false), 1000);
+      // Reduced to 500ms for quicker response
+      setTimeout(() => setIsScrolling(false), 500);
     }
   }, [currentSection, isScrolling]);
 
@@ -189,7 +189,7 @@ const Index = () => {
     if (currentSection > 0 && !isScrolling) {
       setIsScrolling(true);
       setCurrentSection((prev) => prev - 1);
-      setTimeout(() => setIsScrolling(false), 1000);
+      setTimeout(() => setIsScrolling(false), 500);
     }
   }, [currentSection, isScrolling]);
 
