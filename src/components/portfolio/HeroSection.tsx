@@ -15,7 +15,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden py-20 md:py-0 px-4 md:px-8">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-20 pb-24 md:pt-24 md:pb-28 px-4 md:px-8">
       {/* Animated Gradient Background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Primary Orb */}

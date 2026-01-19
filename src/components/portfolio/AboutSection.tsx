@@ -12,7 +12,7 @@ const AboutSection = () => {
   const floatingIcons = [Terminal, Code, Lightbulb, Heart];
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center py-24 md:py-20 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full min-h-screen flex items-center justify-center pt-20 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 overflow-hidden">
       {/* Background Animation - Unique: Slide from left */}
       <motion.div
         initial={{ x: "-100%", opacity: 0 }}
