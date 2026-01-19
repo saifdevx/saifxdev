@@ -12,6 +12,16 @@ const CustomCursor = () => {
   const cursorY = useSpring(0, springConfig);
 
   useEffect(() => {
+    // Hide default cursor globally
+    document.body.style.cursor = 'none';
+    document.documentElement.style.cursor = 'none';
+    
+    // Add style to hide cursor on all elements
+    const style = document.createElement('style');
+    style.id = 'custom-cursor-style';
+    style.textContent = '*, *::before, *::after { cursor: none !important; }';
+    document.head.appendChild(style);
+
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       cursorX.set(e.clientX);
@@ -33,7 +43,7 @@ const CustomCursor = () => {
       });
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
     document.body.addEventListener('mouseleave', handleMouseLeave);
@@ -45,6 +55,12 @@ const CustomCursor = () => {
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
+      // Restore default cursor
+      document.body.style.cursor = '';
+      document.documentElement.style.cursor = '';
+      const existingStyle = document.getElementById('custom-cursor-style');
+      if (existingStyle) existingStyle.remove();
+      
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -90,11 +106,11 @@ const CustomCursor = () => {
         animate={{
           x: mousePosition.x - 100,
           y: mousePosition.y - 100,
-          opacity: isVisible ? 0.3 : 0,
+          opacity: isVisible ? 0.15 : 0,
         }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="w-[200px] h-[200px] rounded-full bg-primary/40 blur-3xl" />
+        <div className="w-[200px] h-[200px] rounded-full bg-primary/30 blur-3xl" />
       </motion.div>
     </>
   );

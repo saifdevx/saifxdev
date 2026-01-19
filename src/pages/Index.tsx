@@ -60,8 +60,6 @@ const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const lastScrollTime = useRef(0);
-
   // Check if mobile
   useEffect(() => {
     const checkMobile = () => {
@@ -90,19 +88,47 @@ const Index = () => {
     }
   }, [currentSection, isMobile]);
 
+  // Define navigation callbacks BEFORE useEffects that use them
+  const goToNextSection = useCallback(() => {
+    if (currentSection < sections.length - 1 && !isScrolling) {
+      setIsScrolling(true);
+      setCurrentSection((prev) => prev + 1);
+      setTimeout(() => setIsScrolling(false), 400);
+    }
+  }, [currentSection, isScrolling]);
+
+  const goToPreviousSection = useCallback(() => {
+    if (currentSection > 0 && !isScrolling) {
+      setIsScrolling(true);
+      setCurrentSection((prev) => prev - 1);
+      setTimeout(() => setIsScrolling(false), 400);
+    }
+  }, [currentSection, isScrolling]);
+
+  const navigateToSection = useCallback((index: number) => {
+    if (isMobile) {
+      sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
+      setCurrentSection(index);
+    } else {
+      if (!isScrolling) {
+        setIsScrolling(true);
+        setCurrentSection(index);
+        setTimeout(() => setIsScrolling(false), 800);
+      }
+    }
+  }, [isMobile, isScrolling]);
+
   // Keyboard navigation (desktop only)
   useEffect(() => {
     if (isMobile) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Command palette
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
         setIsCommandPaletteOpen(true);
         return;
       }
 
-      // Arrow key navigation
       if (e.key === "ArrowRight" || e.key === "ArrowDown") {
         e.preventDefault();
         goToNextSection();
@@ -114,35 +140,45 @@ const Index = () => {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentSection, isMobile]);
+  }, [isMobile, goToNextSection, goToPreviousSection]);
 
-  // Scroll wheel navigation (desktop only - horizontal) - IMPROVED
+  // Scroll wheel navigation (desktop only - horizontal) - OPTIMIZED
   useEffect(() => {
     if (isMobile) return;
+
+    let accumulatedDelta = 0;
+    let scrollTimeout: NodeJS.Timeout | null = null;
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
       
-      const now = Date.now();
-      // Reduced debounce to 600ms for smoother response
-      if (now - lastScrollTime.current < 600) return;
       if (isScrolling) return;
       
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      accumulatedDelta += delta;
       
-      // Threshold of 30 for responsive scrolling
-      if (delta > 30) {
-        lastScrollTime.current = now;
-        goToNextSection();
-      } else if (delta < -30) {
-        lastScrollTime.current = now;
-        goToPreviousSection();
-      }
+      // Clear any existing timeout
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      
+      // Use requestAnimationFrame for smooth handling
+      scrollTimeout = setTimeout(() => {
+        if (Math.abs(accumulatedDelta) > 50) {
+          if (accumulatedDelta > 0) {
+            goToNextSection();
+          } else {
+            goToPreviousSection();
+          }
+        }
+        accumulatedDelta = 0;
+      }, 50);
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [currentSection, isScrolling, isMobile]);
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+    };
+  }, [currentSection, isScrolling, isMobile, goToNextSection, goToPreviousSection]);
 
   // Touch swipe navigation (desktop horizontal mode only)
   useEffect(() => {
@@ -196,38 +232,6 @@ const Index = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
-
-  const goToNextSection = useCallback(() => {
-    if (currentSection < sections.length - 1 && !isScrolling) {
-      setIsScrolling(true);
-      setCurrentSection((prev) => prev + 1);
-      // Reduced to 500ms for quicker response
-      setTimeout(() => setIsScrolling(false), 500);
-    }
-  }, [currentSection, isScrolling]);
-
-  const goToPreviousSection = useCallback(() => {
-    if (currentSection > 0 && !isScrolling) {
-      setIsScrolling(true);
-      setCurrentSection((prev) => prev - 1);
-      setTimeout(() => setIsScrolling(false), 500);
-    }
-  }, [currentSection, isScrolling]);
-
-  const navigateToSection = (index: number) => {
-    if (isMobile) {
-      // Mobile: scroll to section
-      sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
-      setCurrentSection(index);
-    } else {
-      // Desktop: horizontal navigation
-      if (!isScrolling) {
-        setIsScrolling(true);
-        setCurrentSection(index);
-        setTimeout(() => setIsScrolling(false), 1000);
-      }
-    }
-  };
 
   // Loading screen
   useEffect(() => {
@@ -334,13 +338,13 @@ const Index = () => {
 
       {/* Main Content */}
       {isMobile ? (
-        // Mobile: Vertical Scrolling Layout with proper spacing
-        <div className="w-full">
+        // Mobile: Vertical Scrolling Layout - each section isolated
+        <div className="w-full overflow-x-hidden">
           {sections.map((Section, index) => (
             <div
               key={index}
               ref={(el) => (sectionRefs.current[index] = el)}
-              className="min-h-screen flex items-center justify-center py-20"
+              className="w-full"
             >
               <Section />
             </div>

@@ -13,7 +13,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section className="relative w-full h-full md:h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+    <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 py-16 md:py-0">
       {/* Blue themed gradient background */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Primary Blue Orb */}

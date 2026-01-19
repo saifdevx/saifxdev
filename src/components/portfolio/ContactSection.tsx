@@ -69,7 +69,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative w-full h-full md:h-screen flex items-center justify-center px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
       {/* Teal themed background */}
       <div className="absolute inset-0">
         <motion.div
