@@ -42,7 +42,7 @@ const Navigation = ({
           <motion.img 
             src={logoImg} 
             alt="Saif Satti Logo" 
-            className="w-10 h-10 md:w-12 md:h-12 rounded-xl object-contain"
+            className="w-14 h-14 md:w-16 md:h-16 rounded-2xl object-contain"
             animate={{
               rotate: [0, 5, -5, 0],
             }}
