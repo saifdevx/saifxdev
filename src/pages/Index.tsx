@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "@/assets/logo-new.png";
 
-import CustomCursor from "@/components/portfolio/CustomCursor";
+import HoverCursorEffect from "@/components/portfolio/HoverCursorEffect";
 import Navigation from "@/components/portfolio/Navigation";
 import CommandPalette from "@/components/portfolio/CommandPalette";
 import SectionProgress from "@/components/portfolio/SectionProgress";
@@ -88,35 +88,57 @@ const Index = () => {
     }
   }, [currentSection, isMobile]);
 
-  // Define navigation callbacks BEFORE useEffects that use them
-  const goToNextSection = useCallback(() => {
-    if (currentSection < sections.length - 1 && !isScrolling) {
-      setIsScrolling(true);
-      setCurrentSection((prev) => prev + 1);
-      setTimeout(() => setIsScrolling(false), 400);
-    }
+  // Keep refs for ultra-fast input handling (reduces re-renders under wheel spam)
+  const currentSectionRef = useRef(0);
+  const isScrollingRef = useRef(false);
+
+  useEffect(() => {
+    currentSectionRef.current = currentSection;
+    isScrollingRef.current = isScrolling;
   }, [currentSection, isScrolling]);
 
+  // Define navigation callbacks BEFORE useEffects that use them
+  const goToNextSection = useCallback(() => {
+    if (currentSectionRef.current < sections.length - 1 && !isScrollingRef.current) {
+      isScrollingRef.current = true;
+      setIsScrolling(true);
+      setCurrentSection((prev) => prev + 1);
+      setTimeout(() => {
+        isScrollingRef.current = false;
+        setIsScrolling(false);
+      }, 420);
+    }
+  }, []);
+
   const goToPreviousSection = useCallback(() => {
-    if (currentSection > 0 && !isScrolling) {
+    if (currentSectionRef.current > 0 && !isScrollingRef.current) {
+      isScrollingRef.current = true;
       setIsScrolling(true);
       setCurrentSection((prev) => prev - 1);
-      setTimeout(() => setIsScrolling(false), 400);
+      setTimeout(() => {
+        isScrollingRef.current = false;
+        setIsScrolling(false);
+      }, 420);
     }
-  }, [currentSection, isScrolling]);
+  }, []);
 
   const navigateToSection = useCallback((index: number) => {
     if (isMobile) {
       sectionRefs.current[index]?.scrollIntoView({ behavior: "smooth" });
       setCurrentSection(index);
-    } else {
-      if (!isScrolling) {
-        setIsScrolling(true);
-        setCurrentSection(index);
-        setTimeout(() => setIsScrolling(false), 800);
-      }
+      return;
     }
-  }, [isMobile, isScrolling]);
+
+    if (!isScrollingRef.current) {
+      isScrollingRef.current = true;
+      setIsScrolling(true);
+      setCurrentSection(index);
+      setTimeout(() => {
+        isScrollingRef.current = false;
+        setIsScrolling(false);
+      }, 800);
+    }
+  }, [isMobile]);
 
   // Keyboard navigation (desktop only)
   useEffect(() => {
@@ -142,43 +164,60 @@ const Index = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isMobile, goToNextSection, goToPreviousSection]);
 
-  // Scroll wheel navigation (desktop only - horizontal) - OPTIMIZED
+  // Scroll wheel navigation (desktop only - horizontal) - 60fps RAF + threshold
   useEffect(() => {
     if (isMobile) return;
 
-    let accumulatedDelta = 0;
-    let scrollTimeout: NodeJS.Timeout | null = null;
+    const state = {
+      delta: 0,
+      scheduled: false,
+    };
+
+    const threshold = 60;
+
+    const process = () => {
+      state.scheduled = false;
+      if (isScrollingRef.current) {
+        state.delta = 0;
+        return;
+      }
+
+      if (Math.abs(state.delta) >= threshold) {
+        const direction = state.delta > 0 ? 1 : -1;
+        state.delta = 0;
+        if (direction > 0) goToNextSection();
+        else goToPreviousSection();
+        return;
+      }
+
+      // decay so tiny trackpad noise doesn't accumulate forever
+      state.delta *= 0.6;
+      if (Math.abs(state.delta) >= 1) {
+        state.scheduled = true;
+        requestAnimationFrame(process);
+      } else {
+        state.delta = 0;
+      }
+    };
 
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault();
-      
-      if (isScrolling) return;
-      
+      if (isScrollingRef.current) return;
+
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-      accumulatedDelta += delta;
-      
-      // Clear any existing timeout
-      if (scrollTimeout) clearTimeout(scrollTimeout);
-      
-      // Use requestAnimationFrame for smooth handling
-      scrollTimeout = setTimeout(() => {
-        if (Math.abs(accumulatedDelta) > 50) {
-          if (accumulatedDelta > 0) {
-            goToNextSection();
-          } else {
-            goToPreviousSection();
-          }
-        }
-        accumulatedDelta = 0;
-      }, 50);
+      state.delta += delta;
+
+      if (!state.scheduled) {
+        state.scheduled = true;
+        requestAnimationFrame(process);
+      }
     };
 
     window.addEventListener("wheel", handleWheel, { passive: false });
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      if (scrollTimeout) clearTimeout(scrollTimeout);
     };
-  }, [currentSection, isScrolling, isMobile, goToNextSection, goToPreviousSection]);
+  }, [isMobile, goToNextSection, goToPreviousSection]);
 
   // Touch swipe navigation (desktop horizontal mode only)
   useEffect(() => {
@@ -293,7 +332,8 @@ const Index = () => {
         )}
       </AnimatePresence>
 
-      {/* Custom Cursor removed - using default browser cursor */}
+      {/* Cursor hover micro-interaction (keeps default cursor) */}
+      {!isMobile && <HoverCursorEffect />}
 
       {/* Navigation */}
       <Navigation
