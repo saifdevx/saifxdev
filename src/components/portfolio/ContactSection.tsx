@@ -69,7 +69,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center pt-20 pb-28 md:pt-24 md:pb-32 px-4 md:px-8 overflow-hidden">
+    <section className="relative w-full h-screen flex items-center justify-center py-16 md:py-20 px-4 md:px-8 overflow-hidden">
       {/* Animated Background */}
       <div className="absolute inset-0">
         <motion.div
