@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import logoImg from "@/assets/logo.png";
+import logoImg from "@/assets/logo-new.png";
 
 import CustomCursor from "@/components/portfolio/CustomCursor";
 import Navigation from "@/components/portfolio/Navigation";
