@@ -47,6 +47,7 @@ const Index = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const touchStartX = useRef(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const lastScrollTime = useRef(0);
 
   // Check if mobile
   useEffect(() => {
@@ -94,19 +95,26 @@ const Index = () => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [currentSection, isMobile]);
 
-  // Scroll wheel navigation (desktop only - horizontal)
+  // Scroll wheel navigation (desktop only - horizontal) - FIXED scroll speed
   useEffect(() => {
     if (isMobile) return;
 
     const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      
+      const now = Date.now();
+      // Debounce: Only allow scroll every 1200ms (slows down scroll speed)
+      if (now - lastScrollTime.current < 1200) return;
       if (isScrolling) return;
       
-      e.preventDefault();
       const delta = Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
       
-      if (delta > 50) {
+      // Increased threshold from 50 to 100 for more intentional scrolling
+      if (delta > 100) {
+        lastScrollTime.current = now;
         goToNextSection();
-      } else if (delta < -50) {
+      } else if (delta < -100) {
+        lastScrollTime.current = now;
         goToPreviousSection();
       }
     };
@@ -129,7 +137,8 @@ const Index = () => {
       const touchEndX = e.changedTouches[0].clientX;
       const diff = touchStartX.current - touchEndX;
 
-      if (Math.abs(diff) > 80) {
+      // Increased threshold for swipe
+      if (Math.abs(diff) > 100) {
         if (diff > 0) {
           goToNextSection();
         } else {
@@ -151,7 +160,6 @@ const Index = () => {
     if (!isMobile) return;
 
     const handleScroll = () => {
-      const scrollTop = window.scrollY;
       const windowHeight = window.innerHeight;
       
       sectionRefs.current.forEach((ref, index) => {
@@ -172,7 +180,8 @@ const Index = () => {
     if (currentSection < sections.length - 1 && !isScrolling) {
       setIsScrolling(true);
       setCurrentSection((prev) => prev + 1);
-      setTimeout(() => setIsScrolling(false), 800);
+      // Increased timeout to 1000ms for smoother transitions
+      setTimeout(() => setIsScrolling(false), 1000);
     }
   }, [currentSection, isScrolling]);
 
@@ -180,7 +189,7 @@ const Index = () => {
     if (currentSection > 0 && !isScrolling) {
       setIsScrolling(true);
       setCurrentSection((prev) => prev - 1);
-      setTimeout(() => setIsScrolling(false), 800);
+      setTimeout(() => setIsScrolling(false), 1000);
     }
   }, [currentSection, isScrolling]);
 
@@ -194,14 +203,14 @@ const Index = () => {
       if (!isScrolling) {
         setIsScrolling(true);
         setCurrentSection(index);
-        setTimeout(() => setIsScrolling(false), 800);
+        setTimeout(() => setIsScrolling(false), 1000);
       }
     }
   };
 
   // Loading screen
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2000);
+    const timer = setTimeout(() => setIsLoading(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -213,33 +222,45 @@ const Index = () => {
           <motion.div
             initial={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
             className="fixed inset-0 z-[200] bg-background flex items-center justify-center"
           >
             <div className="text-center">
               <motion.div
-                initial={{ scale: 0.8, opacity: 0 }}
+                initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="mb-6"
+                transition={{ duration: 0.6, type: "spring" }}
+                className="mb-8"
               >
-                <h1 className="text-5xl font-black gradient-text">SS</h1>
+                <motion.h1 
+                  className="text-6xl md:text-7xl font-black gradient-text"
+                  animate={{ 
+                    textShadow: [
+                      "0 0 20px hsl(var(--primary) / 0.5)",
+                      "0 0 40px hsl(var(--primary) / 0.8)",
+                      "0 0 20px hsl(var(--primary) / 0.5)"
+                    ]
+                  }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  SS
+                </motion.h1>
               </motion.div>
               
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: 200 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-                className="h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full mx-auto"
+                animate={{ width: 250 }}
+                transition={{ duration: 2, ease: "easeInOut" }}
+                className="h-1.5 bg-gradient-to-r from-primary via-secondary to-accent rounded-full mx-auto"
               />
               
               <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-4 text-muted-foreground text-sm font-mono"
+                className="mt-6 text-muted-foreground text-sm font-mono"
               >
-                Loading experience...
+                Initializing experience...
               </motion.p>
             </div>
           </motion.div>
@@ -316,21 +337,20 @@ const Index = () => {
             }}
             transition={{
               type: "spring",
-              stiffness: 100,
-              damping: 20,
-              mass: 0.5,
+              stiffness: 60,
+              damping: 25,
+              mass: 0.8,
             }}
           >
             {sections.map((Section, index) => (
               <motion.div
                 key={index}
-                className="flex-shrink-0 w-screen h-screen overflow-hidden"
-                initial={{ opacity: 0.5, scale: 0.95 }}
+                className="flex-shrink-0 w-screen h-screen overflow-y-auto overflow-x-hidden"
+                initial={{ opacity: 0.3 }}
                 animate={{
-                  opacity: index === currentSection ? 1 : 0.3,
-                  scale: index === currentSection ? 1 : 0.95,
+                  opacity: index === currentSection ? 1 : 0.2,
                 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6 }}
               >
                 <Section />
               </motion.div>
