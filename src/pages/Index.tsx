@@ -82,7 +82,7 @@ const Index = () => {
 
   // Update accent color based on current section (desktop only)
   useEffect(() => {
-    if (!isMobile) {
+    if (!isMobile && sectionThemes[currentSection]) {
       const root = document.documentElement;
       root.style.setProperty('--primary', sectionThemes[currentSection].accent);
     }
