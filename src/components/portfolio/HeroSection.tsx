@@ -1,6 +1,266 @@
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Sparkles, Code, Zap, Terminal, Cpu } from "lucide-react";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
+
+// Molecule/Nucleus type
+interface Molecule {
+  id: number;
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  color: string;
+  orbitRadius: number;
+  orbitSpeed: number;
+  electrons: number;
+}
+
+// Interactive Molecule System Component
+const MoleculeSystem = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const moleculesRef = useRef<Molecule[]>([]);
+  const mouseRef = useRef({ x: 0, y: 0 });
+  const animationRef = useRef<number>();
+
+  const colors = [
+    "rgba(59, 130, 246, 0.8)",   // blue-500
+    "rgba(6, 182, 212, 0.8)",    // cyan-500
+    "rgba(99, 102, 241, 0.7)",   // indigo-500
+    "rgba(139, 92, 246, 0.6)",   // violet-500
+  ];
+
+  const initMolecules = useCallback((width: number, height: number) => {
+    const molecules: Molecule[] = [];
+    const count = Math.min(15, Math.floor((width * height) / 50000));
+    
+    for (let i = 0; i < count; i++) {
+      molecules.push({
+        id: i,
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        radius: 8 + Math.random() * 12,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        orbitRadius: 15 + Math.random() * 20,
+        orbitSpeed: 0.02 + Math.random() * 0.03,
+        electrons: 2 + Math.floor(Math.random() * 3),
+      });
+    }
+    moleculesRef.current = molecules;
+  }, []);
+
+  const drawMolecule = useCallback((ctx: CanvasRenderingContext2D, mol: Molecule, time: number) => {
+    // Draw nucleus glow
+    const gradient = ctx.createRadialGradient(mol.x, mol.y, 0, mol.x, mol.y, mol.radius * 2);
+    gradient.addColorStop(0, mol.color);
+    gradient.addColorStop(0.5, mol.color.replace("0.8", "0.3").replace("0.7", "0.2").replace("0.6", "0.15"));
+    gradient.addColorStop(1, "transparent");
+    
+    ctx.beginPath();
+    ctx.arc(mol.x, mol.y, mol.radius * 2, 0, Math.PI * 2);
+    ctx.fillStyle = gradient;
+    ctx.fill();
+
+    // Draw nucleus core
+    const coreGradient = ctx.createRadialGradient(mol.x - mol.radius * 0.3, mol.y - mol.radius * 0.3, 0, mol.x, mol.y, mol.radius);
+    coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
+    coreGradient.addColorStop(0.3, mol.color);
+    coreGradient.addColorStop(1, mol.color.replace("0.8", "0.5").replace("0.7", "0.4").replace("0.6", "0.3"));
+    
+    ctx.beginPath();
+    ctx.arc(mol.x, mol.y, mol.radius, 0, Math.PI * 2);
+    ctx.fillStyle = coreGradient;
+    ctx.fill();
+
+    // Draw orbit paths
+    ctx.strokeStyle = mol.color.replace("0.8", "0.15").replace("0.7", "0.1").replace("0.6", "0.08");
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(mol.x, mol.y, mol.orbitRadius, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Draw electrons
+    for (let i = 0; i < mol.electrons; i++) {
+      const angle = time * mol.orbitSpeed + (i * Math.PI * 2) / mol.electrons;
+      const ex = mol.x + Math.cos(angle) * mol.orbitRadius;
+      const ey = mol.y + Math.sin(angle) * mol.orbitRadius;
+      
+      // Electron glow
+      const electronGradient = ctx.createRadialGradient(ex, ey, 0, ex, ey, 6);
+      electronGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
+      electronGradient.addColorStop(0.5, mol.color);
+      electronGradient.addColorStop(1, "transparent");
+      
+      ctx.beginPath();
+      ctx.arc(ex, ey, 6, 0, Math.PI * 2);
+      ctx.fillStyle = electronGradient;
+      ctx.fill();
+
+      // Electron core
+      ctx.beginPath();
+      ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
+      ctx.fill();
+    }
+  }, []);
+
+  const drawConnections = useCallback((ctx: CanvasRenderingContext2D, molecules: Molecule[]) => {
+    for (let i = 0; i < molecules.length; i++) {
+      for (let j = i + 1; j < molecules.length; j++) {
+        const dx = molecules[j].x - molecules[i].x;
+        const dy = molecules[j].y - molecules[i].y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 200) {
+          const opacity = (1 - distance / 200) * 0.3;
+          ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(molecules[i].x, molecules[i].y);
+          ctx.lineTo(molecules[j].x, molecules[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+      if (moleculesRef.current.length === 0) {
+        initMolecules(canvas.width, canvas.height);
+      }
+    };
+
+    resize();
+    window.addEventListener("resize", resize);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      mouseRef.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+    };
+
+    canvas.addEventListener("mousemove", handleMouseMove);
+
+    let time = 0;
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 1;
+
+      const molecules = moleculesRef.current;
+      const mouse = mouseRef.current;
+
+      // Update and draw molecules
+      molecules.forEach((mol) => {
+        // Mouse attraction/repulsion
+        const dx = mouse.x - mol.x;
+        const dy = mouse.y - mol.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 250 && distance > 0) {
+          const force = (250 - distance) / 250;
+          const attractionStrength = 0.02;
+          mol.vx += (dx / distance) * force * attractionStrength;
+          mol.vy += (dy / distance) * force * attractionStrength;
+        }
+
+        // Apply velocity with damping
+        mol.x += mol.vx;
+        mol.y += mol.vy;
+        mol.vx *= 0.98;
+        mol.vy *= 0.98;
+
+        // Bounce off edges
+        if (mol.x < mol.orbitRadius) { mol.x = mol.orbitRadius; mol.vx *= -0.5; }
+        if (mol.x > canvas.width - mol.orbitRadius) { mol.x = canvas.width - mol.orbitRadius; mol.vx *= -0.5; }
+        if (mol.y < mol.orbitRadius) { mol.y = mol.orbitRadius; mol.vy *= -0.5; }
+        if (mol.y > canvas.height - mol.orbitRadius) { mol.y = canvas.height - mol.orbitRadius; mol.vy *= -0.5; }
+      });
+
+      drawConnections(ctx, molecules);
+      molecules.forEach((mol) => drawMolecule(ctx, mol, time));
+
+      animationRef.current = requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener("resize", resize);
+      canvas.removeEventListener("mousemove", handleMouseMove);
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
+    };
+  }, [initMolecules, drawMolecule, drawConnections]);
+
+  return (
+    <canvas
+      ref={canvasRef}
+      className="absolute inset-0 w-full h-full pointer-events-auto"
+      style={{ zIndex: 1 }}
+    />
+  );
+};
+
+// Cycling Tagline Component
+const CyclingTagline = () => {
+  const taglines = [
+    { highlight: "AI automation", text: "that transform businesses through" },
+    { highlight: "machine learning", text: "that revolutionize industries with" },
+    { highlight: "intelligent systems", text: "that empower companies using" },
+    { highlight: "smart solutions", text: "that accelerate growth with" },
+  ];
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % taglines.length);
+    }, 5500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <motion.p
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 1.4 }}
+      className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
+    >
+      Building{" "}
+      <span className="text-foreground font-semibold">intelligent solutions</span>{" "}
+      <AnimatePresence mode="wait">
+        <motion.span
+          key={currentIndex}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.5 }}
+        >
+          {taglines[currentIndex].text}{" "}
+          <motion.span 
+            className="text-blue-400 font-semibold inline-block"
+            animate={{ opacity: [1, 0.7, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            {taglines[currentIndex].highlight}
+          </motion.span>
+        </motion.span>
+      </AnimatePresence>
+    </motion.p>
+  );
+};
 
 // iOS-style Bubble Button Component
 const IOSBubbleButton = ({ 
@@ -80,27 +340,6 @@ const IOSBubbleButton = ({
   );
 };
 
-// Floating Particle Component
-const FloatingParticle = ({ delay, size, x, y }: { delay: number; size: number; x: string; y: string }) => (
-  <motion.div
-    className="absolute rounded-full bg-gradient-to-br from-blue-400/40 to-cyan-400/20 blur-[1px]"
-    style={{ width: size, height: size, left: x, top: y }}
-    initial={{ opacity: 0, scale: 0 }}
-    animate={{
-      opacity: [0, 0.8, 0],
-      scale: [0, 1, 0.5],
-      y: [0, -100, -200],
-      x: [0, Math.random() * 40 - 20, Math.random() * 60 - 30],
-    }}
-    transition={{
-      duration: 4 + Math.random() * 2,
-      delay,
-      repeat: Infinity,
-      ease: "easeOut",
-    }}
-  />
-);
-
 // Text Reveal Animation Component
 const TextReveal = ({ text, className, delay = 0 }: { text: string; className?: string; delay?: number }) => {
   return (
@@ -142,15 +381,6 @@ const HeroSection = () => {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Generate particles
-  const particles = Array.from({ length: 20 }, (_, i) => ({
-    id: i,
-    delay: i * 0.3,
-    size: 4 + Math.random() * 8,
-    x: `${10 + Math.random() * 80}%`,
-    y: `${60 + Math.random() * 30}%`,
-  }));
-
   const codeSnippets = [
     "def build_ai():",
     "import tensorflow",
@@ -162,6 +392,9 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 py-16 md:py-0">
+      {/* Interactive Molecule System */}
+      <MoleculeSystem />
+
       {/* Dynamic gradient that follows mouse */}
       <motion.div
         className="absolute w-[600px] h-[600px] rounded-full opacity-30 blur-3xl pointer-events-none"
@@ -218,11 +451,6 @@ const HeroSection = () => {
           transition={{ duration: 12, repeat: Infinity, ease: "easeInOut", delay: 5 }}
         />
       </div>
-
-      {/* Floating Particles */}
-      {particles.map((particle) => (
-        <FloatingParticle key={particle.id} {...particle} />
-      ))}
 
       {/* Grid Pattern */}
       <div 
@@ -326,24 +554,8 @@ const HeroSection = () => {
           />
         </motion.div>
 
-        {/* Animated Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
-          className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
-        >
-          Building{" "}
-          <span className="text-foreground font-semibold">intelligent solutions</span>{" "}
-          that transform businesses through{" "}
-          <motion.span 
-            className="text-blue-400 font-semibold"
-            animate={{ opacity: [1, 0.7, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            AI automation
-          </motion.span>
-        </motion.p>
+        {/* Cycling Tagline */}
+        <CyclingTagline />
 
         {/* Stats Row with Staggered Animation */}
         <motion.div
