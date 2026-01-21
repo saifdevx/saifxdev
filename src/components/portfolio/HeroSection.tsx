@@ -2,214 +2,104 @@ import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from
 import { ArrowRight, Mail, Sparkles, Code, Zap, Terminal, Cpu } from "lucide-react";
 import { useEffect, useState, useRef, useCallback } from "react";
 
-// Molecule/Nucleus type
-interface Molecule {
-  id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  radius: number;
-  color: string;
-  orbitRadius: number;
-  orbitSpeed: number;
-  electrons: number;
-}
+// Floating Orb Component - Elegant glowing spheres with parallax
+const FloatingOrb = ({ 
+  size, 
+  color, 
+  position, 
+  delay, 
+  mousePosition 
+}: { 
+  size: number; 
+  color: string; 
+  position: { x: string; y: string }; 
+  delay: number;
+  mousePosition: { x: number; y: number };
+}) => {
+  const parallaxStrength = size / 80; // Larger orbs move more
+  
+  return (
+    <motion.div
+      className="absolute rounded-full pointer-events-none"
+      style={{
+        width: size,
+        height: size,
+        left: position.x,
+        top: position.y,
+        background: `radial-gradient(circle at 30% 30%, ${color}40, ${color}20 40%, ${color}05 70%, transparent)`,
+        boxShadow: `
+          0 0 ${size * 0.4}px ${color}30,
+          0 0 ${size * 0.8}px ${color}15,
+          inset 0 0 ${size * 0.3}px ${color}20
+        `,
+        filter: 'blur(0.5px)',
+      }}
+      animate={{
+        x: mousePosition.x * parallaxStrength * 30,
+        y: mousePosition.y * parallaxStrength * 30,
+        scale: [1, 1.05, 1],
+      }}
+      transition={{
+        x: { type: "spring", stiffness: 50, damping: 30 },
+        y: { type: "spring", stiffness: 50, damping: 30 },
+        scale: { duration: 4 + delay, repeat: Infinity, ease: "easeInOut" },
+      }}
+      initial={{ opacity: 0, scale: 0.5 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+    >
+      {/* Inner glow highlight */}
+      <div 
+        className="absolute rounded-full"
+        style={{
+          width: size * 0.35,
+          height: size * 0.35,
+          left: '20%',
+          top: '15%',
+          background: `radial-gradient(circle, rgba(255,255,255,0.4), transparent)`,
+          filter: 'blur(2px)',
+        }}
+      />
+    </motion.div>
+  );
+};
 
-// Interactive Molecule System Component
-const MoleculeSystem = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const moleculesRef = useRef<Molecule[]>([]);
-  const mouseRef = useRef({ x: 0, y: 0 });
-  const animationRef = useRef<number>();
-
-  const colors = [
-    "rgba(59, 130, 246, 0.8)",   // blue-500
-    "rgba(6, 182, 212, 0.8)",    // cyan-500
-    "rgba(99, 102, 241, 0.7)",   // indigo-500
-    "rgba(139, 92, 246, 0.6)",   // violet-500
+// Premium Orb System - Elegant floating orbs with mouse parallax
+const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } }) => {
+  const orbs = [
+    { size: 120, color: 'hsl(217, 91%, 60%)', position: { x: '10%', y: '20%' }, delay: 0 },
+    { size: 80, color: 'hsl(199, 89%, 48%)', position: { x: '75%', y: '15%' }, delay: 1 },
+    { size: 60, color: 'hsl(221, 83%, 53%)', position: { x: '85%', y: '60%' }, delay: 2 },
+    { size: 100, color: 'hsl(199, 89%, 48%)', position: { x: '5%', y: '70%' }, delay: 1.5 },
+    { size: 45, color: 'hsl(217, 91%, 60%)', position: { x: '60%', y: '75%' }, delay: 0.5 },
+    { size: 70, color: 'hsl(221, 83%, 53%)', position: { x: '30%', y: '10%' }, delay: 2.5 },
+    { size: 35, color: 'hsl(199, 89%, 48%)', position: { x: '90%', y: '35%' }, delay: 1 },
+    { size: 55, color: 'hsl(217, 91%, 60%)', position: { x: '20%', y: '85%' }, delay: 3 },
   ];
 
-  const initMolecules = useCallback((width: number, height: number) => {
-    const molecules: Molecule[] = [];
-    const count = Math.min(15, Math.floor((width * height) / 50000));
-    
-    for (let i = 0; i < count; i++) {
-      molecules.push({
-        id: i,
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: 8 + Math.random() * 12,
-        color: colors[Math.floor(Math.random() * colors.length)],
-        orbitRadius: 15 + Math.random() * 20,
-        orbitSpeed: 0.02 + Math.random() * 0.03,
-        electrons: 2 + Math.floor(Math.random() * 3),
-      });
-    }
-    moleculesRef.current = molecules;
-  }, []);
-
-  const drawMolecule = useCallback((ctx: CanvasRenderingContext2D, mol: Molecule, time: number) => {
-    // Draw nucleus glow
-    const gradient = ctx.createRadialGradient(mol.x, mol.y, 0, mol.x, mol.y, mol.radius * 2);
-    gradient.addColorStop(0, mol.color);
-    gradient.addColorStop(0.5, mol.color.replace("0.8", "0.3").replace("0.7", "0.2").replace("0.6", "0.15"));
-    gradient.addColorStop(1, "transparent");
-    
-    ctx.beginPath();
-    ctx.arc(mol.x, mol.y, mol.radius * 2, 0, Math.PI * 2);
-    ctx.fillStyle = gradient;
-    ctx.fill();
-
-    // Draw nucleus core
-    const coreGradient = ctx.createRadialGradient(mol.x - mol.radius * 0.3, mol.y - mol.radius * 0.3, 0, mol.x, mol.y, mol.radius);
-    coreGradient.addColorStop(0, "rgba(255, 255, 255, 0.9)");
-    coreGradient.addColorStop(0.3, mol.color);
-    coreGradient.addColorStop(1, mol.color.replace("0.8", "0.5").replace("0.7", "0.4").replace("0.6", "0.3"));
-    
-    ctx.beginPath();
-    ctx.arc(mol.x, mol.y, mol.radius, 0, Math.PI * 2);
-    ctx.fillStyle = coreGradient;
-    ctx.fill();
-
-    // Draw orbit paths
-    ctx.strokeStyle = mol.color.replace("0.8", "0.15").replace("0.7", "0.1").replace("0.6", "0.08");
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.arc(mol.x, mol.y, mol.orbitRadius, 0, Math.PI * 2);
-    ctx.stroke();
-
-    // Draw electrons
-    for (let i = 0; i < mol.electrons; i++) {
-      const angle = time * mol.orbitSpeed + (i * Math.PI * 2) / mol.electrons;
-      const ex = mol.x + Math.cos(angle) * mol.orbitRadius;
-      const ey = mol.y + Math.sin(angle) * mol.orbitRadius;
-      
-      // Electron glow
-      const electronGradient = ctx.createRadialGradient(ex, ey, 0, ex, ey, 6);
-      electronGradient.addColorStop(0, "rgba(255, 255, 255, 1)");
-      electronGradient.addColorStop(0.5, mol.color);
-      electronGradient.addColorStop(1, "transparent");
-      
-      ctx.beginPath();
-      ctx.arc(ex, ey, 6, 0, Math.PI * 2);
-      ctx.fillStyle = electronGradient;
-      ctx.fill();
-
-      // Electron core
-      ctx.beginPath();
-      ctx.arc(ex, ey, 3, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255, 255, 255, 0.95)";
-      ctx.fill();
-    }
-  }, []);
-
-  const drawConnections = useCallback((ctx: CanvasRenderingContext2D, molecules: Molecule[]) => {
-    for (let i = 0; i < molecules.length; i++) {
-      for (let j = i + 1; j < molecules.length; j++) {
-        const dx = molecules[j].x - molecules[i].x;
-        const dy = molecules[j].y - molecules[i].y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 200) {
-          const opacity = (1 - distance / 200) * 0.3;
-          ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
-          ctx.lineWidth = 1;
-          ctx.beginPath();
-          ctx.moveTo(molecules[i].x, molecules[i].y);
-          ctx.lineTo(molecules[j].x, molecules[j].y);
-          ctx.stroke();
-        }
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-      if (moleculesRef.current.length === 0) {
-        initMolecules(canvas.width, canvas.height);
-      }
-    };
-
-    resize();
-    window.addEventListener("resize", resize);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      };
-    };
-
-    canvas.addEventListener("mousemove", handleMouseMove);
-
-    let time = 0;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 1;
-
-      const molecules = moleculesRef.current;
-      const mouse = mouseRef.current;
-
-      // Update and draw molecules
-      molecules.forEach((mol) => {
-        // Mouse attraction/repulsion
-        const dx = mouse.x - mol.x;
-        const dy = mouse.y - mol.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        if (distance < 250 && distance > 0) {
-          const force = (250 - distance) / 250;
-          const attractionStrength = 0.02;
-          mol.vx += (dx / distance) * force * attractionStrength;
-          mol.vy += (dy / distance) * force * attractionStrength;
-        }
-
-        // Apply velocity with damping
-        mol.x += mol.vx;
-        mol.y += mol.vy;
-        mol.vx *= 0.98;
-        mol.vy *= 0.98;
-
-        // Bounce off edges
-        if (mol.x < mol.orbitRadius) { mol.x = mol.orbitRadius; mol.vx *= -0.5; }
-        if (mol.x > canvas.width - mol.orbitRadius) { mol.x = canvas.width - mol.orbitRadius; mol.vx *= -0.5; }
-        if (mol.y < mol.orbitRadius) { mol.y = mol.orbitRadius; mol.vy *= -0.5; }
-        if (mol.y > canvas.height - mol.orbitRadius) { mol.y = canvas.height - mol.orbitRadius; mol.vy *= -0.5; }
-      });
-
-      drawConnections(ctx, molecules);
-      molecules.forEach((mol) => drawMolecule(ctx, mol, time));
-
-      animationRef.current = requestAnimationFrame(animate);
-    };
-
-    animate();
-
-    return () => {
-      window.removeEventListener("resize", resize);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      if (animationRef.current) cancelAnimationFrame(animationRef.current);
-    };
-  }, [initMolecules, drawMolecule, drawConnections]);
-
   return (
-    <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full pointer-events-auto"
-      style={{ zIndex: 1 }}
-    />
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {orbs.map((orb, index) => (
+        <FloatingOrb 
+          key={index} 
+          {...orb} 
+          mousePosition={mousePosition}
+        />
+      ))}
+      
+      {/* Subtle ambient glow in center */}
+      <motion.div
+        className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle, hsl(217 91% 60% / 0.08) 0%, transparent 60%)',
+        }}
+        animate={{
+          scale: [1, 1.1, 1],
+          opacity: [0.5, 0.8, 0.5],
+        }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+    </div>
   );
 };
 
@@ -392,8 +282,8 @@ const HeroSection = () => {
 
   return (
     <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 py-16 md:py-0">
-      {/* Interactive Molecule System */}
-      <MoleculeSystem />
+      {/* Elegant Floating Orb System */}
+      <OrbSystem mousePosition={mousePosition} />
 
       {/* Dynamic gradient that follows mouse */}
       <motion.div
