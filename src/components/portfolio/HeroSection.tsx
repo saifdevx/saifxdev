@@ -455,8 +455,8 @@ const HeroSection = () => {
           className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-6 md:mb-8"
         >
           {[
-            { value: "5+", label: "Projects" },
-            { value: "10+", label: "Technologies" },
+            { value: "10+", label: "Websites Built" },
+            { value: "2+", label: "Years Experience" },
             { value: "AI", label: "Focused" },
           ].map((stat, index) => (
             <motion.div 
