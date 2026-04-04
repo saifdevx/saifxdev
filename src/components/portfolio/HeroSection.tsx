@@ -106,10 +106,10 @@ const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } 
 // Cycling Tagline Component
 const CyclingTagline = () => {
   const taglines = [
-    { highlight: "AI automation", text: "that transform businesses through" },
-    { highlight: "machine learning", text: "that revolutionize industries with" },
-    { highlight: "intelligent systems", text: "that empower companies using" },
-    { highlight: "smart solutions", text: "that accelerate growth with" },
+    { highlight: "generative AI", text: "that transform businesses through" },
+    { highlight: "prompt engineering", text: "that build intelligent products with" },
+    { highlight: "AI automation", text: "that streamline workflows using" },
+    { highlight: "WordPress & web solutions", text: "that deliver results with" },
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
