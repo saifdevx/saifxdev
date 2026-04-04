@@ -4,44 +4,47 @@ import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
 
 const projects = [
   {
-    title: "AI Automation Platform",
-    description: "Intelligent task automation system using Python and LLMs. Automates complex workflows, processes documents, and integrates with business tools.",
-    tech: ["Python", "LangChain", "FastAPI", "React"],
-    image: "/placeholder.svg",
+    title: "AI-Powered Chatbot System",
+    description: "Built intelligent chatbot solutions using ChatGPT API, n8n automation, and Chatbase. Handles customer inquiries with automated conversation flows and AI-powered responses embedded into websites.",
+    tech: ["ChatGPT API", "n8n", "Chatbase", "WordPress"],
     gradient: "from-rose-500/20 to-pink-500/20",
   },
   {
-    title: "Smart Data Processor",
-    description: "AI-powered data analysis and visualization tool. Transforms raw data into actionable insights with automated reporting and dashboard generation.",
-    tech: ["Python", "Pandas", "Plotly", "Streamlit"],
-    image: "/placeholder.svg",
+    title: "E-Commerce WordPress Stores",
+    description: "Designed and delivered 10+ responsive, SEO-optimized WordPress websites with WooCommerce for international clients across UK and US markets. Full project lifecycle management.",
+    tech: ["WordPress", "WooCommerce", "Elementor", "SEO"],
     gradient: "from-pink-500/20 to-red-500/20",
   },
   {
-    title: "Custom ChatGPT Agent",
-    description: "Specialized AI agent for business operations. Handles customer inquiries, processes orders, and provides intelligent recommendations.",
-    tech: ["OpenAI API", "Python", "LangChain", "PostgreSQL"],
-    image: "/placeholder.svg",
+    title: "LLM Workflow Automation",
+    description: "Contributing to generative AI product development at Hypervail LLC. Designing prompt engineering pipelines, AI agent systems, and intelligent automation features for client-facing projects.",
+    tech: ["LLMs", "Prompt Engineering", "AI Agents", "Automation"],
     gradient: "from-red-500/20 to-rose-500/20",
+  },
+  {
+    title: "AI-Assisted Branding & Design",
+    description: "Used AI design tools like MidJourney, ImagineArt, and other platforms to produce brand identities, logos, and visual content for international clients within tight timelines.",
+    tech: ["MidJourney", "ImagineArt", "AI Design", "Branding"],
+    gradient: "from-rose-400/20 to-pink-400/20",
+  },
+  {
+    title: "Portfolio Website with AI",
+    description: "Built this interactive portfolio using Lovable AI with custom animations, contact form with database integration, and responsive design across all devices.",
+    tech: ["Lovable AI", "React", "TypeScript", "Tailwind CSS"],
+    gradient: "from-pink-400/20 to-rose-500/20",
   },
 ];
 
 const ProjectsSection = () => {
   const [currentProject, setCurrentProject] = useState(0);
 
-  const nextProject = () => {
-    setCurrentProject((prev) => (prev + 1) % projects.length);
-  };
-
-  const prevProject = () => {
-    setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length);
-  };
+  const nextProject = () => setCurrentProject((prev) => (prev + 1) % projects.length);
+  const prevProject = () => setCurrentProject((prev) => (prev - 1 + projects.length) % projects.length);
 
   const project = projects[currentProject];
 
   return (
     <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
-      {/* Rose/Pink themed background */}
       <motion.div
         key={currentProject}
         initial={{ opacity: 0 }}
@@ -69,9 +72,7 @@ const ProjectsSection = () => {
           </h2>
         </motion.div>
 
-        {/* Project Card */}
         <div className="grid lg:grid-cols-2 gap-4 md:gap-6 items-center">
-          {/* Project Image */}
           <motion.div
             key={`image-${currentProject}`}
             initial={{ opacity: 0, x: -50, rotateY: -15 }}
@@ -81,11 +82,7 @@ const ProjectsSection = () => {
           >
             <motion.div
               className="glass-card overflow-hidden aspect-video border border-rose-500/20"
-              whileHover={{ 
-                rotateY: 5, 
-                rotateX: -5,
-                scale: 1.02,
-              }}
+              whileHover={{ rotateY: 5, rotateX: -5, scale: 1.02 }}
               style={{ transformStyle: "preserve-3d" }}
             >
               <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
@@ -94,7 +91,6 @@ const ProjectsSection = () => {
             </motion.div>
           </motion.div>
 
-          {/* Project Info */}
           <motion.div
             key={`info-${currentProject}`}
             initial={{ opacity: 0, x: 50 }}
@@ -108,50 +104,20 @@ const ProjectsSection = () => {
               </span>
             </div>
 
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">
-              {project.title}
-            </h3>
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">{project.title}</h3>
 
-            <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">
-              {project.description}
-            </p>
+            <p className="text-muted-foreground text-sm md:text-base mb-3 md:mb-4 leading-relaxed">{project.description}</p>
 
-            {/* Tech Stack */}
             <div className="flex flex-wrap gap-1.5 mb-4 md:mb-5">
               {project.tech.map((tech) => (
-                <span
-                  key={tech}
-                  className="px-2 py-0.5 text-xs rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/30"
-                >
+                <span key={tech} className="px-2 py-0.5 text-xs rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/30">
                   {tech}
                 </span>
               ))}
             </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 md:gap-3">
-              <motion.button
-                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-rose-500 text-white font-medium text-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <ExternalLink size={14} />
-                Live Demo
-              </motion.button>
-              
-              <motion.button
-                className="flex items-center justify-center gap-2 px-4 py-2 rounded-xl border border-rose-500/30 hover:border-rose-500/60 transition-colors font-medium text-sm"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Github size={14} />
-                Source Code
-              </motion.button>
-            </div>
           </motion.div>
         </div>
 
-        {/* Navigation Arrows */}
         <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
           <motion.button
             onClick={prevProject}
@@ -162,16 +128,13 @@ const ProjectsSection = () => {
             <ChevronLeft size={18} />
           </motion.button>
           
-          {/* Dots */}
           <div className="flex items-center gap-2">
             {projects.map((_, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentProject(index)}
                 className={`h-2 rounded-full transition-all duration-300 ${
-                  index === currentProject
-                    ? "w-6 bg-rose-500"
-                    : "w-2 bg-muted-foreground/30 hover:bg-rose-400/60"
+                  index === currentProject ? "w-6 bg-rose-500" : "w-2 bg-muted-foreground/30 hover:bg-rose-400/60"
                 }`}
               />
             ))}

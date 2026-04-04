@@ -1,35 +1,50 @@
 import { motion } from "framer-motion";
-import { GraduationCap, Award, CheckCircle } from "lucide-react";
+import { GraduationCap, Award, CheckCircle, Briefcase } from "lucide-react";
+
+const workExperience = [
+  {
+    role: "Generative AI Associate",
+    company: "Hypervail LLC (US-Based)",
+    period: "Feb 2026 – Present",
+    description: "Contributing to AI product development, LLM-powered workflows, prompt engineering, and AI agent design for client-facing projects.",
+  },
+  {
+    role: "WordPress Developer & Designer",
+    company: "Freelance (International Clients)",
+    period: "Jan 2024 – Present",
+    description: "Delivered 10+ responsive, SEO-optimized WordPress websites for clients across UK, US and other markets.",
+  },
+  {
+    role: "Chatbot Development",
+    company: "Self-Learning & Freelance",
+    period: "2025 – 2026",
+    description: "Built chatbot solutions using WordPress plugins, n8n, Chatbase, and ChatGPT API integrations.",
+  },
+];
 
 const certifications = [
-  "Microsoft Office Specialist",
-  "IT Expert Certification",
-  "ChatGPT Specialist",
-  "WordPress Designer",
-  "Website Designer",
+  "Agentic AI Course – Air University",
+  "NYC CEO Council Software Engineering Sim",
+  "ChatGPT Expert – Udemy",
+  "Microsoft Office Specialist – PowerPoint",
+  "Website Designing Diploma",
+  "Information Technology Diploma",
 ];
 
 const ExperienceSection = () => {
   return (
     <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
-      {/* Cyan themed background */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/3 left-1/4 w-[200px] md:w-[350px] h-[200px] md:h-[350px] rounded-full blur-3xl"
           style={{ background: "hsl(199 89% 48% / 0.2)" }}
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
           transition={{ duration: 20, repeat: Infinity }}
         />
         <motion.div
           className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] rounded-full blur-3xl"
           style={{ background: "hsl(185 84% 40% / 0.15)" }}
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, 30, 0],
-          }}
+          animate={{ scale: [1, 1.3, 1], x: [0, 30, 0] }}
           transition={{ duration: 15, repeat: Infinity, delay: 2 }}
         />
       </div>
@@ -44,12 +59,12 @@ const ExperienceSection = () => {
         >
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-400 mb-3 block">Background</span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold">
-            Education & <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-teal-500">Certifications</span>
+            Experience & <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-teal-500">Education</span>
           </h2>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-3 md:gap-6">
-          {/* Education */}
+          {/* Work Experience + Education */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -59,47 +74,47 @@ const ExperienceSection = () => {
           >
             <div className="flex items-center gap-3 mb-3 md:mb-4">
               <div className="p-2 rounded-xl bg-cyan-500/10">
-                <GraduationCap size={20} className="text-cyan-400" />
+                <Briefcase size={20} className="text-cyan-400" />
               </div>
               <div>
-                <h3 className="text-base md:text-lg font-bold">Education</h3>
-                <p className="text-muted-foreground text-xs">Academic Background</p>
+                <h3 className="text-base md:text-lg font-bold">Experience</h3>
+                <p className="text-muted-foreground text-xs">Work History</p>
               </div>
             </div>
 
-            <div className="relative pl-4 border-l-2 border-cyan-500/30">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                viewport={{ once: true }}
-              >
-                {/* Timeline Dot */}
-                <div className="absolute -left-[7px] top-0 w-3 h-3 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/50" />
-                
-                <div className="mb-2">
-                  <span className="text-xs font-mono text-cyan-400">2024 — 2028</span>
-                </div>
-                
-                <h4 className="text-sm md:text-base font-semibold mb-1">
-                  Bachelor in Computer Science
-                </h4>
-                
-                <p className="text-muted-foreground text-xs md:text-sm mb-2">
-                  SZABIST, Islamabad
-                </p>
-                
-                <div className="inline-block px-2 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs">
-                  Specialization: Artificial Intelligence
-                </div>
-              </motion.div>
+            <div className="relative pl-4 border-l-2 border-cyan-500/30 space-y-4">
+              {workExperience.map((exp, index) => (
+                <motion.div
+                  key={exp.role}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.1 * index }}
+                  viewport={{ once: true }}
+                  className="relative"
+                >
+                  <div className="absolute -left-[calc(1rem+5px)] top-1 w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/50" />
+                  <span className="text-[10px] font-mono text-cyan-400">{exp.period}</span>
+                  <h4 className="text-xs md:text-sm font-semibold">{exp.role}</h4>
+                  <p className="text-muted-foreground text-[10px] md:text-xs">{exp.company}</p>
+                  <p className="text-muted-foreground text-[10px] md:text-xs mt-1 leading-relaxed">{exp.description}</p>
+                </motion.div>
+              ))}
             </div>
 
-            {/* Future Experience Placeholder */}
-            <div className="mt-4 md:mt-6 p-3 rounded-xl border border-dashed border-cyan-500/20">
-              <p className="text-muted-foreground text-xs text-center">
-                Experience entries coming soon...
-              </p>
+            {/* Education */}
+            <div className="mt-4 pt-4 border-t border-cyan-500/10">
+              <div className="flex items-center gap-2 mb-2">
+                <GraduationCap size={14} className="text-cyan-400" />
+                <span className="text-xs font-semibold">Education</span>
+              </div>
+              <div className="pl-4 border-l-2 border-cyan-500/20">
+                <span className="text-[10px] font-mono text-cyan-400">2024 – 2028</span>
+                <h4 className="text-xs md:text-sm font-semibold">BS Computer Science</h4>
+                <p className="text-muted-foreground text-[10px] md:text-xs">SZABIST, Islamabad • 4th Semester</p>
+                <div className="inline-block mt-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px]">
+                  + Agentic AI Course
+                </div>
+              </div>
             </div>
           </motion.div>
 
@@ -137,16 +152,14 @@ const ExperienceSection = () => {
               ))}
             </div>
 
-            {/* More Coming */}
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center text-muted-foreground text-xs mt-4"
-            >
-              Continuously learning and earning more...
-            </motion.p>
+            {/* Languages */}
+            <div className="mt-4 pt-3 border-t border-teal-500/10">
+              <p className="text-xs font-semibold mb-2">Languages</p>
+              <div className="flex gap-2">
+                <span className="px-2 py-1 text-[10px] rounded-lg bg-teal-500/10 border border-teal-500/20">English – Professional</span>
+                <span className="px-2 py-1 text-[10px] rounded-lg bg-teal-500/10 border border-teal-500/20">Urdu – Native</span>
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
