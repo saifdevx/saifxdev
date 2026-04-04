@@ -106,10 +106,10 @@ const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } 
 // Cycling Tagline Component
 const CyclingTagline = () => {
   const taglines = [
-    { highlight: "AI automation", text: "that transform businesses through" },
-    { highlight: "machine learning", text: "that revolutionize industries with" },
-    { highlight: "intelligent systems", text: "that empower companies using" },
-    { highlight: "smart solutions", text: "that accelerate growth with" },
+    { highlight: "generative AI", text: "that transform businesses through" },
+    { highlight: "prompt engineering", text: "that build intelligent products with" },
+    { highlight: "AI automation", text: "that streamline workflows using" },
+    { highlight: "WordPress & web solutions", text: "that deliver results with" },
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -410,7 +410,7 @@ const HeroSection = () => {
             <Cpu className="w-4 h-4 text-blue-400" />
           </motion.div>
           <span className="text-xs md:text-sm font-medium text-muted-foreground tracking-[0.2em] uppercase">
-            Python Developer × AI Specialist
+            Generative AI Associate × WordPress Developer
           </span>
           <motion.div
             animate={{ rotate: -360 }}
@@ -429,7 +429,7 @@ const HeroSection = () => {
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
             <TextReveal 
-              text="SAIF SATTI" 
+              text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
               delay={0.5}
             />
@@ -455,8 +455,8 @@ const HeroSection = () => {
           className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-6 md:mb-8"
         >
           {[
-            { value: "5+", label: "Projects" },
-            { value: "10+", label: "Technologies" },
+            { value: "10+", label: "Websites Built" },
+            { value: "2+", label: "Years Experience" },
             { value: "AI", label: "Focused" },
           ].map((stat, index) => (
             <motion.div 

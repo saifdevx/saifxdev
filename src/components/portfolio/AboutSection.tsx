@@ -1,15 +1,16 @@
 import { motion } from "framer-motion";
-import { Code, Terminal, Rocket, Heart, Coffee, Lightbulb, User } from "lucide-react";
+import { Code, Terminal, Rocket, Coffee, Lightbulb, User, Brain, Globe } from "lucide-react";
+import saifPhoto from "@/assets/saif-profile.png";
 
 const AboutSection = () => {
   const quickFacts = [
     { icon: User, text: "CS Student @ SZABIST" },
-    { icon: Code, text: "Python & AI Enthusiast" },
-    { icon: Rocket, text: "Always Building" },
-    { icon: Coffee, text: "Fueled by Curiosity" },
+    { icon: Brain, text: "Generative AI Associate" },
+    { icon: Globe, text: "WordPress Developer" },
+    { icon: Coffee, text: "Actively Learning Python" },
   ];
 
-  const floatingIcons = [Terminal, Code, Lightbulb, Heart];
+  const floatingIcons = [Terminal, Code, Lightbulb, Brain];
 
   return (
     <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
@@ -52,7 +53,7 @@ const AboutSection = () => {
       ))}
 
       <div className="max-w-6xl w-full grid md:grid-cols-2 gap-6 md:gap-10 lg:gap-16 items-center">
-        {/* Left: Photo Placeholder with 3D Effect */}
+        {/* Left: Profile Photo */}
         <motion.div
           initial={{ opacity: 0, x: -80, rotateY: -30 }}
           whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
@@ -60,7 +61,6 @@ const AboutSection = () => {
           viewport={{ once: true }}
           className="relative order-2 md:order-1"
         >
-          {/* Photo Frame */}
           <motion.div
             className="relative aspect-square max-w-[250px] md:max-w-[350px] mx-auto"
             whileHover={{ scale: 1.02, rotateY: 5, rotateX: -5 }}
@@ -69,18 +69,12 @@ const AboutSection = () => {
           >
             {/* Green Gradient Border */}
             <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-green-400 via-emerald-500 to-teal-500 p-[3px]">
-              <div className="w-full h-full rounded-3xl bg-background flex items-center justify-center overflow-hidden">
-                {/* Photo Placeholder */}
-                <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex flex-col items-center justify-center gap-3">
-                  <motion.div
-                    className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center"
-                    animate={{ scale: [1, 1.05, 1] }}
-                    transition={{ duration: 3, repeat: Infinity }}
-                  >
-                    <User size={40} className="text-green-500/50" />
-                  </motion.div>
-                  <p className="text-muted-foreground text-xs">Photo Coming Soon</p>
-                </div>
+              <div className="w-full h-full rounded-3xl bg-background overflow-hidden">
+                <img 
+                  src={saifPhoto} 
+                  alt="Saif Rasheed - Generative AI Associate & Developer" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -108,7 +102,7 @@ const AboutSection = () => {
             >
               <div className="flex items-center gap-2">
                 <Terminal size={12} className="text-green-500" />
-                <span className="text-xs font-mono">AI Developer</span>
+                <span className="text-xs font-mono">Gen AI Associate</span>
               </div>
             </motion.div>
           </motion.div>
@@ -133,7 +127,7 @@ const AboutSection = () => {
           
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3 md:mb-4">
             Passionate About{" "}
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-500">Building the Future</span>
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 to-emerald-500">AI & Innovation</span>
           </h2>
 
           <div className="space-y-3 text-muted-foreground text-sm md:text-base leading-relaxed">
@@ -143,9 +137,10 @@ const AboutSection = () => {
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
             >
-              I'm an AI developer with a passion for creating intelligent solutions 
-              that make a real difference. When I'm not coding, I'm exploring the 
-              latest in AI research and dreaming up new ways to automate the world.
+              Generative AI Associate and WordPress Developer with 2+ years of experience 
+              in AI-assisted workflows, web development, and digital automation. Currently 
+              contributing to AI product development at Hypervail LLC, working on LLM-powered 
+              workflows, prompt engineering, and AI agent systems.
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}
@@ -153,9 +148,9 @@ const AboutSection = () => {
               transition={{ delay: 0.4 }}
               viewport={{ once: true }}
             >
-              My journey in tech started with curiosity and grew into a deep love 
-              for problem-solving. I believe that <span className="text-foreground font-medium">
-              AI has the power to transform how we work and live</span>.
+              Computer Science student at SZABIST University, actively building skills in{" "}
+              <span className="text-foreground font-medium">Python and backend development</span>. 
+              Passionate about leveraging AI to transform how we work and build digital products.
             </motion.p>
           </div>
 
