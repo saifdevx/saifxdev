@@ -423,6 +423,9 @@ const Index = () => {
           </motion.div>
         </div>
       )}
+
+      {/* AI Chatbot */}
+      <ChatBot />
     </>
   );
 };
