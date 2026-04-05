@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "@/assets/logo-new.png";
-
+import ChatBot from "@/components/portfolio/ChatBot";
 import HoverCursorEffect from "@/components/portfolio/HoverCursorEffect";
 import Navigation from "@/components/portfolio/Navigation";
 import CommandPalette from "@/components/portfolio/CommandPalette";
