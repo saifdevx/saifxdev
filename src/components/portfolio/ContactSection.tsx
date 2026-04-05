@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Twitter, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Loader2, MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "@/hooks/use-toast";
@@ -11,34 +11,49 @@ const contactSchema = z.object({
   message: z.string().trim().min(1, "Message is required").max(1000, "Message too long (max 1000 chars)"),
 });
 
+// Fiverr SVG icon component
+const FiverrIcon = ({ size = 18 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+    <path d="M23.004 15.588a.995.995 0 1 0 .002-1.99.995.995 0 0 0-.002 1.99zm-.996-3.705h-.85c-.546 0-.84.41-.84 1.092V16h-1.722v-3.793c0-.542.266-.79.662-.79.342 0 .564.198.662.492l.012.036h1.64c-.174-.892-.818-1.353-1.988-1.353-1.244 0-2.043.658-2.043 1.74v.624h-1.14c-.942 0-1.478.536-1.478 1.22v.136h-.638V16h-.84v-2.472h-1.14v-.884h1.14v-1.386h1.722v1.386h1.476v-.124c0-1.156.78-1.884 2.14-1.884h1.368v2.267zm-9.182 4.164V12.32h1.722V16h-1.722zm-2.782 0V12.32h1.722V16h-1.722zm-2.782 0h1.722v-2.704c0-.51.282-.76.65-.76.334 0 .574.21.574.574V16h1.722v-3.024c0-.978-.61-1.624-1.59-1.624-.542 0-1.022.234-1.356.618v-.65H7.262V16zM3.2 14.124c0-.95.614-1.496 1.384-1.496.77 0 1.384.546 1.384 1.496 0 .95-.614 1.496-1.384 1.496-.77 0-1.384-.546-1.384-1.496zm-1.784 0c0 1.77 1.384 3.08 3.168 3.08s3.168-1.31 3.168-3.08c0-1.77-1.384-3.08-3.168-3.08S1.416 12.354 1.416 14.124z"/>
+  </svg>
+);
+
 const socialLinks = [
   { 
     name: "LinkedIn", 
     icon: Linkedin, 
-    url: "#", 
-    color: "hover:bg-teal-500/20 hover:border-teal-500/50 hover:text-teal-400",
-    glow: "group-hover:shadow-teal-500/30",
+    url: "https://www.linkedin.com/in/saif-dev-core/", 
+    color: "hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-400",
+    glow: "group-hover:shadow-blue-500/30",
   },
   { 
     name: "GitHub", 
     icon: Github, 
-    url: "#", 
+    url: "https://github.com/saifdevx", 
     color: "hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-cyan-400",
     glow: "group-hover:shadow-cyan-500/30",
   },
   { 
     name: "Instagram", 
     icon: Instagram, 
-    url: "#", 
-    color: "hover:bg-teal-400/20 hover:border-teal-400/50 hover:text-teal-300",
-    glow: "group-hover:shadow-teal-400/30",
+    url: "https://www.instagram.com/saif__satti", 
+    color: "hover:bg-pink-500/20 hover:border-pink-500/50 hover:text-pink-400",
+    glow: "group-hover:shadow-pink-500/30",
   },
   { 
-    name: "Twitter", 
-    icon: Twitter, 
-    url: "#", 
-    color: "hover:bg-cyan-400/20 hover:border-cyan-400/50 hover:text-cyan-300",
-    glow: "group-hover:shadow-cyan-400/30",
+    name: "Fiverr", 
+    icon: FiverrIcon, 
+    url: "https://www.fiverr.com/saifdevai", 
+    color: "hover:bg-green-500/20 hover:border-green-500/50 hover:text-green-400",
+    glow: "group-hover:shadow-green-500/30",
+    isCustom: true,
+  },
+  { 
+    name: "WhatsApp", 
+    icon: MessageSquare, 
+    url: "https://api.whatsapp.com/send/?phone=923295129669&text=Hello%21+I%27m+interested+in+your+AI+development+services.&type=phone_number&app_absent=0", 
+    color: "hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-400",
+    glow: "group-hover:shadow-emerald-500/30",
   },
 ];
 
@@ -84,7 +99,6 @@ const ContactSection = () => {
 
       if (error) throw error;
 
-      // Send email notification
       await supabase.functions.invoke("send-contact-email", {
         body: { name: result.data.name, email: result.data.email, message: result.data.message },
       });
@@ -94,7 +108,7 @@ const ContactSection = () => {
         description: "Thanks for reaching out. I'll get back to you soon.",
       });
       setFormData({ name: "", email: "", message: "" });
-    } catch (error: any) {
+    } catch {
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
@@ -115,7 +129,6 @@ const ContactSection = () => {
 
   return (
     <section className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center px-4 md:px-8 py-16 md:py-0 overflow-hidden">
-      {/* Background */}
       <div className="absolute inset-0">
         <motion.div
           className="absolute top-1/3 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] rounded-full blur-3xl"
@@ -150,7 +163,6 @@ const ContactSection = () => {
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Contact Form */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -208,7 +220,6 @@ const ContactSection = () => {
             </form>
           </motion.div>
 
-          {/* Contact Info */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -217,7 +228,6 @@ const ContactSection = () => {
             className="glass-card p-5 md:p-6 relative overflow-hidden border border-teal-500/20 flex flex-col justify-between"
           >
             <div className="space-y-3">
-              {/* Email */}
               <motion.button
                 onClick={() => copyToClipboard("saifdevcore@gmail.com", "email")}
                 className="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-teal-500/10 transition-all duration-300 border border-transparent hover:border-teal-500/20"
@@ -237,7 +247,6 @@ const ContactSection = () => {
                 </motion.div>
               </motion.button>
 
-              {/* Phone */}
               <motion.button
                 onClick={() => copyToClipboard("+92 329 5129669", "phone")}
                 className="w-full group flex items-center justify-between p-3 rounded-xl hover:bg-cyan-500/10 transition-all duration-300 border border-transparent hover:border-cyan-500/20"
@@ -257,7 +266,6 @@ const ContactSection = () => {
                 </motion.div>
               </motion.button>
 
-              {/* Location */}
               <div className="flex items-center gap-3 p-3 rounded-xl">
                 <div className="p-2.5 rounded-xl bg-teal-400/10">
                   <MapPin size={18} className="text-teal-300" />
@@ -269,7 +277,6 @@ const ContactSection = () => {
               </div>
             </div>
 
-            {/* Social Links */}
             <div className="mt-6">
               <p className="text-xs text-muted-foreground mb-3">Connect with me</p>
               <div className="flex items-center gap-3">
@@ -277,6 +284,8 @@ const ContactSection = () => {
                   <motion.a
                     key={social.name}
                     href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.5 + index * 0.1 }}
@@ -286,7 +295,11 @@ const ContactSection = () => {
                     className={`group p-3 rounded-xl bg-muted/30 border border-teal-500/20 transition-all duration-300 ${social.color} ${social.glow} hover:shadow-lg`}
                     title={social.name}
                   >
-                    <social.icon size={18} />
+                    {social.isCustom ? (
+                      <social.icon size={18} />
+                    ) : (
+                      <social.icon size={18} />
+                    )}
                   </motion.a>
                 ))}
               </div>
@@ -294,7 +307,6 @@ const ContactSection = () => {
           </motion.div>
         </div>
 
-        {/* Quote & Footer */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

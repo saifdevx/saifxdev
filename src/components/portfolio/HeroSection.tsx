@@ -485,8 +485,11 @@ const HeroSection = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-3"
           style={{ perspective: "1000px" }}
         >
-          <IOSBubbleButton variant="primary">
-            View Projects
+          <IOSBubbleButton 
+            variant="primary"
+            onClick={() => window.open("https://www.linkedin.com/in/saif-dev-core/", "_blank")}
+          >
+            View LinkedIn
             <motion.span
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -495,7 +498,10 @@ const HeroSection = () => {
             </motion.span>
           </IOSBubbleButton>
 
-          <IOSBubbleButton variant="secondary">
+          <IOSBubbleButton 
+            variant="secondary"
+            onClick={() => window.location.href = "mailto:saifdevcore@gmail.com"}
+          >
             <Mail size={16} />
             Let's Talk
           </IOSBubbleButton>

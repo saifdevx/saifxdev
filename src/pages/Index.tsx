@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "@/assets/logo-new.png";
-
+import ChatBot from "@/components/portfolio/ChatBot";
 import HoverCursorEffect from "@/components/portfolio/HoverCursorEffect";
 import Navigation from "@/components/portfolio/Navigation";
 import CommandPalette from "@/components/portfolio/CommandPalette";
@@ -274,7 +274,7 @@ const Index = () => {
 
   // Loading screen
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 2500);
+    const timer = setTimeout(() => setIsLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -285,47 +285,34 @@ const Index = () => {
         {isLoading && (
           <motion.div
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6 }}
+            exit={{ opacity: 0, scale: 1.05 }}
+            transition={{ duration: 0.5 }}
             className="fixed inset-0 z-[200] bg-background flex items-center justify-center"
           >
             <div className="text-center">
-              <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.6, type: "spring" }}
-                className="mb-8"
-              >
-                <motion.img 
-                  src={logoImg}
-                  alt="Saif Satti Logo"
-                  className="w-24 h-24 md:w-32 md:h-32 mx-auto rounded-3xl"
-                  animate={{ 
-                    boxShadow: [
-                      "0 0 20px hsl(var(--primary) / 0.5)",
-                      "0 0 60px hsl(var(--primary) / 0.8)",
-                      "0 0 20px hsl(var(--primary) / 0.5)"
-                    ],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                />
-              </motion.div>
+              <motion.img 
+                src={logoImg}
+                alt="Saif Rasheed"
+                className="w-20 h-20 md:w-24 md:h-24 mx-auto rounded-2xl mb-6"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6, type: "spring", stiffness: 200 }}
+              />
               
               <motion.div
                 initial={{ width: 0 }}
-                animate={{ width: 250 }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-                className="h-1.5 bg-gradient-to-r from-primary via-secondary to-accent rounded-full mx-auto"
+                animate={{ width: 200 }}
+                transition={{ duration: 1.2, ease: "easeInOut" }}
+                className="h-1 bg-gradient-to-r from-primary via-secondary to-accent rounded-full mx-auto"
               />
               
               <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.5 }}
-                className="mt-6 text-muted-foreground text-sm font-mono"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 0.5, 1] }}
+                transition={{ duration: 1, delay: 0.3 }}
+                className="mt-4 text-muted-foreground text-xs font-mono"
               >
-                Initializing experience...
+                Loading...
               </motion.p>
             </div>
           </motion.div>
@@ -423,6 +410,9 @@ const Index = () => {
           </motion.div>
         </div>
       )}
+
+      {/* AI Chatbot */}
+      <ChatBot />
     </>
   );
 };
