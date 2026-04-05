@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import projectChatbot from "@/assets/project-chatbot.jpg";
+import projectEcommerce from "@/assets/project-ecommerce.jpg";
+import projectLlm from "@/assets/project-llm.jpg";
+import projectBranding from "@/assets/project-branding.jpg";
+import projectPortfolio from "@/assets/project-portfolio.jpg";
 
 const projects = [
   {
@@ -8,30 +13,56 @@ const projects = [
     description: "Built intelligent chatbot solutions using ChatGPT API, n8n automation, and Chatbase. Handles customer inquiries with automated conversation flows and AI-powered responses embedded into websites.",
     tech: ["ChatGPT API", "n8n", "Chatbase", "WordPress"],
     gradient: "from-rose-500/20 to-pink-500/20",
+    image: projectChatbot,
   },
   {
     title: "E-Commerce WordPress Stores",
     description: "Designed and delivered 10+ responsive, SEO-optimized WordPress websites with WooCommerce for international clients across UK and US markets. Full project lifecycle management.",
     tech: ["WordPress", "WooCommerce", "Elementor", "SEO"],
     gradient: "from-pink-500/20 to-red-500/20",
+    image: projectEcommerce,
   },
   {
     title: "LLM Workflow Automation",
     description: "Contributing to generative AI product development at Hypervail LLC. Designing prompt engineering pipelines, AI agent systems, and intelligent automation features for client-facing projects.",
     tech: ["LLMs", "Prompt Engineering", "AI Agents", "Automation"],
     gradient: "from-red-500/20 to-rose-500/20",
+    image: projectLlm,
   },
   {
     title: "AI-Assisted Branding & Design",
     description: "Used AI design tools like MidJourney, ImagineArt, and other platforms to produce brand identities, logos, and visual content for international clients within tight timelines.",
     tech: ["MidJourney", "ImagineArt", "AI Design", "Branding"],
     gradient: "from-rose-400/20 to-pink-400/20",
+    image: projectBranding,
   },
   {
     title: "Portfolio Website with AI",
     description: "Built this interactive portfolio using Lovable AI with custom animations, contact form with database integration, and responsive design across all devices.",
     tech: ["Lovable AI", "React", "TypeScript", "Tailwind CSS"],
     gradient: "from-pink-400/20 to-rose-500/20",
+    image: projectPortfolio,
+  },
+  {
+    title: "SEO Optimization Suite",
+    description: "Coming soon — Building comprehensive SEO optimization tools and workflows for improving search rankings and organic traffic for client websites.",
+    tech: ["SEO", "Analytics", "Content Strategy", "AI Tools"],
+    gradient: "from-rose-300/20 to-pink-300/20",
+    image: null,
+  },
+  {
+    title: "AI Agent Dashboard",
+    description: "Coming soon — Developing an intelligent dashboard for managing and monitoring AI agents across multiple workflows and client projects.",
+    tech: ["AI Agents", "Dashboard", "React", "Python"],
+    gradient: "from-pink-300/20 to-rose-400/20",
+    image: null,
+  },
+  {
+    title: "No-Code Automation Platform",
+    description: "Coming soon — Creating a visual platform for building AI-powered automation workflows without coding, targeted at small businesses.",
+    tech: ["No-Code", "n8n", "Automation", "AI"],
+    gradient: "from-rose-500/20 to-red-400/20",
+    image: null,
   },
 ];
 
@@ -85,9 +116,27 @@ const ProjectsSection = () => {
               whileHover={{ rotateY: 5, rotateX: -5, scale: 1.02 }}
               style={{ transformStyle: "preserve-3d" }}
             >
-              <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center">
-                <span className="text-muted-foreground text-xs">Project Preview</span>
-              </div>
+              {project.image ? (
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover"
+                  loading="lazy"
+                  width={800}
+                  height={512}
+                />
+              ) : (
+                <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex flex-col items-center justify-center gap-2">
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                    className="text-rose-400 text-lg font-bold"
+                  >
+                    🚀
+                  </motion.div>
+                  <span className="text-muted-foreground text-xs font-medium">Coming Soon</span>
+                </div>
+              )}
             </motion.div>
           </motion.div>
 
@@ -102,6 +151,11 @@ const ProjectsSection = () => {
               <span className="text-xs font-mono text-rose-400">
                 0{currentProject + 1} / 0{projects.length}
               </span>
+              {!project.image && (
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                  Coming Soon
+                </span>
+              )}
             </div>
 
             <h3 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3">{project.title}</h3>
