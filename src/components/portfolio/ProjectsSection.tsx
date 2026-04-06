@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import projectChatbot from "@/assets/project-chatbot.jpg";
 import projectEcommerce from "@/assets/project-ecommerce.jpg";
 import projectLlm from "@/assets/project-llm.jpg";
