@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code, Terminal, Rocket, Coffee, Lightbulb, User, Brain, Globe } from "lucide-react";
+import { Code, Terminal, Rocket, Coffee, Lightbulb, User, Brain, Globe, Download } from "lucide-react";
 import saifPhoto from "@/assets/saif-profile.png";
 
 const AboutSection = () => {
