@@ -88,7 +88,7 @@ const ChatBot = () => {
       {/* Neon Chat Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 left-6 z-50 p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-[0_0_20px_hsl(217_91%_60%/0.4),0_0_40px_hsl(217_91%_60%/0.2)]"
+        className="fixed bottom-6 left-6 z-50 p-4 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-[0_0_20px_hsl(217_91%_60%/0.4),0_0_40px_hsl(217_91%_60%/0.2)] my-[28px] px-[10px] py-[10px]"
         whileHover={{ scale: 1.1, boxShadow: "0 0 30px hsl(217 91% 60% / 0.6), 0 0 60px hsl(217 91% 60% / 0.3)" }}
         whileTap={{ scale: 0.9 }}
         animate={{ boxShadow: [
