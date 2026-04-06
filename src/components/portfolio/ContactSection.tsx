@@ -294,11 +294,7 @@ const ContactSection = () => {
                     className={`group p-3 rounded-xl bg-muted/30 border border-teal-500/20 transition-all duration-300 ${social.color} ${social.glow} hover:shadow-lg`}
                     title={social.name}
                   >
-                    {social.isCustom ? (
-                      <social.icon size={18} />
-                    ) : (
-                      <social.icon size={18} />
-                    )}
+                    {<social.icon size={18} />}
                   </motion.a>
                 ))}
               </div>
