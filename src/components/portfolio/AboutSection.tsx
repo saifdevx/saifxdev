@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Code, Terminal, Rocket, Coffee, Lightbulb, User, Brain, Globe } from "lucide-react";
+import { Code, Terminal, Rocket, Coffee, Lightbulb, User, Brain, Globe, Download } from "lucide-react";
 import saifPhoto from "@/assets/saif-profile.png";
 
 const AboutSection = () => {
@@ -180,12 +180,12 @@ const AboutSection = () => {
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
             viewport={{ once: true }}
-            className="mt-5 px-5 py-3 rounded-2xl bg-green-500/10 border border-green-500/30 text-green-500 font-semibold text-sm flex items-center gap-2.5 hover:bg-green-500/20 transition-all inline-flex w-fit cursor-pointer"
+            className="mt-5 px-6 py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm flex items-center gap-2.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all inline-flex w-fit cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Rocket size={16} />
-            View Resume
+            <Download size={16} />
+            Download Resume
           </motion.a>
         </motion.div>
       </div>
