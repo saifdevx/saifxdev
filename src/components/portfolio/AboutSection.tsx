@@ -175,17 +175,16 @@ const AboutSection = () => {
           {/* Download Resume Button */}
           <motion.a
             href="/Saif_Rasheed_CV.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Saif_Rasheed_CV.pdf"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
             viewport={{ once: true }}
-            className="mt-5 px-5 py-2.5 rounded-xl bg-green-500/10 border border-green-500/30 text-green-500 font-medium text-sm flex items-center gap-2 hover:bg-green-500/20 transition-colors inline-flex w-fit"
+            className="mt-5 px-5 py-3 rounded-2xl bg-green-500/10 border border-green-500/30 text-green-500 font-semibold text-sm flex items-center gap-2.5 hover:bg-green-500/20 transition-all inline-flex w-fit cursor-pointer"
             whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Rocket size={14} />
+            <Rocket size={16} />
             View Resume
           </motion.a>
         </motion.div>
