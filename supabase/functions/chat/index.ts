@@ -55,7 +55,27 @@ serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
 
   try {
-    const { messages } = await req.json();
+    const body = await req.json();
+
+    // Validate messages input
+    if (!body.messages || !Array.isArray(body.messages) || body.messages.length === 0 || body.messages.length > 50) {
+      return new Response(JSON.stringify({ error: "Invalid messages format" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Validate each message
+    const validRoles = ["user", "assistant"];
+    const sanitizedMessages = [];
+    for (const msg of body.messages) {
+      if (!msg || typeof msg.role !== "string" || !validRoles.includes(msg.role) || typeof msg.content !== "string") {
+        return new Response(JSON.stringify({ error: "Invalid message structure" }), {
+          status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+        });
+      }
+      sanitizedMessages.push({ role: msg.role, content: msg.content.slice(0, 2000) });
+    }
+
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
     if (!LOVABLE_API_KEY) throw new Error("LOVABLE_API_KEY is not configured");
 
@@ -69,7 +89,7 @@ serve(async (req) => {
         model: "google/gemini-3-flash-preview",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
+          ...sanitizedMessages,
         ],
         stream: true,
       }),
@@ -98,7 +118,7 @@ serve(async (req) => {
     });
   } catch (e) {
     console.error("chat error:", e);
-    return new Response(JSON.stringify({ error: e instanceof Error ? e.message : "Unknown error" }), {
+    return new Response(JSON.stringify({ error: "Something went wrong" }), {
       status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
   }
