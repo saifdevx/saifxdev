@@ -272,6 +272,18 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
+  // Listen for custom navigateToSection events from other components
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail && typeof detail.index === 'number') {
+        navigateToSection(detail.index);
+      }
+    };
+    window.addEventListener('navigateToSection', handler);
+    return () => window.removeEventListener('navigateToSection', handler);
+  }, [navigateToSection]);
+
   // Loading screen
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1500);

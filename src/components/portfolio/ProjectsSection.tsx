@@ -177,6 +177,25 @@ const ProjectsSection = () => {
                 </span>
               ))}
             </div>
+
+            {project.caseStudyUrl ? (
+              <motion.a
+                href={project.caseStudyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-semibold hover:bg-rose-500/20 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ExternalLink size={14} />
+                View Case Study
+              </motion.a>
+            ) : (
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30 text-muted-foreground border border-muted-foreground/20 text-xs font-semibold cursor-default opacity-60">
+                <ExternalLink size={14} />
+                Case Study Coming Soon
+              </span>
+            )}
           </motion.div>
         </div>
 
