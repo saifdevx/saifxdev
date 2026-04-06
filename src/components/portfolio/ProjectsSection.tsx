@@ -14,6 +14,7 @@ const projects = [
     tech: ["ChatGPT API", "n8n", "Chatbase", "WordPress"],
     gradient: "from-rose-500/20 to-pink-500/20",
     image: projectChatbot,
+    caseStudyUrl: "",
   },
   {
     title: "E-Commerce WordPress Stores",
@@ -21,6 +22,7 @@ const projects = [
     tech: ["WordPress", "WooCommerce", "Elementor", "SEO"],
     gradient: "from-pink-500/20 to-red-500/20",
     image: projectEcommerce,
+    caseStudyUrl: "",
   },
   {
     title: "LLM Workflow Automation",
@@ -28,6 +30,7 @@ const projects = [
     tech: ["LLMs", "Prompt Engineering", "AI Agents", "Automation"],
     gradient: "from-red-500/20 to-rose-500/20",
     image: projectLlm,
+    caseStudyUrl: "",
   },
   {
     title: "AI-Assisted Branding & Design",
@@ -35,6 +38,7 @@ const projects = [
     tech: ["MidJourney", "ImagineArt", "AI Design", "Branding"],
     gradient: "from-rose-400/20 to-pink-400/20",
     image: projectBranding,
+    caseStudyUrl: "",
   },
   {
     title: "Portfolio Website with AI",
@@ -42,6 +46,7 @@ const projects = [
     tech: ["Lovable AI", "React", "TypeScript", "Tailwind CSS"],
     gradient: "from-pink-400/20 to-rose-500/20",
     image: projectPortfolio,
+    caseStudyUrl: "",
   },
   {
     title: "SEO Optimization Suite",
@@ -49,6 +54,7 @@ const projects = [
     tech: ["SEO", "Analytics", "Content Strategy", "AI Tools"],
     gradient: "from-rose-300/20 to-pink-300/20",
     image: null,
+    caseStudyUrl: "",
   },
   {
     title: "AI Agent Dashboard",
@@ -56,6 +62,7 @@ const projects = [
     tech: ["AI Agents", "Dashboard", "React", "Python"],
     gradient: "from-pink-300/20 to-rose-400/20",
     image: null,
+    caseStudyUrl: "",
   },
   {
     title: "No-Code Automation Platform",
@@ -63,6 +70,7 @@ const projects = [
     tech: ["No-Code", "n8n", "Automation", "AI"],
     gradient: "from-rose-500/20 to-red-400/20",
     image: null,
+    caseStudyUrl: "",
   },
 ];
 
