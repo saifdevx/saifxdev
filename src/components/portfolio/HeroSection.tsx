@@ -506,10 +506,12 @@ const HeroSection = () => {
 
           <IOSBubbleButton 
             variant="secondary"
-            onClick={() => window.open("/Saif_Rasheed_CV.pdf", "_blank")}
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('navigateToSection', { detail: { index: 4 } }));
+            }}
           >
-            <Mail size={16} />
-            View Resume
+            <Code size={16} />
+            View Projects
           </IOSBubbleButton>
         </motion.div>
 
