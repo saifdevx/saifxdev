@@ -41,12 +41,11 @@ const socialLinks = [
     glow: "group-hover:shadow-pink-500/30",
   },
   { 
-    name: "Fiverr", 
-    icon: FiverrIcon, 
-    url: "https://www.fiverr.com/saifdevai", 
-    color: "hover:bg-green-500/20 hover:border-green-500/50 hover:text-green-400",
-    glow: "group-hover:shadow-green-500/30",
-    isCustom: true,
+    name: "WhatsApp", 
+    icon: MessageSquare, 
+    url: "https://api.whatsapp.com/send/?phone=923295129669&text=Hello%21+I%27m+interested+in+your+AI+development+services.&type=phone_number&app_absent=0", 
+    color: "hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-400",
+    glow: "group-hover:shadow-emerald-500/30",
   },
   { 
     name: "WhatsApp", 
@@ -295,11 +294,7 @@ const ContactSection = () => {
                     className={`group p-3 rounded-xl bg-muted/30 border border-teal-500/20 transition-all duration-300 ${social.color} ${social.glow} hover:shadow-lg`}
                     title={social.name}
                   >
-                    {social.isCustom ? (
-                      <social.icon size={18} />
-                    ) : (
-                      <social.icon size={18} />
-                    )}
+                    {<social.icon size={18} />}
                   </motion.a>
                 ))}
               </div>

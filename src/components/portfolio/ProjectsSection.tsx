@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
 import projectChatbot from "@/assets/project-chatbot.jpg";
 import projectEcommerce from "@/assets/project-ecommerce.jpg";
 import projectLlm from "@/assets/project-llm.jpg";
@@ -14,6 +14,7 @@ const projects = [
     tech: ["ChatGPT API", "n8n", "Chatbase", "WordPress"],
     gradient: "from-rose-500/20 to-pink-500/20",
     image: projectChatbot,
+    caseStudyUrl: "",
   },
   {
     title: "E-Commerce WordPress Stores",
@@ -21,6 +22,7 @@ const projects = [
     tech: ["WordPress", "WooCommerce", "Elementor", "SEO"],
     gradient: "from-pink-500/20 to-red-500/20",
     image: projectEcommerce,
+    caseStudyUrl: "",
   },
   {
     title: "LLM Workflow Automation",
@@ -28,6 +30,7 @@ const projects = [
     tech: ["LLMs", "Prompt Engineering", "AI Agents", "Automation"],
     gradient: "from-red-500/20 to-rose-500/20",
     image: projectLlm,
+    caseStudyUrl: "",
   },
   {
     title: "AI-Assisted Branding & Design",
@@ -35,6 +38,7 @@ const projects = [
     tech: ["MidJourney", "ImagineArt", "AI Design", "Branding"],
     gradient: "from-rose-400/20 to-pink-400/20",
     image: projectBranding,
+    caseStudyUrl: "",
   },
   {
     title: "Portfolio Website with AI",
@@ -42,6 +46,7 @@ const projects = [
     tech: ["Lovable AI", "React", "TypeScript", "Tailwind CSS"],
     gradient: "from-pink-400/20 to-rose-500/20",
     image: projectPortfolio,
+    caseStudyUrl: "",
   },
   {
     title: "SEO Optimization Suite",
@@ -49,6 +54,7 @@ const projects = [
     tech: ["SEO", "Analytics", "Content Strategy", "AI Tools"],
     gradient: "from-rose-300/20 to-pink-300/20",
     image: null,
+    caseStudyUrl: "",
   },
   {
     title: "AI Agent Dashboard",
@@ -56,6 +62,7 @@ const projects = [
     tech: ["AI Agents", "Dashboard", "React", "Python"],
     gradient: "from-pink-300/20 to-rose-400/20",
     image: null,
+    caseStudyUrl: "",
   },
   {
     title: "No-Code Automation Platform",
@@ -63,6 +70,7 @@ const projects = [
     tech: ["No-Code", "n8n", "Automation", "AI"],
     gradient: "from-rose-500/20 to-red-400/20",
     image: null,
+    caseStudyUrl: "",
   },
 ];
 
@@ -169,6 +177,25 @@ const ProjectsSection = () => {
                 </span>
               ))}
             </div>
+
+            {project.caseStudyUrl ? (
+              <motion.a
+                href={project.caseStudyUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-500/10 text-rose-400 border border-rose-500/30 text-xs font-semibold hover:bg-rose-500/20 transition-colors"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <ExternalLink size={14} />
+                View Case Study
+              </motion.a>
+            ) : (
+              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30 text-muted-foreground border border-muted-foreground/20 text-xs font-semibold cursor-default opacity-60">
+                <ExternalLink size={14} />
+                Case Study Coming Soon
+              </span>
+            )}
           </motion.div>
         </div>
 

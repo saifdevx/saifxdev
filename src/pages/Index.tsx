@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import logoImg from "@/assets/logo-new.png";
 import ChatBot from "@/components/portfolio/ChatBot";
@@ -8,13 +8,15 @@ import CommandPalette from "@/components/portfolio/CommandPalette";
 import SectionProgress from "@/components/portfolio/SectionProgress";
 import MobileProgress from "@/components/portfolio/MobileProgress";
 import HeroSection from "@/components/portfolio/HeroSection";
-import AboutSection from "@/components/portfolio/AboutSection";
-import SpecializationsSection from "@/components/portfolio/SpecializationsSection";
-import SkillsSection from "@/components/portfolio/SkillsSection";
-import ProjectsSection from "@/components/portfolio/ProjectsSection";
-import ExperienceSection from "@/components/portfolio/ExperienceSection";
-import ServicesSection from "@/components/portfolio/ServicesSection";
-import ContactSection from "@/components/portfolio/ContactSection";
+
+// Lazy load non-critical sections
+const AboutSection = lazy(() => import("@/components/portfolio/AboutSection"));
+const SpecializationsSection = lazy(() => import("@/components/portfolio/SpecializationsSection"));
+const SkillsSection = lazy(() => import("@/components/portfolio/SkillsSection"));
+const ProjectsSection = lazy(() => import("@/components/portfolio/ProjectsSection"));
+const ExperienceSection = lazy(() => import("@/components/portfolio/ExperienceSection"));
+const ServicesSection = lazy(() => import("@/components/portfolio/ServicesSection"));
+const ContactSection = lazy(() => import("@/components/portfolio/ContactSection"));
 
 const sectionNames = [
   "Hero",
@@ -272,6 +274,18 @@ const Index = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMobile]);
 
+  // Listen for custom navigateToSection events from other components
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent).detail;
+      if (detail && typeof detail.index === 'number') {
+        navigateToSection(detail.index);
+      }
+    };
+    window.addEventListener('navigateToSection', handler);
+    return () => window.removeEventListener('navigateToSection', handler);
+  }, [navigateToSection]);
+
   // Loading screen
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 1500);
@@ -372,7 +386,7 @@ const Index = () => {
               ref={(el) => (sectionRefs.current[index] = el)}
               className="w-full"
             >
-              <Section />
+              <Suspense fallback={<div className="w-full min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}><Section /></Suspense>
             </div>
           ))}
         </div>
@@ -404,7 +418,7 @@ const Index = () => {
                 }}
                 transition={{ duration: 0.6 }}
               >
-                <Section />
+                <Suspense fallback={<div className="w-full h-full flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}><Section /></Suspense>
               </motion.div>
             ))}
           </motion.div>

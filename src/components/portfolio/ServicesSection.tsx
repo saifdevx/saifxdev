@@ -122,6 +122,7 @@ const ServicesSection = () => {
             className="group px-6 py-3 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold text-sm flex items-center gap-2 mx-auto"
             whileHover={{ scale: 1.05, boxShadow: "0 20px 40px hsl(280 85% 65% / 0.3)" }}
             whileTap={{ scale: 0.98 }}
+            onClick={() => window.dispatchEvent(new CustomEvent('navigateToSection', { detail: { index: 7 } }))}
           >
             <Zap size={16} />
             Start a Project

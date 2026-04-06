@@ -487,9 +487,15 @@ const HeroSection = () => {
         >
           <IOSBubbleButton 
             variant="primary"
-            onClick={() => window.open("https://www.linkedin.com/in/saif-dev-core/", "_blank")}
+            onClick={() => {
+              const contactSection = document.querySelectorAll('section');
+              const lastSection = contactSection[contactSection.length - 1];
+              if (lastSection) lastSection.scrollIntoView({ behavior: 'smooth' });
+              // Also dispatch a custom event for the horizontal scroll navigation
+              window.dispatchEvent(new CustomEvent('navigateToSection', { detail: { index: 7 } }));
+            }}
           >
-            View LinkedIn
+            Get in Touch
             <motion.span
               animate={{ x: [0, 4, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -500,10 +506,10 @@ const HeroSection = () => {
 
           <IOSBubbleButton 
             variant="secondary"
-            onClick={() => window.location.href = "mailto:saifdevcore@gmail.com"}
+            onClick={() => window.open("/Saif_Rasheed_CV.pdf", "_blank")}
           >
             <Mail size={16} />
-            Let's Talk
+            View Resume
           </IOSBubbleButton>
         </motion.div>
 
