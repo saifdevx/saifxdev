@@ -386,7 +386,7 @@ const Index = () => {
               ref={(el) => (sectionRefs.current[index] = el)}
               className="w-full"
             >
-              <Section />
+              <Suspense fallback={<div className="w-full min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div>}><Section /></Suspense>
             </div>
           ))}
         </div>
