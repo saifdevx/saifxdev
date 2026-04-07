@@ -74,6 +74,8 @@ const AboutSection = () => {
                   src={saifPhoto} 
                   alt="Saif Rasheed - Generative AI Associate & Developer" 
                   className="w-full h-full object-cover"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
