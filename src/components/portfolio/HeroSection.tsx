@@ -125,7 +125,7 @@ const CyclingTagline = () => {
     <motion.p
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: 1.4 }}
+      transition={{ duration: 0.5, delay: 0.3 }}
       className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
     >
       Building{" "}
