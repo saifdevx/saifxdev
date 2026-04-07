@@ -173,9 +173,15 @@ const AboutSection = () => {
           </div>
 
           {/* Download Resume Button */}
-          <motion.a
-            href="/Saif_Rasheed_CV.pdf"
-            download="Saif_Rasheed_CV.pdf"
+          <motion.button
+            onClick={() => {
+              const link = document.createElement('a');
+              link.href = '/Saif_Rasheed_CV.pdf';
+              link.download = 'Saif_Rasheed_CV.pdf';
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
@@ -186,7 +192,7 @@ const AboutSection = () => {
           >
             <Download size={16} />
             Download Resume
-          </motion.a>
+          </motion.button>
         </motion.div>
       </div>
     </section>
