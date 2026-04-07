@@ -47,13 +47,6 @@ const socialLinks = [
     color: "hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-400",
     glow: "group-hover:shadow-emerald-500/30",
   },
-  { 
-    name: "WhatsApp", 
-    icon: MessageSquare, 
-    url: "https://api.whatsapp.com/send/?phone=923295129669&text=Hello%21+I%27m+interested+in+your+AI+development+services.&type=phone_number&app_absent=0", 
-    color: "hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-400",
-    glow: "group-hover:shadow-emerald-500/30",
-  },
 ];
 
 const ContactSection = () => {
