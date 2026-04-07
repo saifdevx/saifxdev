@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon, Command, Menu, X, Home, User, Briefcase, Code2, FolderOpen, GraduationCap, Wrench, Mail } from "lucide-react";
 import { useState } from "react";
-import logoImg from "@/assets/logo-new.png";
+import logoImg from "@/assets/logo-new.webp";
 
 interface NavigationProps {
   currentSection: number;
