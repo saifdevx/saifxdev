@@ -174,27 +174,6 @@ const AboutSection = () => {
             ))}
           </div>
 
-          {/* Download Resume Button */}
-          <motion.button
-            onClick={() => {
-              const link = document.createElement('a');
-              link.href = '/Saif_Rasheed_CV.pdf';
-              link.download = 'Saif_Rasheed_CV.pdf';
-              document.body.appendChild(link);
-              link.click();
-              document.body.removeChild(link);
-            }}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.8 }}
-            viewport={{ once: true }}
-            className="mt-5 px-6 py-3 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold text-sm flex items-center gap-2.5 shadow-lg shadow-green-500/25 hover:shadow-green-500/40 transition-all inline-flex w-fit cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Download size={16} />
-            Download Resume
-          </motion.button>
         </motion.div>
       </div>
     </section>
