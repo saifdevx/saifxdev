@@ -461,7 +461,7 @@ const HeroSection = () => {
               className="text-center px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 1.8 + index * 0.15, type: "spring", stiffness: 200 }}
+              transition={{ delay: 0.7 + index * 0.1, type: "spring", stiffness: 200 }}
               whileHover={{ scale: 1.05, backgroundColor: "hsl(217 91% 60% / 0.1)" }}
             >
               <motion.p 
