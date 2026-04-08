@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Loader2, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const contactSchema = z.object({
@@ -83,29 +82,26 @@ const ContactSection = () => {
 
     setIsSubmitting(true);
     try {
-      const { error } = await supabase.from("contact_submissions").insert({
-        name: result.data.name,
-        email: result.data.email,
-        message: result.data.message,
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_key: "a02d0950-4ea2-49d1-be38-a5d81b383069",
+          name: result.data.name,
+          email: result.data.email,
+          message: result.data.message,
+        }),
       });
+      const data = await response.json();
 
-      if (error) throw error;
-
-      await supabase.functions.invoke("send-contact-email", {
-        body: { name: result.data.name, email: result.data.email, message: result.data.message },
-      });
-
-      toast({
-        title: "Message sent!",
-        description: "Thanks for reaching out. I'll get back to you soon.",
-      });
-      setFormData({ name: "", email: "", message: "" });
+      if (data.success) {
+        toast.success("Message sent! Thanks for reaching out. I'll get back to you soon.");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        toast.error("Failed to send message. Please try again.");
+      }
     } catch {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
+      toast.error("Failed to send message. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
