@@ -122,10 +122,7 @@ const CyclingTagline = () => {
   }, []);
 
   return (
-    <motion.p
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: 0.3 }}
+    <p
       className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
     >
       Building{" "}
@@ -148,7 +145,7 @@ const CyclingTagline = () => {
           </motion.span>
         </motion.span>
       </AnimatePresence>
-    </motion.p>
+    </p>
   );
 };
 
@@ -385,7 +382,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4 md:mb-6"
         >
           <motion.span 
@@ -400,7 +397,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.4, delay: 0.15 }}
           className="flex items-center justify-center gap-3 mb-3 md:mb-4"
         >
           <motion.div
@@ -424,14 +421,14 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="relative mb-4 md:mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
             <TextReveal 
               text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
-              delay={0.5}
+              delay={0.25}
             />
           </h1>
           
@@ -440,7 +437,7 @@ const HeroSection = () => {
             className="h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-transparent via-blue-500 to-transparent"
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "60%", opacity: 1 }}
-            transition={{ duration: 1, delay: 1.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           />
         </motion.div>
 
@@ -451,7 +448,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.6 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
           className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-6 md:mb-8"
         >
           {[
@@ -464,7 +461,7 @@ const HeroSection = () => {
               className="text-center px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              transition={{ delay: 1.8 + index * 0.15, type: "spring", stiffness: 200 }}
+              transition={{ delay: 0.7 + index * 0.1, type: "spring", stiffness: 200 }}
               whileHover={{ scale: 1.05, backgroundColor: "hsl(217 91% 60% / 0.1)" }}
             >
               <motion.p 
@@ -481,7 +478,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 2.2 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-3"
           style={{ perspective: "1000px" }}
         >
@@ -519,7 +516,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 3 }}
+          transition={{ delay: 1.2 }}
           className="absolute -bottom-12 md:bottom-4 left-1/2 -translate-x-1/2"
         >
           <motion.div
