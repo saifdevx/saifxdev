@@ -55,7 +55,6 @@ const Index = () => {
   const [currentSection, setCurrentSection] = useState(0);
   const [isDark, setIsDark] = useState(true);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isScrolling, setIsScrolling] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
