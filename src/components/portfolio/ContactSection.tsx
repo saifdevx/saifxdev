@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin, Send, Copy, Check, Linkedin, Github, Instagram, Loader2, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const contactSchema = z.object({
