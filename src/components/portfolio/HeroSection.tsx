@@ -428,7 +428,7 @@ const HeroSection = () => {
             <TextReveal 
               text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
-              delay={0.5}
+              delay={0.25}
             />
           </h1>
           
