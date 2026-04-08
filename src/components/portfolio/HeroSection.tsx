@@ -145,7 +145,7 @@ const CyclingTagline = () => {
           </motion.span>
         </motion.span>
       </AnimatePresence>
-    </motion.p>
+    </p>
   );
 };
 
