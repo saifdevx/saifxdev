@@ -448,7 +448,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 1.6 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
           className="flex flex-wrap items-center justify-center gap-4 md:gap-8 mb-6 md:mb-8"
         >
           {[
