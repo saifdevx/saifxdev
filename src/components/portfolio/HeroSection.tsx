@@ -421,7 +421,7 @@ const HeroSection = () => {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
           className="relative mb-4 md:mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
