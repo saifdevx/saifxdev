@@ -300,17 +300,38 @@ const Index = () => {
     return () => window.removeEventListener('navigateToSection', handler);
   }, [navigateToSection]);
 
+  // Hash-based navigation: respond to URL hash changes (e.g. /#projects)
+  useEffect(() => {
+    const applyHash = () => {
+      const raw = window.location.hash.replace(/^#/, "").toLowerCase();
+      if (raw in hashToIndex) {
+        const idx = hashToIndex[raw];
+        if (idx !== currentSectionRef.current) {
+          if (isMobile) {
+            sectionRefs.current[idx]?.scrollIntoView({ behavior: "smooth" });
+            setCurrentSection(idx);
+          } else {
+            navigateToSection(idx);
+          }
+        }
+      }
+    };
+    // Apply on mount (after refs are set) and on hash changes
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, [isMobile, navigateToSection]);
 
-  return (
-    <>
+  // Keep URL hash in sync with current section
+  useEffect(() => {
+    const slug = sectionNames[currentSection]?.toLowerCase() || "";
+    const newHash = currentSection === 0 ? "" : `#${slug}`;
+    if (window.location.hash !== newHash) {
+      window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}${newHash}`);
+    }
+  }, [currentSection]);
 
-      {/* Cursor hover micro-interaction (keeps default cursor) */}
-      {!isMobile && <HoverCursorEffect />}
 
-      {/* Navigation */}
-      <Navigation
-        currentSection={currentSection}
-        totalSections={sections.length}
         isDark={isDark}
         onThemeToggle={() => setIsDark(!isDark)}
         onCommandPaletteOpen={() => setIsCommandPaletteOpen(true)}
