@@ -332,6 +332,15 @@ const Index = () => {
   }, [currentSection]);
 
 
+  return (
+    <>
+      {/* Cursor hover micro-interaction (keeps default cursor) */}
+      {!isMobile && <HoverCursorEffect />}
+
+      {/* Navigation */}
+      <Navigation
+        currentSection={currentSection}
+        totalSections={sections.length}
         isDark={isDark}
         onThemeToggle={() => setIsDark(!isDark)}
         onCommandPaletteOpen={() => setIsCommandPaletteOpen(true)}
