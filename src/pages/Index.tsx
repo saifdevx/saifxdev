@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import logoImg from "@/assets/logo-new.webp";
-import ChatBot from "@/components/portfolio/ChatBot";
-import HoverCursorEffect from "@/components/portfolio/HoverCursorEffect";
 import Navigation from "@/components/portfolio/Navigation";
-import CommandPalette from "@/components/portfolio/CommandPalette";
 import SectionProgress from "@/components/portfolio/SectionProgress";
 import MobileProgress from "@/components/portfolio/MobileProgress";
 import HeroSection from "@/components/portfolio/HeroSection";
+
+// Lazy load non-critical above-the-fold extras
+const ChatBot = lazy(() => import("@/components/portfolio/ChatBot"));
+const HoverCursorEffect = lazy(() => import("@/components/portfolio/HoverCursorEffect"));
+const CommandPalette = lazy(() => import("@/components/portfolio/CommandPalette"));
 
 // Lazy load non-critical sections
 const AboutSection = lazy(() => import("@/components/portfolio/AboutSection"));
@@ -332,10 +333,20 @@ const Index = () => {
   }, [currentSection]);
 
 
+  // Defer non-critical components until after first paint to improve LCP/FCP
+  const [showDeferred, setShowDeferred] = useState(false);
+  useEffect(() => {
+    const w = window as unknown as { requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => void };
+    const schedule = w.requestIdleCallback || ((cb: () => void) => setTimeout(cb, 1500));
+    schedule(() => setShowDeferred(true), { timeout: 2500 });
+  }, []);
+
   return (
     <>
       {/* Cursor hover micro-interaction (keeps default cursor) */}
-      {!isMobile && <HoverCursorEffect />}
+      {!isMobile && showDeferred && (
+        <Suspense fallback={null}><HoverCursorEffect /></Suspense>
+      )}
 
       {/* Navigation */}
       <Navigation
@@ -349,12 +360,16 @@ const Index = () => {
         isMobile={isMobile}
       />
 
-      {/* Command Palette */}
-      <CommandPalette
-        isOpen={isCommandPaletteOpen}
-        onClose={() => setIsCommandPaletteOpen(false)}
-        onNavigate={navigateToSection}
-      />
+      {/* Command Palette - lazy + only when needed */}
+      {isCommandPaletteOpen && (
+        <Suspense fallback={null}>
+          <CommandPalette
+            isOpen={isCommandPaletteOpen}
+            onClose={() => setIsCommandPaletteOpen(false)}
+            onNavigate={navigateToSection}
+          />
+        </Suspense>
+      )}
 
       {/* Section Progress (Desktop) */}
       {!isMobile && (
@@ -426,8 +441,10 @@ const Index = () => {
         </div>
       )}
 
-      {/* AI Chatbot */}
-      <ChatBot />
+      {/* AI Chatbot - deferred until idle */}
+      {showDeferred && (
+        <Suspense fallback={null}><ChatBot /></Suspense>
+      )}
     </>
   );
 };

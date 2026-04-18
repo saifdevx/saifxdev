@@ -130,8 +130,9 @@ const ProjectsSection = () => {
                   alt={project.title} 
                   className="w-full h-full object-cover"
                   loading="lazy"
-                  width={800}
-                  height={512}
+                  decoding="async"
+                  width={720}
+                  height={460}
                 />
               ) : (
                 <div className="w-full h-full bg-gradient-to-br from-muted to-muted/50 flex flex-col items-center justify-center gap-2">
