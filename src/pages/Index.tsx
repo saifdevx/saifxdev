@@ -1,13 +1,14 @@
 import { useState, useEffect, useRef, useCallback, lazy, Suspense } from "react";
 import { motion } from "framer-motion";
-import logoImg from "@/assets/logo-new.webp";
-import ChatBot from "@/components/portfolio/ChatBot";
-import HoverCursorEffect from "@/components/portfolio/HoverCursorEffect";
 import Navigation from "@/components/portfolio/Navigation";
-import CommandPalette from "@/components/portfolio/CommandPalette";
 import SectionProgress from "@/components/portfolio/SectionProgress";
 import MobileProgress from "@/components/portfolio/MobileProgress";
 import HeroSection from "@/components/portfolio/HeroSection";
+
+// Lazy load non-critical above-the-fold extras
+const ChatBot = lazy(() => import("@/components/portfolio/ChatBot"));
+const HoverCursorEffect = lazy(() => import("@/components/portfolio/HoverCursorEffect"));
+const CommandPalette = lazy(() => import("@/components/portfolio/CommandPalette"));
 
 // Lazy load non-critical sections
 const AboutSection = lazy(() => import("@/components/portfolio/AboutSection"));
