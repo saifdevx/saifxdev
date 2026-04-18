@@ -29,6 +29,21 @@ const sectionNames = [
   "Contact",
 ];
 
+// Map URL hashes to section indices
+const hashToIndex: Record<string, number> = {
+  "": 0,
+  "hero": 0,
+  "home": 0,
+  "about": 1,
+  "specializations": 2,
+  "skills": 3,
+  "projects": 4,
+  "project": 4,
+  "experience": 5,
+  "services": 6,
+  "contact": 7,
+};
+
 const sections = [
   HeroSection,
   AboutSection,
