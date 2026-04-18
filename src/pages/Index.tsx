@@ -441,8 +441,10 @@ const Index = () => {
         </div>
       )}
 
-      {/* AI Chatbot */}
-      <ChatBot />
+      {/* AI Chatbot - deferred until idle */}
+      {showDeferred && (
+        <Suspense fallback={null}><ChatBot /></Suspense>
+      )}
     </>
   );
 };
