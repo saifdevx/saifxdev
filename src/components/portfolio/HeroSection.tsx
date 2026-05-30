@@ -407,7 +407,7 @@ const HeroSection = () => {
             <Cpu className="w-4 h-4 text-blue-400" />
           </motion.div>
           <span className="text-xs md:text-sm font-medium text-muted-foreground tracking-[0.2em] uppercase">
-            Generative AI Associate × WordPress Developer
+            Saif Dev — Generative AI Associate × WordPress Developer
           </span>
           <motion.div
             animate={{ rotate: -360 }}
@@ -425,6 +425,7 @@ const HeroSection = () => {
           className="relative mb-4 md:mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
+            <span className="sr-only">Saif Rasheed (Saif Dev) – Generative AI Developer & WordPress Specialist</span>
             <TextReveal 
               text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
