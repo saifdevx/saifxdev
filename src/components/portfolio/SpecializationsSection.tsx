@@ -29,7 +29,7 @@ const specializations = [
 ];
 
 const tools = [
-  "Lovable AI", "Manus AI", "ChatGPT", "n8n", "Chatbase", 
+  "Manus AI", "ChatGPT", "n8n", "Chatbase", 
   "MidJourney", "ImagineArt", "Elementor", "WooCommerce",
   "VS Code", "Git", "Microsoft Office",
 ];

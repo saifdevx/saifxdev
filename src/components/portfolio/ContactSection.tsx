@@ -302,7 +302,7 @@ const ContactSection = () => {
             "The future belongs to those who understand AI."
           </blockquote>
           <p className="mt-1.5 text-xs font-medium bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">— Saif Rasheed</p>
-          <p className="mt-4 text-[10px] text-muted-foreground">© 2026 Saif Rasheed. Built with passion and AI.</p>
+          <p className="mt-4 text-[10px] text-muted-foreground">© 2026 Saif Rasheed. All rights reserved.</p>
         </motion.div>
       </div>
     </section>
