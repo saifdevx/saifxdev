@@ -30,7 +30,7 @@ WORK EXPERIENCE:
 SKILLS:
 - Generative AI: LLMs, Prompt Engineering, AI Agents, ChatGPT API, NLP, AI Automation
 - Web: WordPress, Elementor, WooCommerce, SEO, HTML, CSS
-- AI Tools: Lovable AI, Manus AI, n8n, Chatbase, MidJourney, ImagineArt, GPTCodes.ai
+- AI Tools: Manus AI, n8n, Chatbase, MidJourney, ImagineArt, GPTCodes.ai
 - Programming: Python (actively learning), Backend Development Fundamentals
 - Professional: Remote collaboration, international client management
 

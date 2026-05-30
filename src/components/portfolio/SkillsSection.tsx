@@ -8,7 +8,7 @@ const skillCategories = [
   },
   {
     title: "AI Tools & Platforms",
-    skills: ["Lovable AI", "Manus AI", "n8n", "Chatbase", "MidJourney", "ImagineArt"],
+    skills: ["Manus AI", "n8n", "Chatbase", "MidJourney", "ImagineArt"],
     color: "from-yellow-500 to-amber-500",
   },
   {

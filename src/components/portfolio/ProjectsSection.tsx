@@ -42,8 +42,8 @@ const projects = [
   },
   {
     title: "Portfolio Website with AI",
-    description: "Built this interactive portfolio using Lovable AI with custom animations, contact form with database integration, and responsive design across all devices.",
-    tech: ["Lovable AI", "React", "TypeScript", "Tailwind CSS"],
+    description: "Built this interactive portfolio with custom animations, contact form with database integration, and responsive design across all devices.",
+    tech: ["React", "TypeScript", "Tailwind CSS", "Framer Motion"],
     gradient: "from-pink-400/20 to-rose-500/20",
     image: projectPortfolio,
     caseStudyUrl: "",
