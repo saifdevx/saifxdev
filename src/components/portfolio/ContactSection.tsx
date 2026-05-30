@@ -140,7 +140,7 @@ const ContactSection = () => {
           viewport={{ once: true }}
           className="text-center mb-8"
         >
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-teal-400 mb-3 block">Get in Touch</span>
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-teal-400 mb-3 block">Contact Saif Rasheed (Saif Dev)</span>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">
             Let's Build Something{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">Amazing</span>

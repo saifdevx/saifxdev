@@ -139,10 +139,11 @@ const AboutSection = () => {
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Generative AI Associate and WordPress Developer with 2+ years of experience 
-              in AI-assisted workflows, web development, and digital automation. Currently 
-              contributing to AI product development at Hypervail LLC, working on LLM-powered 
-              workflows, prompt engineering, and AI agent systems.
+              Saif Rasheed, also known as Saif Dev, is a Generative AI Associate and 
+              WordPress Developer with 2+ years of experience in AI-assisted workflows, 
+              web development, and digital automation. Currently contributing to AI 
+              product development at Hypervail LLC, working on LLM-powered workflows, 
+              prompt engineering, and AI agent systems.
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}

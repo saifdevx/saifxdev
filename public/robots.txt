@@ -1,9 +1,12 @@
-# Allow all search engines
 User-agent: *
 Allow: /
+Disallow: /private/
 
-# Sitemap location
-Sitemap: https://saifxdev.lovable.app/sitemap.xml
+User-agent: Googlebot
+Allow: /
 
-# Crawl delay
-Crawl-delay: 10
+User-agent: Googlebot-Image
+Allow: /
+
+Sitemap: https://saifxdev.vercel.app/sitemap.xml
+Host: saifxdev.vercel.app
