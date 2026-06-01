@@ -425,7 +425,7 @@ const HeroSection = () => {
           className="relative mb-4 md:mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
-            <span className="sr-only">Saif Rasheed (Saif Dev) – Generative AI Developer & WordPress Specialist</span>
+            <span className="sr-only">Saif Rasheed (Saif Dev) – Generative AI Developer & WordPress Specialist. This is the official portfolio website of Saif Rasheed, also known as Saif Dev, a Generative AI Associate and WordPress Developer based in Islamabad, Pakistan. Saif Rasheed offers AI development services, chatbot development, n8n automation, WordPress development, and AI consulting. Contact Saif Dev at saifdevcore@gmail.com. Official portfolio: https://saifxdev.vercel.app</span>
             <TextReveal 
               text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"

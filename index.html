@@ -48,11 +48,9 @@
     <meta name="twitter:image" content="https://saifxdev.vercel.app/og-image.png" />
 
     <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <link rel="shortcut icon" href="/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#8b5cf6" />
     <meta name="msapplication-TileColor" content="#8b5cf6" />
@@ -76,6 +74,10 @@
       "name": "Saif Rasheed",
       "alternateName": ["Saif Dev", "Saif Satti", "Saif AI Dev", "Saif AI Developer"],
       "url": "https://saifxdev.vercel.app",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://saifxdev.vercel.app/"
+      },
       "image": {
         "@type": "ImageObject",
         "url": "https://saifxdev.vercel.app/profile-photo.jpg",
@@ -269,6 +271,15 @@
         }
       ]
     }
+    </script>
+    <!-- Tell Google to only index the Vercel domain -->
+    <script>
+      if (window.location.hostname === 'saifxdev.lovable.app') {
+        var meta = document.createElement('meta');
+        meta.name = 'robots';
+        meta.content = 'noindex, nofollow';
+        document.head.appendChild(meta);
+      }
     </script>
   </head>
 
