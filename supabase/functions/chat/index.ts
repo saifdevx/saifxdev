@@ -64,7 +64,16 @@ If asked about something not related to Saif, his services, or his work, politel
 Keep responses concise (2-4 sentences typically). Use a friendly, professional tone.`;
 
 serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = buildCors(origin);
   if (req.method === "OPTIONS") return new Response(null, { headers: corsHeaders });
+
+  // Origin allowlist — blocks bots/scripts hitting the endpoint directly from outside the site
+  if (!origin || !ALLOWED_ORIGINS.has(origin)) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), {
+      status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
+  }
 
   try {
     const body = await req.json();
