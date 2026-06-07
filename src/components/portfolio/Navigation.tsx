@@ -40,6 +40,7 @@ const Navigation = ({
         <motion.button
           onClick={() => onNavigate(0)}
           className="relative group"
+          aria-label="Go to home section"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -84,6 +85,8 @@ const Navigation = ({
                   onClick={() => onNavigate(index)}
                   onMouseEnter={() => setHoveredIndex(index)}
                   onMouseLeave={() => setHoveredIndex(null)}
+                  aria-label={`Go to ${name} section`}
+                  aria-current={isActive ? "page" : undefined}
                   className={`relative p-2.5 rounded-full transition-all duration-300 ${
                     isActive
                       ? "bg-primary text-primary-foreground"
@@ -128,6 +131,7 @@ const Navigation = ({
           {/* Command Palette Trigger */}
           <motion.button
             onClick={onCommandPaletteOpen}
+            aria-label="Open command palette"
             className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-muted/40 hover:bg-muted/60 transition-all text-xs group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -139,6 +143,7 @@ const Navigation = ({
           {/* Theme Toggle */}
           <motion.button
             onClick={onThemeToggle}
+            aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
             className="p-2.5 rounded-full hover:bg-muted/50 transition-all relative overflow-hidden group"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -176,6 +181,8 @@ const Navigation = ({
           {/* Mobile Menu Toggle */}
           <motion.button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
             className="lg:hidden p-2.5 rounded-full hover:bg-muted/50 transition-all"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
