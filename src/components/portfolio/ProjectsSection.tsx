@@ -203,6 +203,7 @@ const ProjectsSection = () => {
         <div className="flex items-center justify-center gap-3 mt-6 md:mt-8">
           <motion.button
             onClick={prevProject}
+            aria-label="Previous project"
             className="p-2 rounded-xl glass-card hover:bg-rose-500/10 border border-rose-500/20 transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -211,10 +212,12 @@ const ProjectsSection = () => {
           </motion.button>
           
           <div className="flex items-center gap-2">
-            {projects.map((_, index) => (
+            {projects.map((p, index) => (
               <button
                 key={index}
                 onClick={() => setCurrentProject(index)}
+                aria-label={`Go to project: ${p.title}`}
+                aria-current={index === currentProject ? "true" : undefined}
                 className={`h-2 rounded-full transition-all duration-300 ${
                   index === currentProject ? "w-6 bg-rose-500" : "w-2 bg-muted-foreground/30 hover:bg-rose-400/60"
                 }`}
@@ -224,6 +227,7 @@ const ProjectsSection = () => {
 
           <motion.button
             onClick={nextProject}
+            aria-label="Next project"
             className="p-2 rounded-xl glass-card hover:bg-rose-500/10 border border-rose-500/20 transition-colors"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}

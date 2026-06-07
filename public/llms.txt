@@ -1,0 +1,25 @@
+# Saif Dev — Saif Rasheed Portfolio
+
+> Official portfolio of Saif Rasheed (Saif Dev), a Generative AI Associate and WordPress Developer based in Islamabad, Pakistan. Specializes in ChatGPT API integration, n8n automation, AI chatbots, LLM workflows, and WordPress development for international clients.
+
+## About
+
+Saif Rasheed (also known as Saif Dev) is a Generative AI Associate at Hypervail LLC and a freelance WordPress developer with 2+ years of experience serving clients across the UK, US, and worldwide.
+
+## Pages
+
+- [Home](/): One-page portfolio covering about, experience, skills, projects, certifications, services, and contact.
+
+## Services
+
+- Generative AI development (LLM workflows, prompt engineering, AI agents)
+- AI chatbot development (ChatGPT API, n8n, Chatbase)
+- WordPress & WooCommerce development
+- AI automation and AI-assisted branding
+
+## Contact
+
+- Email: saifdevcore@gmail.com
+- Phone: +92-329-5129669
+- Location: Islamabad, Pakistan
+- LinkedIn: https://www.linkedin.com/in/saif-dev-core/

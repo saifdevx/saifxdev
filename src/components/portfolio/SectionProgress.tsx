@@ -30,6 +30,7 @@ const SectionProgress = ({
         <motion.button
           onClick={onPrevious}
           disabled={currentSection === 0}
+          aria-label="Previous section"
           className="p-1 rounded-full hover:bg-muted/50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
@@ -43,6 +44,8 @@ const SectionProgress = ({
             <motion.button
               key={index}
               onClick={() => onNavigate(index)}
+              aria-label={`Go to ${name} section`}
+              aria-current={index === currentSection ? "page" : undefined}
               className="group relative"
               whileHover={{ scale: 1.2 }}
               whileTap={{ scale: 0.9 }}
@@ -75,6 +78,7 @@ const SectionProgress = ({
         <motion.button
           onClick={onNext}
           disabled={currentSection === totalSections - 1}
+          aria-label="Next section"
           className="p-1 rounded-full hover:bg-muted/50 transition-colors disabled:opacity-30 disabled:cursor-not-allowed"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
