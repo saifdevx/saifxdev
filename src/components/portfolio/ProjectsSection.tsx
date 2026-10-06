@@ -1,28 +1,28 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import projectChatbot from "@/assets/project-chatbot.jpg";
-import projectEcommerce from "@/assets/project-ecommerce.jpg";
+import hyperexImg from "@/assets/hyperex.webp";
+import leadgenImg from "@/assets/leadgen.webp";
 import projectLlm from "@/assets/project-llm.jpg";
 import projectBranding from "@/assets/project-branding.jpg";
 import projectPortfolio from "@/assets/project-portfolio.jpg";
 
 const projects = [
   {
-    title: "AI-Powered Chatbot System",
-    description: "Built intelligent chatbot solutions using ChatGPT API, n8n automation, and Chatbase. Handles customer inquiries with automated conversation flows and AI-powered responses embedded into websites.",
-    tech: ["ChatGPT API", "n8n", "Chatbase", "WordPress"],
+    title: "Hyperex Agent: AI Creative Production Platform",
+    description: "An internal AI creative production app built for Hypervail that turns repetitive image-generation work into a fast, consistent, reusable workflow. Define a workflow once, upload reference images, and generate polished outputs on demand.",
+    tech: ["Python", "FastAPI", "Gemini", "OpenAI Image API", "AI Agents", "Prompt Engineering", "Background Jobs"],
     gradient: "from-rose-500/20 to-pink-500/20",
-    image: projectChatbot,
-    caseStudyUrl: "",
+    image: hyperexImg,
+    caseStudyUrl: "https://hyperex.onrender.com",
   },
   {
-    title: "E-Commerce WordPress Stores",
-    description: "Designed and delivered 10+ responsive, SEO-optimized WordPress websites with WooCommerce for international clients across UK and US markets. Full project lifecycle management.",
-    tech: ["WordPress", "WooCommerce", "Elementor", "SEO"],
+    title: "Lead Gen Agent: Automated Prospecting & Outreach",
+    description: "A lead generation application built for Verxas that finds prospects, enriches their contact details, and sends outreach emails automatically, all from one clean workspace. Reusable by any business.",
+    tech: ["Python", "Search APIs", "Enrichment APIs", "AI Models", "Email Automation", "Background Workers", "Caching"],
     gradient: "from-pink-500/20 to-red-500/20",
-    image: projectEcommerce,
-    caseStudyUrl: "",
+    image: leadgenImg,
+    caseStudyUrl: "https://lead-gen-web-rq8w.onrender.com",
   },
   {
     title: "LLM Workflow Automation",
@@ -189,7 +189,7 @@ const ProjectsSection = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <ExternalLink size={14} />
-                View Case Study
+                Visit Live Demo
               </motion.a>
             ) : (
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30 text-muted-foreground border border-muted-foreground/20 text-xs font-semibold cursor-default opacity-60">
