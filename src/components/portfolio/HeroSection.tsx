@@ -105,46 +105,13 @@ const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } 
 
 // Cycling Tagline Component
 const CyclingTagline = () => {
-  const taglines = [
-    { highlight: "generative AI", text: "that transform businesses through" },
-    { highlight: "prompt engineering", text: "that build intelligent products with" },
-    { highlight: "AI automation", text: "that streamline workflows using" },
-    { highlight: "WordPress & web solutions", text: "that deliver results with" },
-  ];
-  
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % taglines.length);
-    }, 5500);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <p
       className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
     >
-      Building{" "}
-      <span className="text-foreground font-semibold">intelligent solutions</span>{" "}
-      <AnimatePresence mode="wait">
-        <motion.span
-          key={currentIndex}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.5 }}
-        >
-          {taglines[currentIndex].text}{" "}
-          <motion.span 
-            className="text-blue-400 font-semibold inline-block"
-            animate={{ opacity: [1, 0.7, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          >
-            {taglines[currentIndex].highlight}
-          </motion.span>
-        </motion.span>
-      </AnimatePresence>
+      I build{" "}
+      <span className="text-foreground font-semibold">AI agents, automations, and web apps</span>{" "}
+      that take real work off people's plates.
     </p>
   );
 };
