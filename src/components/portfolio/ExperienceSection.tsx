@@ -3,32 +3,32 @@ import { GraduationCap, Award, CheckCircle, Briefcase } from "lucide-react";
 
 const workExperience = [
   {
+    role: "Agentic AI Developer",
+    company: "Self-Directed Projects & Freelance (Remote)",
+    period: "Jun 2026 – Present",
+    description: "I design, build, and deploy AI agents and web apps that solve real business problems. My agents automate multi-step tasks end to end, from collecting data to taking action. Recent builds include Hyperex Agent and Lead Gen Agent. I also build chatbots with WordPress plugins, n8n, Chatbase, GPTCodes.ai, and the ChatGPT API.",
+  },
+  {
     role: "Generative AI Associate",
-    company: "Hypervail LLC (US-Based)",
-    period: "Feb 2026 – Present",
-    description: "Contributing to AI product development, LLM-powered workflows, prompt engineering, and AI agent design for client-facing projects.",
+    company: "Hypervail LLC (US-Based, Remote)",
+    period: "Feb 2026 – Sep 2026",
+    description: "Supported LLM-powered workflows and AI agent design for client projects, working with a remote team across time zones. I designed and refined prompt pipelines to make model output more consistent and accurate, managed my own deliverables, and evaluated new generative AI tools for active projects.",
   },
   {
     role: "WordPress Developer & Designer",
     company: "Freelance (International Clients)",
     period: "Jan 2024 – Present",
-    description: "Delivered 10+ responsive, SEO-optimized WordPress websites for clients across UK, US and other markets.",
-  },
-  {
-    role: "Chatbot Development",
-    company: "Self-Learning & Freelance",
-    period: "2025 – 2026",
-    description: "Built chatbot solutions using WordPress plugins, n8n, Chatbase, and ChatGPT API integrations.",
+    description: "Delivered 10+ responsive, SEO-optimized WordPress sites for clients in the UK, US, and other markets, handling everything from the first brief to post-launch support. I built WooCommerce stores and custom Elementor layouts, improved speed and mobile performance, and used AI design tools for logos and brand visuals on tight timelines.",
   },
 ];
 
 const certifications = [
-  "Agentic AI Course – Air University",
-  "NYC CEO Council Software Engineering Sim",
-  "ChatGPT Expert – Udemy",
-  "Microsoft Office Specialist – PowerPoint",
-  "Website Designing Diploma",
-  "Information Technology Diploma",
+  "Agentic AI Course – Air University, Islamabad (2024–2025)",
+  "NYJTC Software Engineering Job Simulation (2024)",
+  "ChatGPT Expert Professional Certification – Udemy (Aug 2023)",
+  "Microsoft Office Specialist (PowerPoint) – Certiport (Jan 2023)",
+  "Website Designing Diploma – Joher Institute (Jul 2022)",
+  "Information Technology Diploma – Joher Institute (Jul 2022)",
 ];
 
 const ExperienceSection = () => {
