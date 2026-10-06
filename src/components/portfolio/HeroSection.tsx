@@ -374,7 +374,7 @@ const HeroSection = () => {
             <Cpu className="w-4 h-4 text-blue-400" />
           </motion.div>
           <span className="text-xs md:text-sm font-medium text-muted-foreground tracking-[0.2em] uppercase">
-            Saif Dev — Generative AI Associate × WordPress Developer
+            Saif Dev — Agentic AI Developer & WordPress Specialist
           </span>
           <motion.div
             animate={{ rotate: -360 }}
@@ -392,7 +392,7 @@ const HeroSection = () => {
           className="relative mb-4 md:mb-6"
         >
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tight">
-            <span className="sr-only">Saif Rasheed (Saif Dev) – Generative AI Developer & WordPress Specialist. This is the official portfolio website of Saif Rasheed, also known as Saif Dev, a Generative AI Associate and WordPress Developer based in Islamabad, Pakistan. Saif Rasheed offers AI development services, chatbot development, n8n automation, WordPress development, and AI consulting. Contact Saif Dev at saifdevcore@gmail.com. Official portfolio: https://saifxdev.vercel.app</span>
+            <span className="sr-only">Saif Rasheed (Saif Dev) is an Agentic AI Developer, Generative AI professional, and WordPress specialist based in Islamabad, Pakistan. He builds AI agents, chatbots, n8n automations, and WordPress websites for clients in the UK, US, and beyond. Contact: saifdevcore@gmail.com.</span>
             <TextReveal 
               text="SAIF RASHEED" 
               className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
@@ -422,7 +422,7 @@ const HeroSection = () => {
           {[
             { value: "10+", label: "Websites Built" },
             { value: "2+", label: "Years Experience" },
-            { value: "AI", label: "Focused" },
+            { value: "2", label: "AI Agents Shipped" },
           ].map((stat, index) => (
             <motion.div 
               key={stat.label}

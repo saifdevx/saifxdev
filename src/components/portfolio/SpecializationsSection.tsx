@@ -4,26 +4,26 @@ import { Brain, Code2, Cog, Monitor, Award, Globe, Bot, Wand2 } from "lucide-rea
 const specializations = [
   {
     icon: Brain,
-    title: "Generative AI",
-    description: "LLMs, prompt engineering, and AI agent systems",
+    title: "Agentic AI & Generative AI",
+    description: "AI agents, agentic workflows, LLMs, and prompt engineering",
     gradient: "from-purple-500 to-pink-500",
   },
   {
     icon: Globe,
     title: "WordPress Development",
-    description: "10+ sites delivered for international clients",
+    description: "10+ sites delivered for clients in the UK, US, and other markets",
     gradient: "from-violet-500 to-purple-500",
   },
   {
     icon: Bot,
-    title: "AI Automation",
+    title: "AI Automation & Chatbots",
     description: "n8n workflows, chatbots, and API integrations",
     gradient: "from-fuchsia-500 to-pink-500",
   },
   {
     icon: Wand2,
     title: "AI-Assisted Design",
-    description: "Branding, logos, and visuals with AI tools",
+    description: "Brand identities, logos, and visuals made with AI tools",
     gradient: "from-purple-400 to-violet-500",
   },
 ];
@@ -31,7 +31,7 @@ const specializations = [
 const tools = [
   "Manus AI", "ChatGPT", "n8n", "Chatbase", 
   "MidJourney", "ImagineArt", "Elementor", "WooCommerce",
-  "VS Code", "Git", "Microsoft Office",
+  "VS Code", "Git", "Microsoft Office", "GPTCodes.ai", "Python",
 ];
 
 const SpecializationsSection = () => {
