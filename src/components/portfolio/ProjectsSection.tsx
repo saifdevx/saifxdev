@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ExternalLink } from "lucide-react";
-import hyperexAsset from "@/assets/hyperex.png.asset.json";
-import leadgenAsset from "@/assets/leadgen.png.asset.json";
+import hyperexImg from "@/assets/hyperex.webp";
+import leadgenImg from "@/assets/leadgen.webp";
 import projectLlm from "@/assets/project-llm.jpg";
 import projectBranding from "@/assets/project-branding.jpg";
 import projectPortfolio from "@/assets/project-portfolio.jpg";
@@ -13,7 +13,7 @@ const projects = [
     description: "An internal AI creative production app built for Hypervail that turns repetitive image-generation work into a fast, consistent, reusable workflow. Define a workflow once, upload reference images, and generate polished outputs on demand.",
     tech: ["Python", "FastAPI", "Gemini", "OpenAI Image API", "AI Agents", "Prompt Engineering", "Background Jobs"],
     gradient: "from-rose-500/20 to-pink-500/20",
-    image: hyperexAsset.url,
+    image: hyperexImg,
     caseStudyUrl: "https://hyperex.onrender.com",
   },
   {
@@ -21,7 +21,7 @@ const projects = [
     description: "A lead generation application built for Verxas that finds prospects, enriches their contact details, and sends outreach emails automatically, all from one clean workspace. Reusable by any business.",
     tech: ["Python", "Search APIs", "Enrichment APIs", "AI Models", "Email Automation", "Background Workers", "Caching"],
     gradient: "from-pink-500/20 to-red-500/20",
-    image: leadgenAsset.url,
+    image: leadgenImg,
     caseStudyUrl: "https://lead-gen-web-rq8w.onrender.com",
   },
   {
@@ -189,7 +189,7 @@ const ProjectsSection = () => {
                 whileTap={{ scale: 0.95 }}
               >
                 <ExternalLink size={14} />
-                View Case Study
+                Visit Live Demo
               </motion.a>
             ) : (
               <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-muted/30 text-muted-foreground border border-muted-foreground/20 text-xs font-semibold cursor-default opacity-60">
