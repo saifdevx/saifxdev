@@ -5,9 +5,10 @@ import saifPhoto from "@/assets/saif-profile.webp";
 const AboutSection = () => {
   const quickFacts = [
     { icon: User, text: "CS Student @ SZABIST" },
-    { icon: Brain, text: "Generative AI Associate" },
+    { icon: Brain, text: "Agentic AI Developer" },
+    { icon: Lightbulb, text: "Generative AI" },
     { icon: Globe, text: "WordPress Developer" },
-    { icon: Coffee, text: "Actively Learning Python" },
+    { icon: Coffee, text: "Strengthening Python & Backend" },
   ];
 
   const floatingIcons = [Terminal, Code, Lightbulb, Brain];
@@ -72,7 +73,7 @@ const AboutSection = () => {
               <div className="w-full h-full rounded-3xl bg-background overflow-hidden">
                 <img 
                   src={saifPhoto} 
-                  alt="Saif Rasheed - Generative AI Associate & Developer" 
+                  alt="Saif Rasheed - Agentic AI Developer & WordPress Specialist" 
                   className="w-full h-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -104,7 +105,7 @@ const AboutSection = () => {
             >
               <div className="flex items-center gap-2">
                 <Terminal size={12} className="text-green-500" />
-                <span className="text-xs font-mono">Gen AI Associate</span>
+                <span className="text-xs font-mono">Agentic AI Developer</span>
               </div>
             </motion.div>
           </motion.div>
@@ -139,11 +140,9 @@ const AboutSection = () => {
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
             >
-              Saif Rasheed, also known as Saif Dev, is a Generative AI Associate and 
-              WordPress Developer with 2+ years of experience in AI-assisted workflows, 
-              web development, and digital automation. Currently contributing to AI 
-              product development at Hypervail LLC, working on LLM-powered workflows, 
-              prompt engineering, and AI agent systems.
+              I'm Saif Rasheed, also known as Saif Dev, an Agentic AI developer and
+              WordPress specialist based in Islamabad, Pakistan. I have 2+ years of
+              experience across AI-assisted workflows, web development, and automation.
             </motion.p>
             <motion.p
               initial={{ opacity: 0 }}
@@ -151,9 +150,19 @@ const AboutSection = () => {
               transition={{ delay: 0.4 }}
               viewport={{ once: true }}
             >
-              Computer Science student at SZABIST University, actively building skills in{" "}
-              <span className="text-foreground font-medium">Python and backend development</span>. 
-              Passionate about leveraging AI to transform how we work and build digital products.
+              I started in Generative AI at Hypervail LLC, a US-based company, where I worked
+              on LLM workflows, prompt pipelines, and AI agent design. Since June 2026 I've
+              moved fully into Agentic AI, building agents and web apps with AI tools to solve
+              real business problems.
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+              viewport={{ once: true }}
+            >
+              I'm also a Computer Science student at SZABIST University, strengthening my{" "}
+              <span className="text-foreground font-medium">Python and backend skills</span> alongside my work.
             </motion.p>
           </div>
 

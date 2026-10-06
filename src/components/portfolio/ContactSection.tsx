@@ -146,7 +146,7 @@ const ContactSection = () => {
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-cyan-500">Amazing</span>
           </h2>
           <p className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto">
-            Have a project in mind? Let's turn your ideas into reality.
+            Have a project or an idea for an AI agent? Tell me what you need and let's work it out.
           </p>
         </motion.div>
 

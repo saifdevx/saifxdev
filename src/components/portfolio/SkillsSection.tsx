@@ -3,22 +3,22 @@ import { motion } from "framer-motion";
 const skillCategories = [
   {
     title: "Generative AI & LLMs",
-    skills: ["Prompt Engineering", "ChatGPT API", "LLM Workflows", "AI Agents", "NLP", "AI Automation"],
+    skills: ["Generative AI", "LLMs", "Prompt Engineering", "LLM Workflow Design", "ChatGPT API", "NLP"],
     color: "from-amber-500 to-orange-500",
   },
   {
-    title: "AI Tools & Platforms",
-    skills: ["Manus AI", "n8n", "Chatbase", "MidJourney", "ImagineArt"],
+    title: "Agentic AI & Automation",
+    skills: ["Agentic AI", "AI Agent Development", "Agentic Workflows", "AI-Assisted App & Web Development", "Chatbot Development", "n8n", "Chatbase", "No-Code Automation", "API Integration"],
     color: "from-yellow-500 to-amber-500",
   },
   {
     title: "Web Development",
-    skills: ["WordPress", "Elementor", "WooCommerce", "HTML", "CSS", "SEO Optimization"],
+    skills: ["WordPress", "Elementor", "WooCommerce", "SEO", "Responsive Design", "HTML", "CSS", "Performance Optimization"],
     color: "from-orange-500 to-red-500",
   },
   {
     title: "Programming & Tools",
-    skills: ["Python", "Backend Fundamentals", "API Integration", "Git", "VS Code", "Microsoft Office"],
+    skills: ["Python", "Backend Fundamentals", "Git", "VS Code", "Microsoft Office", "AI Design Tools"],
     color: "from-amber-400 to-yellow-500",
   },
 ];
@@ -104,7 +104,7 @@ const SkillsSection = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <motion.span
                     key={skill}
-                    custom={skillIndex + categoryIndex * 6}
+                    custom={skillIndex + categoryIndex * 9}
                     variants={tagVariants}
                     whileHover={{ scale: 1.15, y: -3, boxShadow: "0 4px 15px hsl(38 92% 50% / 0.3)" }}
                     className="px-2.5 py-1 text-xs rounded-lg bg-amber-500/10 border border-amber-500/20 hover:border-amber-500/50 hover:bg-amber-500/15 transition-colors cursor-default"
@@ -133,7 +133,7 @@ const SkillsSection = () => {
               🚀
             </motion.span>
             <span className="text-xs text-muted-foreground">
-              Actively learning Python & backend development
+              Building agents with AI tools and strengthening my Python & backend fundamentals
             </span>
           </div>
         </motion.div>
