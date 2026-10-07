@@ -422,7 +422,7 @@ const HeroSection = () => {
           {[
             { value: "10+", label: "Websites Built" },
             { value: "2+", label: "Years Experience" },
-            { value: "2", label: "AI Agents Shipped" },
+            { value: "6", label: "AI Agents Shipped" },
           ].map((stat, index) => (
             <motion.div 
               key={stat.label}

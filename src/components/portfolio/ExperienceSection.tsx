@@ -110,7 +110,7 @@ const ExperienceSection = () => {
               <div className="pl-4 border-l-2 border-cyan-500/20">
                 <span className="text-[10px] font-mono text-cyan-400">2024 – 2028</span>
                 <h4 className="text-xs md:text-sm font-semibold">BS Computer Science</h4>
-                <p className="text-muted-foreground text-[10px] md:text-xs">SZABIST, Islamabad • 4th Semester</p>
+                <p className="text-muted-foreground text-[10px] md:text-xs">SZABIST, Islamabad</p>
                 <div className="inline-block mt-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px]">
                   + Agentic AI Course
                 </div>
