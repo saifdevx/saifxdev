@@ -140,7 +140,7 @@ const AboutSection = () => {
               transition={{ delay: 0.3 }}
               viewport={{ once: true }}
             >
-              I'm Saif Rasheed, also known as Saif Dev, an Agentic AI developer and
+              I'm Saif Rasheed, an Agentic AI developer and
               WordPress specialist based in Islamabad, Pakistan. I have 2+ years of
               experience across AI-assisted workflows, web development, and automation.
             </motion.p>
