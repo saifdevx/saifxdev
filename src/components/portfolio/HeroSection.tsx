@@ -520,8 +520,8 @@ const HeroSection = () => {
         animate={{ y: [0, -15, 0], rotate: [0, 5, 0] }}
         transition={{ duration: 5, repeat: Infinity }}
       >
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-transparent backdrop-blur-sm border border-blue-500/20 flex items-center justify-center">
-          <Terminal size={18} className="text-blue-400" />
+        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#e11d2e]/20 to-transparent backdrop-blur-sm border border-[#e11d2e]/20 flex items-center justify-center">
+          <Terminal size={18} className="text-[#ff2d3d]" />
         </div>
       </motion.div>
       
@@ -530,8 +530,8 @@ const HeroSection = () => {
         animate={{ y: [0, 20, 0], rotate: [0, -5, 0] }}
         transition={{ duration: 6, repeat: Infinity, delay: 1 }}
       >
-        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-cyan-500/20 to-transparent backdrop-blur-sm border border-cyan-500/20 flex items-center justify-center">
-          <Code size={16} className="text-cyan-400" />
+        <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#e11d2e]/20 to-transparent backdrop-blur-sm border border-[#e11d2e]/20 flex items-center justify-center">
+          <Code size={16} className="text-[#ff2d3d]" />
         </div>
       </motion.div>
       
@@ -540,8 +540,8 @@ const HeroSection = () => {
         animate={{ y: [0, -10, 0], x: [0, 5, 0] }}
         transition={{ duration: 4, repeat: Infinity, delay: 2 }}
       >
-        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-400/20 to-transparent backdrop-blur-sm border border-blue-400/20 flex items-center justify-center">
-          <Sparkles size={14} className="text-blue-300" />
+        <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neutral-400/20 to-transparent backdrop-blur-sm border border-neutral-400/20 flex items-center justify-center">
+          <Sparkles size={14} className="text-neutral-300" />
         </div>
       </motion.div>
 
@@ -553,8 +553,8 @@ const HeroSection = () => {
         }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         style={{
-          background: "linear-gradient(135deg, hsl(217 91% 60% / 0.2), hsl(199 89% 48% / 0.1))",
-          border: "1px solid hsl(217 91% 60% / 0.2)",
+          background: "linear-gradient(135deg, rgba(225,29,46,0.2), rgba(127,16,32,0.1))",
+          border: "1px solid rgba(225,29,46,0.2)",
         }}
       />
         {/* Scroll Hint */}
