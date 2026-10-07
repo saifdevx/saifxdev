@@ -125,6 +125,38 @@
     scroll-behavior: smooth;
   }
 
+  section {
+    scroll-margin-top: 5rem;
+  }
+
+  /* Blurred glows: own GPU layer so moving them never re-rasterizes the blur */
+  .blur-3xl, .blur-2xl {
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+
+  img {
+    content-visibility: auto;
+  }
+
+  @media (max-width: 767px) {
+    /* Lighter blur on phones: same look, far less GPU work */
+    .blur-3xl { --tw-blur: blur(40px); }
+    .backdrop-blur-xl, .backdrop-blur-2xl {
+      backdrop-filter: blur(12px) !important;
+      -webkit-backdrop-filter: blur(12px) !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, sans-serif;

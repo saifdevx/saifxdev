@@ -51,7 +51,7 @@ const SectionProgress = ({
               whileTap={{ scale: 0.9 }}
             >
               <motion.div
-                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                className={`w-1.5 h-1.5 rounded-full transition-[transform,background-color,border-color,color,opacity,width] duration-300 ${
                   index === currentSection
                     ? "bg-primary w-3"
                     : index < currentSection

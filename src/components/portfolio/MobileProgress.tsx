@@ -40,7 +40,7 @@ const MobileProgress = ({
             {Array.from({ length: totalSections }).map((_, index) => (
               <motion.div
                 key={index}
-                className={`h-1.5 rounded-full transition-all duration-300 ${
+                className={`h-1.5 rounded-full transition-[transform,background-color,border-color,color,opacity,width] duration-300 ${
                   index === currentSection
                     ? "w-4 bg-primary"
                     : index < currentSection
