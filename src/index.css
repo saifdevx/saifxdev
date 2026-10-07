@@ -136,10 +136,6 @@
     backface-visibility: hidden;
   }
 
-  img {
-    content-visibility: auto;
-  }
-
   @media (max-width: 767px) {
     /* Lighter blur on phones: same look, far less GPU work */
     .blur-3xl { --tw-blur: blur(40px); }
