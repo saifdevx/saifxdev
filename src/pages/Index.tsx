@@ -272,16 +272,22 @@ const Index = () => {
   useEffect(() => {
     if (!isMobile) return;
 
+    let ticking = false;
     const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+      ticking = false;
       const windowHeight = window.innerHeight;
       
       sectionRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
           if (rect.top <= windowHeight / 2 && rect.bottom >= windowHeight / 2) {
-            setCurrentSection(index);
+            setCurrentSection((prev) => (prev === index ? prev : index));
           }
         }
+      });
       });
     };
 

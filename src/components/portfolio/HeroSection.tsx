@@ -167,7 +167,7 @@ const IOSBubbleButton = ({
       whileTap={{ scale: 0.92 }}
       className={`
         relative w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold text-sm
-        transition-all duration-300 ease-out
+        transition-[transform,background-color,border-color,color,box-shadow] duration-300 ease-out
         ${isPrimary 
           ? "bg-gradient-to-br from-[#e11d2e] to-[#9b0e1c] text-white shadow-[0_4px_24px_-4px_rgba(225,29,46,0.55),inset_0_1px_1px_hsl(0_0%_100%/0.2)]" 
           : "bg-white/10 backdrop-blur-xl text-foreground border border-white/20 hover:border-[#ff2d3d]/50 shadow-[0_4px_20px_-4px_hsl(0_0%_0%/0.3),inset_0_1px_1px_hsl(0_0%_100%/0.1)]"
@@ -223,17 +223,29 @@ const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let raf = 0;
+    let last = { x: 0, y: 0 };
+    let inView = true;
+    const io = new IntersectionObserver(([e]) => { inView = e.isIntersecting; });
+    if (containerRef.current) io.observe(containerRef.current);
     const handleMouseMove = (e: MouseEvent) => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      setMousePosition({
-        x: (e.clientX - rect.left) / rect.width,
-        y: (e.clientY - rect.top) / rect.height,
+      if (raf || !inView || !containerRef.current) return;
+      const cx = e.clientX, cy = e.clientY;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        if (!containerRef.current) return;
+        const rect = containerRef.current.getBoundingClientRect();
+        const x = (cx - rect.left) / rect.width;
+        const y = (cy - rect.top) / rect.height;
+        if (Math.abs(x - last.x) < 0.01 && Math.abs(y - last.y) < 0.01) return;
+        last = { x, y };
+        setMousePosition(last);
       });
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
+    const cleanupExtra = () => { io.disconnect(); if (raf) cancelAnimationFrame(raf); };
+    return () => { window.removeEventListener("mousemove", handleMouseMove); cleanupExtra(); };
   }, []);
 
   const codeSnippets = [

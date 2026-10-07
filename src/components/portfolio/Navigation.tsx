@@ -87,7 +87,7 @@ const Navigation = ({
                   onMouseLeave={() => setHoveredIndex(null)}
                   aria-label={`Go to ${name} section`}
                   aria-current={isActive ? "page" : undefined}
-                  className={`relative p-2.5 rounded-full transition-all duration-300 ${
+                  className={`relative p-2.5 rounded-full transition-[transform,background-color,border-color,color,opacity,width] duration-300 ${
                     isActive
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
@@ -132,7 +132,7 @@ const Navigation = ({
           <motion.button
             onClick={onCommandPaletteOpen}
             aria-label="Open command palette"
-            className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-muted/40 hover:bg-muted/60 transition-all text-xs group"
+            className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-full bg-muted/40 hover:bg-muted/60 transition-[transform,background-color,border-color,color,opacity,width] text-xs group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -144,7 +144,7 @@ const Navigation = ({
           <motion.button
             onClick={onThemeToggle}
             aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
-            className="p-2.5 rounded-full hover:bg-muted/50 transition-all relative overflow-hidden group"
+            className="p-2.5 rounded-full hover:bg-muted/50 transition-[transform,background-color,border-color,color,opacity,width] relative overflow-hidden group"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -183,7 +183,7 @@ const Navigation = ({
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
-            className="lg:hidden p-2.5 rounded-full hover:bg-muted/50 transition-all"
+            className="lg:hidden p-2.5 rounded-full hover:bg-muted/50 transition-[transform,background-color,border-color,color,opacity,width]"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
@@ -257,7 +257,7 @@ const Navigation = ({
                       onNavigate(index);
                       setIsMobileMenuOpen(false);
                     }}
-                    className={`relative w-full max-w-xs flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all ${
+                    className={`relative w-full max-w-xs flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-[transform,background-color,border-color,color,opacity,width] ${
                       index === currentSection
                         ? "bg-primary/10 border border-primary/30"
                         : "hover:bg-muted/50"

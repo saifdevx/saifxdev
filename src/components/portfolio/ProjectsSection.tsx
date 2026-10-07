@@ -218,7 +218,7 @@ const ProjectsSection = () => {
                 onClick={() => setCurrentProject(index)}
                 aria-label={`Go to project: ${p.title}`}
                 aria-current={index === currentProject ? "true" : undefined}
-                className={`h-2 rounded-full transition-all duration-300 ${
+                className={`h-2 rounded-full transition-[transform,background-color,border-color,color,opacity,width] duration-300 ${
                   index === currentProject ? "w-6 bg-rose-500" : "w-2 bg-muted-foreground/30 hover:bg-rose-400/60"
                 }`}
               />
