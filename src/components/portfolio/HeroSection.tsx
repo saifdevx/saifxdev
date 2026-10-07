@@ -374,7 +374,7 @@ const HeroSection = () => {
             <Cpu className="w-4 h-4 text-blue-400" />
           </motion.div>
           <span className="text-xs md:text-sm font-medium text-muted-foreground tracking-[0.2em] uppercase">
-            Saif Dev — Agentic AI Developer & WordPress Specialist
+            SAIF DEV — AI DEVELOPER
           </span>
           <motion.div
             animate={{ rotate: -360 }}
