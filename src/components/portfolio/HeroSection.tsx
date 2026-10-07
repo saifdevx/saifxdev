@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowRight, Mail, Sparkles, Code, Zap, Terminal, Cpu } from "lucide-react";
 import { useEffect, useState, useRef, useCallback } from "react";
+import heroHands from "@/assets/hero-hands.webp";
 
 // Floating Orb Component - Elegant glowing spheres with parallax
 const FloatingOrb = ({ 
@@ -67,14 +68,14 @@ const FloatingOrb = ({
 // Premium Orb System - Elegant floating orbs with mouse parallax
 const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } }) => {
   const orbs = [
-    { size: 120, color: 'hsl(217, 91%, 60%)', position: { x: '10%', y: '20%' }, delay: 0 },
-    { size: 80, color: 'hsl(199, 89%, 48%)', position: { x: '75%', y: '15%' }, delay: 1 },
-    { size: 60, color: 'hsl(221, 83%, 53%)', position: { x: '85%', y: '60%' }, delay: 2 },
-    { size: 100, color: 'hsl(199, 89%, 48%)', position: { x: '5%', y: '70%' }, delay: 1.5 },
-    { size: 45, color: 'hsl(217, 91%, 60%)', position: { x: '60%', y: '75%' }, delay: 0.5 },
-    { size: 70, color: 'hsl(221, 83%, 53%)', position: { x: '30%', y: '10%' }, delay: 2.5 },
-    { size: 35, color: 'hsl(199, 89%, 48%)', position: { x: '90%', y: '35%' }, delay: 1 },
-    { size: 55, color: 'hsl(217, 91%, 60%)', position: { x: '20%', y: '85%' }, delay: 3 },
+    { size: 120, color: 'hsl(354, 78%, 50%)', position: { x: '10%', y: '20%' }, delay: 0 },
+    { size: 80, color: 'hsl(350, 77%, 28%)', position: { x: '75%', y: '15%' }, delay: 1 },
+    { size: 60, color: 'hsl(0, 0%, 45%)', position: { x: '85%', y: '60%' }, delay: 2 },
+    { size: 100, color: 'hsl(350, 77%, 28%)', position: { x: '5%', y: '70%' }, delay: 1.5 },
+    { size: 45, color: 'hsl(354, 78%, 50%)', position: { x: '60%', y: '75%' }, delay: 0.5 },
+    { size: 70, color: 'hsl(0, 0%, 45%)', position: { x: '30%', y: '10%' }, delay: 2.5 },
+    { size: 35, color: 'hsl(350, 77%, 28%)', position: { x: '90%', y: '35%' }, delay: 1 },
+    { size: 55, color: 'hsl(354, 78%, 50%)', position: { x: '20%', y: '85%' }, delay: 3 },
   ];
 
   return (
@@ -91,7 +92,7 @@ const OrbSystem = ({ mousePosition }: { mousePosition: { x: number; y: number } 
       <motion.div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsl(217 91% 60% / 0.08) 0%, transparent 60%)',
+          background: 'radial-gradient(circle, hsl(354 78% 50% / 0.06) 0%, transparent 60%)',
         }}
         animate={{
           scale: [1, 1.1, 1],
@@ -110,7 +111,7 @@ const CyclingTagline = () => {
       className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-2xl mx-auto mb-6 md:mb-8 leading-relaxed px-4"
     >
       I build{" "}
-      <span className="text-foreground font-semibold">AI agents, automations, and web apps</span>{" "}
+      <span className="font-semibold" style={{ color: "#ff2d3d" }}>AI agents, automations, and web apps</span>{" "}
       that take real work off people's plates.
     </p>
   );
@@ -168,8 +169,8 @@ const IOSBubbleButton = ({
         relative w-full sm:w-auto px-6 py-3 rounded-2xl font-semibold text-sm
         transition-all duration-300 ease-out
         ${isPrimary 
-          ? "bg-gradient-to-br from-blue-500 via-blue-600 to-cyan-500 text-white shadow-[0_4px_20px_-4px_hsl(217_91%_60%/0.5),inset_0_1px_1px_hsl(0_0%_100%/0.2)]" 
-          : "bg-white/10 backdrop-blur-xl text-foreground border border-white/20 shadow-[0_4px_20px_-4px_hsl(0_0%_0%/0.3),inset_0_1px_1px_hsl(0_0%_100%/0.1)]"
+          ? "bg-gradient-to-br from-[#e11d2e] to-[#9b0e1c] text-white shadow-[0_4px_24px_-4px_rgba(225,29,46,0.55),inset_0_1px_1px_hsl(0_0%_100%/0.2)]" 
+          : "bg-white/10 backdrop-blur-xl text-foreground border border-white/20 hover:border-[#ff2d3d]/50 shadow-[0_4px_20px_-4px_hsl(0_0%_0%/0.3),inset_0_1px_1px_hsl(0_0%_100%/0.1)]"
         }
         ${className}
       `}
@@ -245,7 +246,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 py-16 md:py-0">
+    <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex flex-col items-center justify-start overflow-hidden px-4 md:px-8 pt-20 md:pt-[9vh] pb-[66vw] md:pb-0" style={{ background: "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)" }}>
       {/* Elegant Floating Orb System */}
       <OrbSystem mousePosition={mousePosition} />
 
@@ -258,7 +259,7 @@ const HeroSection = () => {
         }}
         transition={{ type: "spring", stiffness: 50, damping: 30 }}
         style={{
-          background: "radial-gradient(circle, hsl(217 91% 60% / 0.6) 0%, hsl(199 89% 48% / 0.3) 50%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(127,16,32,0.5) 0%, rgba(127,16,32,0.2) 50%, transparent 70%)",
           left: "50%",
           top: "50%",
           transform: "translate(-50%, -50%)",
@@ -270,7 +271,7 @@ const HeroSection = () => {
         <motion.div
           className="absolute w-[300px] md:w-[600px] h-[300px] md:h-[600px] -top-20 -left-20 md:-top-40 md:-left-40 rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(217 91% 60% / 0.4) 0%, transparent 60%)",
+            background: "radial-gradient(circle, rgba(127,16,32,0.35) 0%, transparent 60%)",
           }}
           animate={{
             x: [0, 50, 0],
@@ -283,7 +284,7 @@ const HeroSection = () => {
         <motion.div
           className="absolute w-[250px] md:w-[500px] h-[250px] md:h-[500px] top-1/2 -right-10 md:-right-20 rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(210 100% 50% / 0.35) 0%, transparent 60%)",
+            background: "radial-gradient(circle, rgba(225,29,46,0.15) 0%, transparent 60%)",
           }}
           animate={{
             x: [0, -60, 0],
@@ -296,7 +297,7 @@ const HeroSection = () => {
         <motion.div
           className="absolute w-[200px] md:w-[400px] h-[200px] md:h-[400px] bottom-0 left-1/4 rounded-full"
           style={{
-            background: "radial-gradient(circle, hsl(199 89% 48% / 0.3) 0%, transparent 60%)",
+            background: "radial-gradient(circle, rgba(127,16,32,0.25) 0%, transparent 60%)",
           }}
           animate={{
             x: [0, 40, 0],
@@ -322,7 +323,7 @@ const HeroSection = () => {
       {codeSnippets.map((snippet, index) => (
         <motion.div
           key={index}
-          className="absolute hidden md:block text-[10px] md:text-xs font-mono text-blue-400/20 select-none"
+          className="absolute hidden md:block text-[10px] md:text-xs font-mono text-neutral-500/20 select-none"
           style={{
             left: `${10 + (index * 15) % 80}%`,
             top: `${15 + (index * 20) % 70}%`,
@@ -343,6 +344,37 @@ const HeroSection = () => {
         </motion.div>
       ))}
 
+      {/* Hands image band */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 pointer-events-none md:h-[44%]"
+        style={{
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 88%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 88%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
+          WebkitMaskComposite: "source-in",
+          maskComposite: "intersect",
+        }}
+      >
+        <img
+          src={heroHands}
+          alt=""
+          width={1587}
+          height={991}
+          loading="eager"
+          // @ts-ignore
+          fetchpriority="high"
+          className="block w-full h-auto md:h-full md:object-cover"
+          style={{ objectPosition: "50% 55%", filter: "invert(1) grayscale(1) contrast(1.1) brightness(0.85)" }}
+        />
+        <motion.div
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(circle at 50% 55%, rgba(255,40,50,0.55), transparent 22%)", mixBlendMode: "screen" }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 55%, transparent 45%, rgba(5,5,5,0.85) 100%)" }} />
+      </div>
+
       {/* Main Content */}
       <div className="relative z-10 text-center max-w-5xl mx-auto">
         {/* Status Badge */}
@@ -350,7 +382,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, scale: 0.8, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-4 md:mb-6"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#7f1020]/15 border border-[#7f1020]/50 shadow-[0_0_18px_rgba(127,16,32,0.45)] mb-4 md:mb-6"
         >
           <motion.span 
             className="w-2 h-2 rounded-full bg-green-500"
@@ -371,16 +403,16 @@ const HeroSection = () => {
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            <Cpu className="w-4 h-4 text-blue-400" />
+            <Cpu className="w-4 h-4 text-[#ff2d3d]" />
           </motion.div>
-          <span className="text-xs md:text-sm font-medium text-muted-foreground tracking-[0.2em] uppercase">
+          <span className="text-xs md:text-sm font-medium text-[#ff2d3d] tracking-[0.2em] uppercase">
             SAIF DEV — AI DEVELOPER
           </span>
           <motion.div
             animate={{ rotate: -360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            <Zap className="w-4 h-4 text-cyan-400" />
+            <Zap className="w-4 h-4 text-[#ff2d3d]" />
           </motion.div>
         </motion.div>
 
@@ -395,14 +427,14 @@ const HeroSection = () => {
             <span className="sr-only">Saif Rasheed (Saif Dev) is an Agentic AI Developer, Generative AI professional, and WordPress specialist based in Islamabad, Pakistan. He builds AI agents, chatbots, n8n automations, and WordPress websites for clients in the UK, US, and beyond. Contact: saifdevcore@gmail.com.</span>
             <TextReveal 
               text="SAIF RASHEED" 
-              className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-cyan-400 to-blue-500"
+              className="bg-clip-text text-transparent bg-gradient-to-r from-[#ffffff] via-[#ff4d5a] to-[#c1121f]"
               delay={0.25}
             />
           </h1>
           
           {/* Animated underline */}
           <motion.div
-            className="h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-transparent via-blue-500 to-transparent"
+            className="h-1 mx-auto mt-4 rounded-full bg-gradient-to-r from-transparent via-[#ff2d3d] to-transparent"
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: "60%", opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
@@ -426,14 +458,14 @@ const HeroSection = () => {
           ].map((stat, index) => (
             <motion.div 
               key={stat.label}
-              className="text-center px-4 py-2 rounded-xl bg-white/5 backdrop-blur-sm border border-white/10"
+              className="text-center px-4 py-2 rounded-xl bg-black/40 backdrop-blur-sm border border-[#ff2d3d]/20"
               initial={{ opacity: 0, scale: 0.8, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: 0.7 + index * 0.1, type: "spring", stiffness: 200 }}
-              whileHover={{ scale: 1.05, backgroundColor: "hsl(217 91% 60% / 0.1)" }}
+              whileHover={{ scale: 1.05, backgroundColor: "rgba(255,45,61,0.08)" }}
             >
               <motion.p 
-                className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-cyan-400"
+                className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#ff4d5a] to-[#e11d2e]"
               >
                 {stat.value}
               </motion.p>
@@ -480,23 +512,6 @@ const HeroSection = () => {
           </IOSBubbleButton>
         </motion.div>
 
-        {/* Scroll Hint */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="absolute -bottom-12 md:bottom-4 left-1/2 -translate-x-1/2"
-        >
-          <motion.div
-            animate={{ x: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex items-center gap-2 text-muted-foreground text-xs"
-          >
-            <span className="hidden md:inline">Scroll to explore</span>
-            <span className="md:hidden">Swipe to explore</span>
-            <ArrowRight size={12} />
-          </motion.div>
-        </motion.div>
       </div>
 
       {/* Floating Elements */}
@@ -542,6 +557,23 @@ const HeroSection = () => {
           border: "1px solid hsl(217 91% 60% / 0.2)",
         }}
       />
+        {/* Scroll Hint */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 z-20 opacity-50"
+        >
+          <motion.div
+            animate={{ x: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex items-center gap-2 text-neutral-400 text-[10px] md:text-xs"
+          >
+            <span className="hidden md:inline">Scroll to explore</span>
+            <span className="md:hidden">Swipe to explore</span>
+            <ArrowRight size={12} />
+          </motion.div>
+        </motion.div>
     </section>
   );
 };
