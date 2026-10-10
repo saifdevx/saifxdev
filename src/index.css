@@ -361,3 +361,12 @@
     transform: rotate(360deg);
   }
 }
+
+/* Mobile-only hero hands treatment */
+@media (max-width: 767px) {
+  .hero-hands {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, black 55%, black 80%, transparent 100%) !important;
+    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 30%, black 55%, black 80%, transparent 100%) !important;
+  }
+  .hero-hands-img { object-position: 50% 50% !important; }
+}
