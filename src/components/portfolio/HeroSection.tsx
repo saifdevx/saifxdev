@@ -258,7 +258,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex flex-col items-center justify-start overflow-hidden px-4 md:px-8 pt-20 md:pt-[9vh] pb-[66vw] md:pb-0" style={{ background: "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)" }}>
+    <section ref={containerRef} className="relative w-full min-h-[100svh] md:h-screen flex flex-col items-center justify-start overflow-hidden px-4 md:px-8 pt-20 md:pt-[9vh] pb-[calc(32svh-48px)] md:pb-0" style={{ background: "linear-gradient(180deg, #0a0a0a 0%, #050505 100%)" }}>
       {/* Elegant Floating Orb System */}
       <OrbSystem mousePosition={mousePosition} />
 
@@ -359,7 +359,7 @@ const HeroSection = () => {
       {/* Hands image band */}
       <div
         aria-hidden="true"
-        className="absolute inset-x-0 bottom-0 pointer-events-none md:h-[44%]"
+        className="hero-hands absolute inset-x-0 bottom-0 z-0 pointer-events-none h-[32svh] md:h-[44%]"
         style={{
           WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 88%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, transparent 0%, black 35%, black 88%, transparent 100%), linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)",
@@ -375,17 +375,20 @@ const HeroSection = () => {
           loading="eager"
           // @ts-ignore
           fetchpriority="high"
-          className="block w-full h-auto md:h-full md:object-cover"
+          className="hero-hands-img block w-full h-full object-cover md:h-full md:object-cover"
           style={{ objectPosition: "50% 55%", filter: "invert(1) grayscale(1) contrast(1.1) brightness(0.85)" }}
         />
+        <div className="md:hidden absolute inset-0" style={{ background: "radial-gradient(circle at 50% 50%, rgba(255,40,50,0.4), transparent 22%)" }} />
         <motion.div
-          className="absolute inset-0"
+          className="hidden md:block absolute inset-0"
           style={{ background: "radial-gradient(circle at 50% 55%, rgba(255,40,50,0.55), transparent 22%)", mixBlendMode: "screen" }}
           animate={{ opacity: [0.6, 1, 0.6] }}
           transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         />
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse at 50% 55%, transparent 45%, rgba(5,5,5,0.85) 100%)" }} />
       </div>
+      {/* Mobile bottom dissolve into next section */}
+      <div aria-hidden="true" className="md:hidden absolute inset-x-0 bottom-0 h-20 z-[1] pointer-events-none bg-gradient-to-b from-transparent to-background" />
 
       {/* Main Content */}
       <div className="relative z-10 text-center max-w-5xl mx-auto">
@@ -574,7 +577,7 @@ const HeroSection = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 z-20 opacity-50"
+          className="hidden md:block absolute bottom-3 md:bottom-5 left-1/2 -translate-x-1/2 z-20 opacity-50"
         >
           <motion.div
             animate={{ x: [0, 8, 0] }}
