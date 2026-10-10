@@ -85,16 +85,24 @@ serve(async (req) => {
       });
     }
 
-    // Validate each message
-    const validRoles = ["user", "assistant"];
+    // Validate each message. Only visitor ("user") messages are trusted;
+    // caller-supplied "assistant" messages are dropped so nobody can inject
+    // fake assistant replies into the conversation history.
     const sanitizedMessages = [];
     for (const msg of body.messages) {
-      if (!msg || typeof msg.role !== "string" || !validRoles.includes(msg.role) || typeof msg.content !== "string") {
+      if (!msg || typeof msg.role !== "string" || typeof msg.content !== "string") {
         return new Response(JSON.stringify({ error: "Invalid message structure" }), {
           status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
-      sanitizedMessages.push({ role: msg.role, content: msg.content.slice(0, 2000) });
+      if (msg.role !== "user") continue;
+      sanitizedMessages.push({ role: "user", content: msg.content.slice(0, 2000) });
+    }
+
+    if (sanitizedMessages.length === 0) {
+      return new Response(JSON.stringify({ error: "Invalid messages format" }), {
+        status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
