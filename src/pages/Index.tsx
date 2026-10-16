@@ -218,6 +218,12 @@ const Index = () => {
     };
 
     const handleWheel = (e: WheelEvent) => {
+      const inner = (e.target as HTMLElement)?.closest?.(".exp-desktop-scroll") as HTMLElement | null;
+      if (inner && inner.scrollHeight > inner.clientHeight + 1) {
+        const atTop = inner.scrollTop <= 0;
+        const atBottom = inner.scrollTop + inner.clientHeight >= inner.scrollHeight - 1;
+        if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) return;
+      }
       e.preventDefault();
       if (isScrollingRef.current) return;
 
