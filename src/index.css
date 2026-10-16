@@ -370,3 +370,11 @@
   }
   .hero-hands-img { object-position: 50% 50% !important; }
 }
+
+/* Experience section desktop inner scroll */
+@media (min-width: 1024px) {
+  .exp-desktop-scroll { scrollbar-width: thin; scrollbar-color: hsl(var(--muted)) transparent;
+    -webkit-mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%);
+    mask-image: linear-gradient(to bottom, black calc(100% - 32px), transparent 100%); }
+  .exp-desktop-scroll::-webkit-scrollbar { width: 4px; }
+}

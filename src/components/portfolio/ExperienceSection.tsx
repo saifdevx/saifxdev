@@ -63,7 +63,105 @@ const ExperienceSection = () => {
           </h2>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-3 md:gap-6">
+        {/* Desktop (>=1024px) layout */}
+        <div className="hidden lg:block exp-desktop-scroll max-h-[calc(100svh-15rem)] overflow-y-auto pr-2 pb-6">
+          <div className="grid grid-cols-[55fr_45fr] gap-9 items-start">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="glass-card p-6 border border-cyan-500/20"
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div className="p-2 rounded-xl bg-cyan-500/10">
+                  <Briefcase size={20} className="text-cyan-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold">Experience</h3>
+                  <p className="text-muted-foreground text-xs">Work History</p>
+                </div>
+              </div>
+              <div className="relative pl-4 border-l-2 border-cyan-500/30 space-y-5">
+                {workExperience.map((exp) => (
+                  <div key={exp.role} className="relative">
+                    <div className="absolute -left-[calc(1rem+5px)] top-1 w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-lg shadow-cyan-500/50" />
+                    <span className="text-[10px] font-mono text-cyan-400">{exp.period}</span>
+                    <h4 className="text-sm font-semibold">{exp.role}</h4>
+                    <p className="text-muted-foreground text-xs">{exp.company}</p>
+                    <p className="text-muted-foreground text-xs mt-1 leading-relaxed">{exp.description}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <div className="space-y-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                viewport={{ once: true }}
+                className="glass-card p-4 border border-cyan-500/20"
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCap size={16} className="text-cyan-400" />
+                  <span className="text-sm font-semibold">Education</span>
+                </div>
+                <div className="pl-4 border-l-2 border-cyan-500/20">
+                  <span className="text-[10px] font-mono text-cyan-400">2024 – 2028</span>
+                  <h4 className="text-sm font-semibold">BS Computer Science</h4>
+                  <p className="text-muted-foreground text-xs">SZABIST, Islamabad</p>
+                  <div className="inline-block mt-1 px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px]">
+                    + Agentic AI Course
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="glass-card p-4 border border-teal-500/20"
+              >
+                <div className="flex items-center gap-2 mb-3">
+                  <Award size={16} className="text-teal-400" />
+                  <span className="text-sm font-semibold">Certifications</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  {certifications.map((cert) => {
+                    const m = cert.match(/^(.*?)\s*(\([^)]*\))$/);
+                    return (
+                      <div key={cert} className="flex items-start gap-2 p-2 rounded-lg bg-cyan-500/5 border border-cyan-500/10">
+                        <CheckCircle size={12} className="text-teal-500 flex-shrink-0 mt-0.5" />
+                        <span className="text-[11px] font-medium leading-snug">
+                          {m ? m[1] : cert}
+                          {m && <span className="block text-muted-foreground font-normal">{m[2]}</span>}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+                viewport={{ once: true }}
+                className="glass-card p-4 border border-teal-500/20"
+              >
+                <p className="text-xs font-semibold mb-2">Languages</p>
+                <div className="flex gap-2">
+                  <span className="px-2 py-1 text-[10px] rounded-lg bg-teal-500/10 border border-teal-500/20">English – Professional</span>
+                  <span className="px-2 py-1 text-[10px] rounded-lg bg-teal-500/10 border border-teal-500/20">Urdu – Native</span>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-3 md:gap-6 lg:hidden">
           {/* Work Experience + Education */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
